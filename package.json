@@ -1,0 +1,20 @@
+{
+  "name": "sos1718-helloworld",
+  "version": "0.0.0",
+  "description": "my first module in NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gti-sos/SOS1718-09.git"
+  },
+  "author": "balramrom",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gti-sos/SOS1718-09/issues"
+  },
+  "homepage": "https://github.com/gti-sos/SOS1718-09#readme"
+}
