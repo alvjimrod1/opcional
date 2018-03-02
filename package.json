@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/gti-sos/SOS1718-09/issues"
   },
-  "homepage": "https://github.com/gti-sos/SOS1718-09#readme"
+  "homepage": "https://github.com/gti-sos/SOS1718-09#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
