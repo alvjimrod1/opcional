@@ -7,7 +7,7 @@ app.get("/hello", (req,res) =>{
     res.send("Hello World")
 });
 
-app.use("/",express.static("/home/ubuntu/workspace/SOS1718-09/public"));
+app.use("/",express.static(__dirname +"/public"));
 
 app.listen(port,()=>{
     console.log("Server ready on port "+port+"!");
