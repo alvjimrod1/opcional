@@ -207,10 +207,6 @@ app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
     
     SpanUNivStatsdb.find({"autCommunity":ac, "year": parseInt(y)}, (err, stats) => {
         
- //       var filteredStats = stats.filter((s)=>{
-//            return(s.autCommunity == ac && s.year == y);
- //       });
-
         if (err) {
             console.error(" Error accesing DB");
             res.sendStatus(500);
