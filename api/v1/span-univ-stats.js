@@ -38,7 +38,7 @@ var initialStats = [
 
 ];
 
-var db = new DataStore({
+var SpanUNivStatsdb = new DataStore({
     
     filename: dbFileName,
     autoload: true
@@ -51,7 +51,7 @@ app.get(BASE_API_PATH + "/span-univ-stats/loadInitialData", (req, res) => {
 
     console.log(Date() + " - GET /span-univ-stats/loadInitialData")
 
-    db.find({}, (err, stats) => {
+    SpanUNivStatsdb.find({}, (err, stats) => {
 
         if (err) {
             console.error(" Error accesing DB");
@@ -61,7 +61,7 @@ app.get(BASE_API_PATH + "/span-univ-stats/loadInitialData", (req, res) => {
 
         if (stats.length == 0) {
             console.log(" Empty DB");
-            db.insert(initialStats);
+            SpanUNivStatsdb.insert(initialStats);
 
         }
         else {
@@ -77,7 +77,7 @@ app.get(BASE_API_PATH + "/span-univ-stats/loadInitialData", (req, res) => {
 
 app.get(BASE_API_PATH + "/span-univ-stats", (req, res) => {
     console.log(Date() + " - GET /span-univ-stats");
-    db.find({}, (err, stats) => {
+    SpanUNivStatsdb.find({}, (err, stats) => {
 
         if (err) {
             console.error(" Error accesing DB");
@@ -95,7 +95,7 @@ app.post(BASE_API_PATH + "/span-univ-stats", (req, res) => {
     console.log(Date() + " - POST /span-univ-stats");
     var stat = req.body;
     
-    db.insert(stat);
+    SpanUNivStatsdb.insert(stat);
     res.sendStatus(201);
 });
 
@@ -106,9 +106,9 @@ app.put(BASE_API_PATH + "/span-univ-stats", (req, res) => {
 
 app.delete(BASE_API_PATH + "/span-univ-stats", (req, res) => {
     console.log(Date() + " - DELETE /span-univ-stats");
-    db.find({}, (err, stats) => {
+    SpanUNivStatsdb.find({}, (err, stats) => {
         for(var i = 0;i<stats.length;i++){
-        db.remove({});
+        SpanUNivStatsdb.remove({});
         }
     });
     
@@ -121,7 +121,7 @@ app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
     var autComm = req.params.autCommunity;
     console.log(Date() + " - GET /span-univ-stats/" + autComm);
     
-    db.find({autCommunity : autComm}, (err, stats) => {
+    SpanUNivStatsdb.find({autCommunity : autComm}, (err, stats) => {
 
         if (err) {
             console.error(" Error accesing DB");
@@ -141,9 +141,9 @@ app.delete(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
 
     console.log(Date() + " - DELETE /span-univ-stats/" + autComm);
     
-    db.find({autCommunity : autComm}, (err, stats) => {
+    SpanUNivStatsdb.find({autCommunity : autComm}, (err, stats) => {
         for(var i=0;i<stats.length;i++){
-            db.remove({autCommunity : autComm});
+            SpanUNivStatsdb.remove({autCommunity : autComm});
         }
         
     });
@@ -176,7 +176,7 @@ app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
         return;
     }
     
-    db.update({autCommunity : autComm},stat,(err,numUpdated)=>{
+    SpanUNivStatsdb.update({autCommunity : autComm},stat,(err,numUpdated)=>{
         console.log(" - Updated"+ numUpdated);
     });
     
@@ -190,10 +190,10 @@ app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
 
 app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
     var ac = req.params.autCommunity;
-    var y = req.params.year;
+    var y = parseInt(req.params.year);
     console.log(Date() + " - GET /span-univ-stats/" + ac + "/"+ y);
     
-    db.find({}, (err, stats) => {
+    SpanUNivStatsdb.find({}, (err, stats) => {
         
         var filteredStats = stats.filter((s)=>{
             return(s.autCommunity == ac && s.year == y);
@@ -217,7 +217,7 @@ app.delete(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) =>
     var year1 = req.params.year;
     console.log(Date() + " - DELETE /span-univ-stats/" + autComm + "/" + year1);
     
-    db.remove({autCommunity: autComm, year: year1});
+    SpanUNivStatsdb.remove({autCommunity: autComm, year: year1});
     
     res.sendStatus(200);
 
@@ -245,7 +245,7 @@ app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
         return;
     }
     
-    db.update({"autCommunity": autComm, "year": year},stat,(err,numUpdated)=>{
+    SpanUNivStatsdb.update({"autCommunity": autComm, "year": year},stat,(err,numUpdated)=>{
         console.log(" - Updated"+ numUpdated);
     });
     
