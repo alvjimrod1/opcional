@@ -4,7 +4,7 @@ var DataStore = require("nedb");
 
 var port = (process.env.PORT || 1607);
 var BASE_API_PATH = "/api/v1";
-var dbFileName = __dirname + "/stats.db";
+var dbSpanUnivStats = __dirname + "/stats.db";
 
 var app = express();
 
@@ -40,7 +40,7 @@ var initialStats = [
 
 var SpanUNivStatsdb = new DataStore({
     
-    filename: dbFileName,
+    filename: dbSpanUnivStats,
     autoload: true
 });
 
