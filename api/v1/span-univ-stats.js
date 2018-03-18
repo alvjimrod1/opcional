@@ -65,7 +65,7 @@ app.get(BASE_API_PATH + "/span-univ-stats/loadInitialData", (req, res) => {
 
         }
         else {
-            console.log("DB initialized with " + stats.length + " contacts")
+            console.log("DB initialized with " + stats.length + " stats")
         }
 
     });
