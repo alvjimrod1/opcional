@@ -29,7 +29,7 @@ var initialStats = [
     {
 
         "autCommunity": "aragon",
-        "year": "2015",
+        "year": 2015,
         "enrolledNumber": 33456,
         "degree": 26900,
         "master": 1348,
@@ -40,7 +40,7 @@ var initialStats = [
     {
 
         "autCommunity": "andalucia",
-        "year": "2015",
+        "year": 2015,
         "enrolledNumber": 250785,
         "degree": 182591,
         "master": 14896,
@@ -205,11 +205,11 @@ app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
     var y = parseInt(req.params.year);
     console.log(Date() + " - GET /span-univ-stats/" + ac + "/"+ y);
     
-    SpanUNivStatsdb.find({}, (err, stats) => {
+    SpanUNivStatsdb.find({"autCommunity":ac, "year": parseInt(y)}, (err, stats) => {
         
-        var filteredStats = stats.filter((s)=>{
-            return(s.autCommunity == ac && s.year == y);
-        });
+ //       var filteredStats = stats.filter((s)=>{
+//            return(s.autCommunity == ac && s.year == y);
+ //       });
 
         if (err) {
             console.error(" Error accesing DB");
@@ -217,7 +217,7 @@ app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
             return;
         }
 
-        res.send(filteredStats);
+        res.send(stats);
 
     });
 });
@@ -229,7 +229,7 @@ app.delete(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) =>
     var year1 = req.params.year;
     console.log(Date() + " - DELETE /span-univ-stats/" + autComm + "/" + year1);
     
-    SpanUNivStatsdb.remove({autCommunity: autComm, year: year1});
+    SpanUNivStatsdb.remove({autCommunity: autComm, year: parseInt(year1)});
     
     res.sendStatus(200);
 
@@ -257,7 +257,7 @@ app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
         return;
     }
     
-    SpanUNivStatsdb.update({"autCommunity": autComm, "year": year},stat,(err,numUpdated)=>{
+    SpanUNivStatsdb.update({"autCommunity": autComm, "year": parseInt(year)},stat,(err,numUpdated)=>{
         console.log(" - Updated"+ numUpdated);
     });
     
