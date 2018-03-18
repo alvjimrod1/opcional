@@ -202,7 +202,7 @@ app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
 
 app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
     var ac = req.params.autCommunity;
-    var y = parseInt(req.params.year);
+    var y = req.params.year;
     console.log(Date() + " - GET /span-univ-stats/" + ac + "/"+ y);
     
     SpanUNivStatsdb.find({"autCommunity":ac, "year": parseInt(y)}, (err, stats) => {
