@@ -157,7 +157,7 @@ app.delete(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
 
 app.post(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
     var autComm = req.params.autCommunity;
-    console.log(Date() + " - POST /span-univ-stats" + autComm);
+    console.log(Date() + " - POST /span-univ-stats/" + autComm);
     res.sendStatus(405);
 });
 
