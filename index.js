@@ -12,7 +12,9 @@ app.get("/hello", (req,res) =>{
     res.send("Hello World")
 });
 
+///////APIS
 
+var apiSpanUnivStats = require("./api/span-univ-stats.js")
 
 app.listen(port,()=>{
     console.log("Server ready on port "+port+"!");
