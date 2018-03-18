@@ -19,7 +19,7 @@ var initialUniversities = [
         "yearFund": "1542",
         "headquar": "zaragoza",
         "type": "publica",
-        "nameUniversity": "universidad a distancia de madrid",
+        "nameUniversity": "universidad de zaragoza",
 
 
     },
@@ -171,15 +171,15 @@ app.put(BASE_API_PATH + "/spanish-universities/:autCommunity/:yearFund", (req, r
     var university = req.body;
 
 
-    
+
     if (autCommunity != university.autCommunity || yearFund != university.yearFund) {
         res.sendStatus(409);
         console.warn(Date() + "  - Hacking attemp!");
         return;
     }
 
-    univs.update({"autCommunity": autCommunity, "yearFund": yearFund},university,(err,numUpdated)=>{
-        console.log(" - Updated"+ numUpdated);
+    univs.update({ "autCommunity": autCommunity, "yearFund": yearFund }, university, (err, numUpdated) => {
+        console.log(" - Updated" + numUpdated);
     });
     res.sendStatus(200);
 
