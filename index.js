@@ -439,8 +439,6 @@ app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
 
 });
 
-
-
 // API open-source-contests
 
 initialProjects = [
@@ -501,14 +499,25 @@ initialProjects = [
             }
             ]
 
+var projects = initialProjects.slice();
+
+app.get(BASE_API_PATH + "/contests/loadInitialData", (req, res) => {
+
+    console.log(Date() + " - GET /contests/loadInitialData")
+    
+    projects = initialProjects.slice();
+    res.send(projects);
+
+});
+
 app.get(BASE_API_PATH + "/contests", (req,res) =>{
-    res.send(initialProjects);
+    res.send(projects);
 });
 
 app.get(BASE_API_PATH + "/contests/:year/:university/:project", (req, res) => {
     console.log(Date() + " - GET /contests/:year/:university/:project");
     let {year, university, project} = req.params;
-    res.send(initialProjects.filter((o) => (o.year == year))
+    res.send(projects.filter((o) => (o.year == year))
                         .filter((o) => (o.university == university))
                         .filter((o) => (o.project == project))[0]);
 });
@@ -516,20 +525,20 @@ app.get(BASE_API_PATH + "/contests/:year/:university/:project", (req, res) => {
 app.get(BASE_API_PATH + "/contests/:year/:university", (req, res) => {
     console.log(Date() + " - GET /contests/:year/:university");
     let {year, university} = req.params;
-    res.send(initialProjects.filter((o) => (o.year == year))
+    res.send(projects.filter((o) => (o.year == year))
                  .filter((o) => (o.university == university)));
 });
 
 app.get(BASE_API_PATH + "/contests/:year", (req, res) => {
     console.log(Date() + " - GET /contests/:year");
     let {year} = req.params;
-    res.send(initialProjects.filter((o) => (o.year == year)));
+    res.send(projects.filter((o) => (o.year == year)));
 });
 
 app.post(BASE_API_PATH + "/contests", (req, res) => {
     console.log(Date() + " - POST /contests");
     let project = req.body;
-    initialProjects.push(project);
+    projects.push(project);
     res.sendStatus(201);
 });
 
@@ -548,7 +557,7 @@ app.put(BASE_API_PATH + "/contests/:year/:university/:project", (req, res) => {
         return;
     };
     
-    initialProjects = initialProjects.map((o)=>{
+    projects = projects.map((o)=>{
         if(o.year == year && o.university == university && o.project == project){
             return obj;
         }else{
@@ -566,7 +575,7 @@ app.put(BASE_API_PATH + "/contests",(req,res)=>{
 
 app.delete(BASE_API_PATH + "/contests",(req,res)=>{
     console.log(Date() + " - DELETE /contests");
-    initialProjects = [];
+    projects = [];
     res.sendStatus(200);
 });
 
@@ -574,7 +583,7 @@ app.delete(BASE_API_PATH + "/contests/:year/:university/:project",(req,res)=>{
     let {year, university, project} = req.params;
     console.log(Date() + " - DELETE /contests/:year/:university/:project");
 
-    initialProjects = initialProjects.filter((o)=>{
+    projects = projects.filter((o)=>{
         return (o.year != year || o.university != university || o.project != project);
     });
     
