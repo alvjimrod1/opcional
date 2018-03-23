@@ -223,6 +223,33 @@ var initialStats = [
         "master": 14896,
         "firstSecondCycle": 53298
 
+    },
+    {
+        "autCommunity": "asturias",
+        "year": 2015,
+        "enrolledNumber": 23074,
+        "degree": 16973,
+        "master": 1283,
+        "firstSecondCycle": 4818
+
+    },
+    {
+        "autCommunity": "andalucia",
+        "year": 2014,
+        "enrolledNumber": 249138,
+        "degree": 146474,
+        "master": 14349,
+        "firstSecondCycle": 88315
+
+    },
+    {
+        "autCommunity": "aragon",
+        "year": 2014,
+        "enrolledNumber": 33798,
+        "degree": 22482,
+        "master": 1657,
+        "firstSecondCycle": 9659
+
     }
 
 ];
