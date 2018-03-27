@@ -10,6 +10,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
     
     
     app.get(BASE_API_PATH + "/span-univ-stats/docs",(res,req)=>{
+        
         res.redirect("https://documenter.getpostman.com/view/3889824/collection/RVtxKY8Y");
 
     });
