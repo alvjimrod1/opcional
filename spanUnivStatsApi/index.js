@@ -7,9 +7,9 @@ module.exports = spanUnivStatsApi;
 spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     console.log("Registering routes for span-univ-stats API...");
-    
-    
-    app.get(BASE_API_PATH + "/span-univ-stats/docs",(res,req)=>{
+
+
+    app.get(BASE_API_PATH + "/span-univ-stats/docs", (req, res) => {
         
         res.redirect("https://documenter.getpostman.com/view/3889824/collection/RVtxKY8Y");
 
@@ -75,12 +75,12 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 res.sendStatus(500);
                 return;
             }
-            
-            if(Object.keys(stat).length !== 6){
-                
+
+            if (Object.keys(stat).length !== 6) {
+
                 console.warn("Stat does not have the expected fields");
                 res.sendStatus(400);
-                
+
             }
             else if (stats.length !== 0) {
 
