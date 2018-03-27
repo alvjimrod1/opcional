@@ -7,6 +7,11 @@ module.exports = spanUnivStatsApi;
 spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     console.log("Registering routes for span-univ-stats API...");
+    
+    
+    app.get(BASE_API_PATH + "/span-univ-stats/docs",(res,req)=>{
+        res.redirect("");
+    });
 
     /////////////   LOADINITIALDATA 
 
