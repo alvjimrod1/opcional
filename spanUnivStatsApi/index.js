@@ -4,7 +4,7 @@ var BASE_API_PATH = "/api/v1";
 module.exports = spanUnivStatsApi;
 
 
-spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
+spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     console.log("Registering routes for span-univ-stats API...");
 
@@ -14,7 +14,7 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
 
         console.log(Date() + " - GET /span-univ-stats/loadInitialData")
 
-        SpanUNivStatsdb.find({}, (err, stats) => {
+        SpanUNivStatsdb.find({}).toArray((err, stats) => {
 
             if (err) {
                 console.error(" Error accesing DB");
@@ -40,7 +40,7 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
 
     app.get(BASE_API_PATH + "/span-univ-stats", (req, res) => {
         console.log(Date() + " - GET /span-univ-stats");
-        SpanUNivStatsdb.find({}, (err, stats) => {
+        SpanUNivStatsdb.find({}).toArray((err, stats) => {
 
             if (err) {
                 console.error(" Error accesing DB");
@@ -48,7 +48,10 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
                 return;
             }
 
-            res.send(stats);
+            res.send(stats.map((s) => {
+                delete s._id;
+                return s;
+            }));
 
         });
 
@@ -58,8 +61,33 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
         console.log(Date() + " - POST /span-univ-stats");
         var stat = req.body;
 
-        SpanUNivStatsdb.insert(stat);
-        res.sendStatus(201);
+        SpanUNivStatsdb.find({ "autCommunity": stat.autCommunity, "year": stat.year }).toArray((err, stats) => {
+
+            if (err) {
+                console.error(" Error accesing DB");
+                res.sendStatus(500);
+                return;
+            }
+            
+            if(Object.keys(stat).length !== 6){
+                
+                console.warn("Stat does not have the expected fields");
+                res.sendStatus(400);
+                
+            }
+            else if (stats.length !== 0) {
+
+                res.sendStatus(409);
+
+            }
+            else {
+
+                SpanUNivStatsdb.insert(stat);
+                res.sendStatus(201);
+            }
+
+        });
+
     });
 
     app.put(BASE_API_PATH + "/span-univ-stats", (req, res) => {
@@ -68,23 +96,10 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
     });
 
     app.delete(BASE_API_PATH + "/span-univ-stats", (req, res) => {
+
         console.log(Date() + " - DELETE /span-univ-stats");
-        SpanUNivStatsdb.find({}, (err, stats) => {
-            for (var i = 0; i < stats.length; i++) {
-                SpanUNivStatsdb.remove({});
-            }
-        });
 
-        res.sendStatus(200);
-    });
-
-    ////// ACCIONES PARA RECURSO CON UNA INSTANCIA (COMUNIDAD AUTONOMA)
-
-    app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
-        var autComm = req.params.autCommunity;
-        console.log(Date() + " - GET /span-univ-stats/" + autComm);
-
-        SpanUNivStatsdb.find({ autCommunity: autComm }, (err, stats) => {
+        SpanUNivStatsdb.find({}).toArray((err, stats) => {
 
             if (err) {
                 console.error(" Error accesing DB");
@@ -92,7 +107,53 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
                 return;
             }
 
-            res.send(stats);
+            if (stats.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                SpanUNivStatsdb.remove({});
+                res.sendStatus(200);
+            }
+
+        });
+
+    });
+
+
+
+
+
+
+    ////// ACCIONES PARA RECURSO CON UNA INSTANCIA (COMUNIDAD AUTONOMA)
+
+    app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
+        var autComm = req.params.autCommunity;
+        console.log(Date() + " - GET /span-univ-stats/" + autComm);
+
+        SpanUNivStatsdb.find({ "autCommunity": autComm }).toArray((err, stats) => {
+
+            if (err) {
+                console.error(" Error accesing DB");
+                res.sendStatus(500);
+                return;
+            }
+
+            if (stats.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                res.send(stats.map((s) => {
+                    delete s._id;
+                    return s;
+                }));
+
+            }
 
         });
     });
@@ -104,15 +165,28 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
 
         console.log(Date() + " - DELETE /span-univ-stats/" + autComm);
 
-        SpanUNivStatsdb.find({ autCommunity: autComm }, (err, stats) => {
-            for (var i = 0; i < stats.length; i++) {
-                SpanUNivStatsdb.remove({ autCommunity: autComm });
+        SpanUNivStatsdb.find({ "autCommunity": autComm }).toArray((err, stats) => {
+
+            if (err) {
+                console.error(" Error accesing DB");
+                res.sendStatus(500);
+                return;
+            }
+
+            if (stats.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                SpanUNivStatsdb.remove({ "autCommunity": autComm });
+                res.sendStatus(200);
+
             }
 
         });
 
-
-        res.sendStatus(200);
 
     });
 
@@ -129,22 +203,8 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
 
     app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
         var autComm = req.params.autCommunity;
-        var stat = req.body;
         console.log(Date() + " - PUT /span-univ-stats/" + autComm);
-
-
-        if (autComm !== stat.autCommunity) {
-            res.sendStatus(409);
-            console.warn(Date() + "  - Hacking attemp!")
-            return;
-        }
-
-        SpanUNivStatsdb.update({ autCommunity: autComm }, stat, (err, numUpdated) => {
-            console.log(" - Updated" + numUpdated);
-        });
-
-        res.sendStatus(200);
-
+        res.sendStatus(405);
     });
 
 
@@ -156,7 +216,7 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
         var y = req.params.year;
         console.log(Date() + " - GET /span-univ-stats/" + ac + "/" + y);
 
-        SpanUNivStatsdb.find({ "autCommunity": ac, "year": parseInt(y) }, (err, stats) => {
+        SpanUNivStatsdb.find({ "autCommunity": ac, "year": parseInt(y) }).toArray((err, stats) => {
 
             if (err) {
                 console.error(" Error accesing DB");
@@ -164,7 +224,19 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
                 return;
             }
 
-            res.send(stats);
+            if (stats.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                res.send(stats.map((s) => {
+                    delete s._id;
+                    return s;
+                }));
+
+            }
 
         });
     });
@@ -176,11 +248,27 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
         var year1 = req.params.year;
         console.log(Date() + " - DELETE /span-univ-stats/" + autComm + "/" + year1);
 
-        SpanUNivStatsdb.remove({ autCommunity: autComm, year: parseInt(year1) });
+        SpanUNivStatsdb.find({ "autCommunity": autComm, "year": parseInt(year1) }).toArray((err, stats) => {
 
-        res.sendStatus(200);
+            if (err) {
+                console.error(" Error accesing DB");
+                res.sendStatus(500);
+                return;
+            }
 
+            if (stats.length == 0) {
 
+                res.sendStatus(404);
+
+            }
+            else {
+
+                SpanUNivStatsdb.remove({ "autCommunity": autComm, "year": parseInt(year1) });
+                res.sendStatus(200);
+
+            }
+
+        });
 
     });
 
@@ -198,8 +286,8 @@ spanUnivStatsApi.register = function(app,SpanUNivStatsdb,initialStats) {
         var year = req.params.year;
         var stat = req.body;
 
-        if (autComm != stat.autCommunity || year != stat.year) {
-            res.sendStatus(409);
+        if (autComm != stat.autCommunity || year != stat.year || Object.keys(stat).length !== 6) {
+            res.sendStatus(400);
             console.warn(Date() + "  - Hacking attemp!");
             return;
         }
