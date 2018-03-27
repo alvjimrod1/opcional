@@ -234,7 +234,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 res.send(stats.map((s) => {
                     delete s._id;
                     return s;
-                }));
+                })[0]);
 
             }
 
