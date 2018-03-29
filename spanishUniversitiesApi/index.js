@@ -7,10 +7,11 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
     console.log("Registering routes for spanishUniversities API");
 
 
-    // app.get(BASE_API_PATH + "/spanish-universities", (req, res) => {
-    //   res.redirect("");
+      app.get(BASE_API_PATH + "/span-univ-stats/docs", (req, res) => {
+        
+        res.redirect("https://documenter.getpostman.com/view/3889824/collection/RVtxKY8Y");
 
-    //   });
+    });
 
 
     /////////////   LOADINITIALDATA 
@@ -19,7 +20,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
 
         console.log(Date() + " - GET /spanish-universities/loadInitialData");
 
-        univs.find({}, (err, universities) => {
+        univs.find({}).toArray((err, universities) => {
 
             if (err) {
                 console.error(" Error accesing DB");
@@ -46,7 +47,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
     //RECURSOS SIMPLES//////////////////////////////////////////////////////////////
     app.get(BASE_API_PATH + "/spanish-universities", (req, res) => {
         console.log(Date() + " - GET /spanish-universities");
-        univs.find({}, (error, universities) => {
+        univs.find({}).toArray((error, universities) => {
 
             if (error) {
                 console.error(" Error accesing DB");

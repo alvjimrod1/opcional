@@ -8,7 +8,6 @@ var port = (process.env.PORT || 1607);
 var BASE_API_PATH = "/api/v1"; /////////////////////////////////// HAY QUE BORRARLO CUANDO LO METAIS EN VUESTRAS APIS POR SEPARADO
 
 var mdbSpanUnivStatsURL = "mongodb://balramrom:balramrom@ds121309.mlab.com:21309/span-univ-stats-brrdb";
-//var mdbSpanishUniversitiesURL = "mongodb://alvjimrod1:alvjimrod1pass@ds227459.mlab.com:27459/spanish-universities"
 
 
 
@@ -45,7 +44,7 @@ var initialUniversities = [
         "yearFund": "1542",
         "headquar": "zaragoza",
         "type": "publica",
-        "nameUniversity": "universidad de zaragoza",
+        "nameUniversity": "universidad de zaragoza"
 
 
     },
@@ -56,7 +55,7 @@ var initialUniversities = [
         "yearFund": "2006",
         "headquar": "madrid",
         "type": "privada-np",
-        "nameUniversity": "universidad abad oliva ceu",
+        "nameUniversity": "universidad abad oliva ceu"
 
 
     }
@@ -136,6 +135,18 @@ MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) =
     var SpanUNivStatsdb = SpanUnivStatsdatabase.collection("spanUnivStats");
 
     spanUnivStatsApi.register(app, SpanUNivStatsdb, initialStats);
+
+
+    console.log("Conected to  spanishUniversities DB");
+
+    var SpanishUniversitiesdatabase = mlabs.db("span-univ-stats-brrdb");
+    var univs = SpanishUniversitiesdatabase.collection("spanishUniversities");
+
+    spanishUniversitiesApi.register(app, univs, initialUniversities);
+
+
+
+
 
 
 
