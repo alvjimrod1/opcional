@@ -58,6 +58,39 @@ var initialUniversities = [
         "nameUniversity": "universidad abad oliva ceu"
 
 
+    },
+
+    {
+
+        "autCommunity": "andalucia",
+        "yearFund": "2012",
+        "headquar": "sevilla",
+        "type": "publica",
+        "nameUniversity": "universidad de sevilla"
+
+
+    },
+
+    {
+
+        "autCommunity": "andalucia",
+        "yearFund": "2006",
+        "headquar": "cadiz",
+        "type": "publica",
+        "nameUniversity": "universidad de cadiz"
+
+
+    },
+
+    {
+
+        "autCommunity": "catañunya",
+        "yearFund": "2004",
+        "headquar": "barcelona",
+        "type": "publica",
+        "nameUniversity": "universidad de barcelona"
+
+
     }
 
 ];
@@ -143,11 +176,6 @@ MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) =
     var univs = SpanishUniversitiesdatabase.collection("spanishUniversities");
 
     spanishUniversitiesApi.register(app, univs, initialUniversities);
-
-
-
-
-
 
 
     app.listen(port, () => {

@@ -7,8 +7,8 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
     console.log("Registering routes for spanishUniversities API");
 
 
-      app.get(BASE_API_PATH + "/span-univ-stats/docs", (req, res) => {
-        
+    app.get(BASE_API_PATH + "/span-univ-stats/docs", (req, res) => {
+
         res.redirect("https://documenter.getpostman.com/view/3889824/collection/RVtxKY8Y");
 
     });
@@ -68,9 +68,34 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
         console.log(Date() + " - POST /spanish-universities");
         var univ = req.body;
 
+        univs.find({ "autCommunity": univ.autCommunity, "yearFund": univ.yearFund }).toArray((err, universities) => {
 
-        univs.insert(univ);
-        res.sendStatus(201);
+            if (err) {
+                console.error(" Error accesing DB");
+                res.sendStatus(500);
+                return;
+            }
+
+            if (Object.keys(univ).length !== 5) {
+
+                console.warn("Stat does not have the expected fields");
+                res.sendStatus(400);
+
+            }
+            else if (univs.length !== 0) {
+
+                res.sendStatus(409);
+
+            }
+            else {
+
+
+                univs.insert(univ);
+                res.sendStatus(201);
+            }
+
+        });
+
     });
 
 
@@ -83,13 +108,26 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
 
     app.delete(BASE_API_PATH + "/spanish-universities", (req, res) => {
         console.log(Date() + " - DELETE /spanish-universities");
-        univs.find({}, (err, universities) => {
-            for (var i = 0; i < universities.length; i++) {
-                univs.remove({});
-            }
-        });
+        univs.find({}).toArray((err, universities) => {
 
-        res.sendStatus(200);
+            if (err) {
+                console.error(" Error accesing DB");
+                res.sendStatus(500);
+                return;
+            }
+
+            if (universities.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                univs.remove({});
+                res.sendStatus(200);
+            }
+
+        });
 
     });
     //RECURSO ESPECIFICO PARA 2 PROPIEDADES //////////////////////////////
@@ -100,11 +138,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
 
         console.log(Date() + " - GET /spanish-universities/" + autCommunity + "/" + yearFund);
 
-        univs.find({}, (err, universities) => {
-
-            var filteredUnivs = universities.filter((s) => {
-                return (s.autCommunity == autCommunity && s.yearFund == yearFund);
-            });
+        univs.find({}).toArray((err, universities) => {
 
             if (err) {
                 console.error(" Error accesing DB");
@@ -112,7 +146,19 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
                 return;
             }
 
-            res.send(filteredUnivs);
+            if (universities.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                res.send(universities.map((s) => {
+                    delete s._id;
+                    return s;
+                })[0]);
+
+            }
 
         });
     });
@@ -123,9 +169,29 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
 
         console.log(Date() + " - DELETE /spanish-universities" + autCommunity + "/" + yearFund);
 
-        univs.remove({ autCommunity: autCommunity, yearFund: yearFund });
 
-        res.sendStatus(200);
+
+        univs.find({ "autCommunity": autCommunity, "yearFund": yearFund }).toArray((err, universities) => {
+
+            if (err) {
+                console.error(" Error accesing DB");
+                res.sendStatus(500);
+                return;
+            }
+
+            if (universities.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                univs.remove({ "autCommunity": autCommunity, "yearFund": yearFund });
+                res.sendStatus(200);
+
+            }
+
+        });
 
     });
 
@@ -144,8 +210,8 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
 
 
 
-        if (autCommunity != university.autCommunity || yearFund != university.yearFund) {
-            res.sendStatus(409);
+        if (autCommunity != university.autCommunity || yearFund != university.yearFund || Object.keys(university).length !== 5) {
+            res.sendStatus(400);
             console.warn(Date() + "  - Hacking attemp!");
             return;
         }
