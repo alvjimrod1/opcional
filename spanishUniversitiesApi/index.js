@@ -7,9 +7,10 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
     console.log("Registering routes for spanishUniversities API");
 
 
-    app.get(BASE_API_PATH + "/span-univ-stats/docs", (req, res) => {
+    app.get(BASE_API_PATH + "/spanish-universities/docs", (req, res) => {
 
-        res.redirect("https://documenter.getpostman.com/view/3889824/collection/RVtxKY8Y");
+        res.redirect("https://documenter.getpostman.com/view/3897591/collection/RVu1GW2H");
+      
 
     });
 
