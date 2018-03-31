@@ -82,7 +82,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
                 res.sendStatus(400);
 
             }
-            else if (univs.length !== 0) {
+            else if (universities.length !== 0) {
 
                 res.sendStatus(409);
 
@@ -93,6 +93,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
                 univs.insert(univ);
                 res.sendStatus(201);
             }
+
 
         });
 
@@ -138,7 +139,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
 
         console.log(Date() + " - GET /spanish-universities/" + autCommunity + "/" + yearFund);
 
-        univs.find({}).toArray((err, universities) => {
+        univs.find({ "autCommunity": autCommunity, "yearFund": yearFund }).toArray((err, universities) => {
 
             if (err) {
                 console.error(" Error accesing DB");
