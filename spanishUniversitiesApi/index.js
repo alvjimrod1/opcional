@@ -10,7 +10,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
     app.get(BASE_API_PATH + "/spanish-universities/docs", (req, res) => {
 
         res.redirect("https://documenter.getpostman.com/view/3897591/collection/RVu1GW2H");
-      
+
 
     });
 
@@ -223,6 +223,40 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
         });
         res.sendStatus(200);
 
+    });
+
+
+
+
+    ////BUSQUEDA IMPLEMENTADA PARA COMM AUTONOMA
+    app.get(BASE_API_PATH + "/spanish-universities/:autCommunity", (req, res) => {
+        var autCommunity = req.params.autCommunity;
+
+        console.log(Date() + " - GET /spanish-universities/" + autCommunity);
+
+        univs.find({ "autCommunity": autCommunity }).toArray((err, universities) => {
+
+            if (err) {
+                console.error(" Error accesing DB");
+                res.sendStatus(500);
+                return;
+            }
+
+            if (universities.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                res.send(universities.filter((c) => {
+                    delete c._id;
+                    return (c.autCommunity == autCommunity);
+                }));
+
+            }
+
+        });
     });
 
 
