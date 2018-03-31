@@ -51,10 +51,10 @@ var initialUniversities = [
 
     {
 
-        "autCommunity": "com-madrid",
-        "yearFund": "2006",
-        "headquar": "madrid",
-        "type": "privada-np",
+        "autCommunity": "catalunya",
+        "yearFund": "2003",
+        "headquar": "barcelona",
+        "type": "privada",
         "nameUniversity": "universidad abad oliva ceu"
 
 
@@ -63,7 +63,7 @@ var initialUniversities = [
     {
 
         "autCommunity": "andalucia",
-        "yearFund": "2012",
+        "yearFund": "1505",
         "headquar": "sevilla",
         "type": "publica",
         "nameUniversity": "universidad de sevilla"
@@ -74,21 +74,21 @@ var initialUniversities = [
     {
 
         "autCommunity": "andalucia",
-        "yearFund": "2006",
-        "headquar": "cadiz",
-        "type": "publica",
-        "nameUniversity": "universidad de cadiz"
+        "yearFund": "2011",
+        "headquar": "sevilla",
+        "type": "privada",
+        "nameUniversity": "universidad loyola andalucia"
 
 
     },
 
     {
 
-        "autCommunity": "catañunya",
-        "yearFund": "2004",
-        "headquar": "barcelona",
+        "autCommunity": "galicia",
+        "yearFund": "1990",
+        "headquar": "vigo",
         "type": "publica",
-        "nameUniversity": "universidad de barcelona"
+        "nameUniversity": "universidad de vigo"
 
 
     }
