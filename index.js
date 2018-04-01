@@ -16,6 +16,8 @@ var mdbSpanUnivStatsURL = "mongodb://balramrom:balramrom@ds121309.mlab.com:21309
 var spanUnivStatsApi = require("./spanUnivStatsApi");
 var spanishUniversitiesApi = require("./spanishUniversitiesApi");
 
+var apikey = require("./apikey");
+
 ////////////////////////////////////////////////////////
 
 
@@ -167,7 +169,7 @@ MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) =
     var SpanUnivStatsdatabase = mlabs.db("span-univ-stats-brrdb");
     var SpanUNivStatsdb = SpanUnivStatsdatabase.collection("spanUnivStats");
 
-    spanUnivStatsApi.register(app, SpanUNivStatsdb, initialStats);
+    spanUnivStatsApi.register(app, SpanUNivStatsdb, initialStats,apikey.checkApiKey);
 
 
     console.log("Conected to  spanishUniversities DB");
