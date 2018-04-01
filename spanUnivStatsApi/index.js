@@ -9,6 +9,110 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
     console.log("Registering routes for span-univ-stats API...");
 
 
+    ///////////// SEARCHING FUNCTION
+
+    var find = function(stats, res_stats, _from, _to, _autCommunity, _year, _enrolledNumber, _degree, _master, _firstSecondCycle) {
+
+
+        var f = _from;
+        var t = _to;
+
+        if (_from != undefined || _to != undefined || _autCommunity != undefined || _year != undefined || _enrolledNumber != undefined || _degree != undefined || _master != undefined || _firstSecondCycle != undefined) {
+
+            for (var j = 0; j < stats.length; j++) {
+
+                var year = stats[j].year;
+                var autCommunity = stats[j].autCommunity;
+                var enrolledNumber = stats[j].enrolledNumber;
+                var degree = stats[j].degree;
+                var master = stats[j].master;
+                var firstSecondCycle = stats[j].firstSecondCycle;
+
+                if (_from != undefined && _to != undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
+
+                    if (f <= year && t >= year) {
+                        res_stats.push(stats[j]);
+                    }
+
+                    // FROM
+                }
+                else if (_from != undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
+
+                    if (f <= year) {
+                        res_stats.push(stats[j]);
+                    }
+
+                    // TO
+                }
+                else if (_from == undefined && _to != undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
+
+                    if (year <= f) {
+                        res_stats.push(stats[j]);
+                    }
+
+                    // autCom  
+                }
+                else if (_from == undefined && _to == undefined && _autCommunity != undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
+
+                    if (autCommunity == _autCommunity) {
+                        res_stats.push(stats[j]);
+                    }
+
+                    // year    
+                }
+                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year != undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
+
+                    if (year == _year) {
+                        res_stats.push(stats[j]);
+                    }
+
+                    // enrolledNumber
+                }
+
+                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber != undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
+
+                    if (enrolledNumber == _enrolledNumber) {
+                        res_stats.push(stats[j]);
+                    }
+
+                    //degree    
+                }
+                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree != undefined && _master == undefined && _firstSecondCycle == undefined) {
+
+                    if (degree == _degree) {
+                        res_stats.push(stats[j]);
+                    }
+
+                    //master    
+                }
+                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master != undefined && _firstSecondCycle == undefined) {
+
+                    if (master == _master) {
+                        res_stats.push(stats[j]);
+                    }
+
+                    //firstSecondCycle
+                }
+                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle != undefined) {
+
+                    if (firstSecondCycle == _firstSecondCycle) {
+                        res_stats.push(stats[j]);
+                    }
+                }
+
+            }
+
+        }
+
+
+        return res_stats;
+
+    };
+
+
+
+    ///////////// REDIRECT
+
     app.get(BASE_API_PATH + "/span-univ-stats/docs", (req, res) => {
 
         res.redirect("https://documenter.getpostman.com/view/3889824/collection/RVtxKY8Y");
@@ -98,10 +202,10 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
         });
 
     });
-    
-    
-    
-    
+
+
+
+
 
     app.put(BASE_API_PATH + "/span-univ-stats", (req, res) => {
 
@@ -177,8 +281,8 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
         });
     });
-    
-    
+
+
 
 
     app.delete(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
@@ -332,6 +436,100 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
         res.sendStatus(200);
 
+
+    });
+
+
+
+
+    ////*******************************************************************************************************************************////////////////////
+    //BUSQUEDA****************************************************************************************
+    // GET (WITH SEARCH)
+    app.get(BASE_API_PATH + "/span-univ-stats", function(request, response) {
+
+        console.log("INFO: New GET request to /span-univ-stats");
+
+        var limit = parseInt(request.query.limit);
+        var offset = parseInt(request.query.offset);
+        var from = request.query.from;
+        var to = request.query.to;
+        var autCommunity = request.query.autCommunity;
+        var year = request.query.year;
+        var enrolledNumber = request.query.enrolledNumber;
+        var degree = request.query.degree;
+        var master = request.query.master;
+        var firstSecondCycle = request.query.firstSecondCycle;
+
+        var aux = [];
+        var aux2 = [];
+        var aux_empty = [];
+
+
+        if (limit || offset >= 0) {
+            SpanUNivStatsdb.find({}).skip(offset).limit(limit).toArray(function(err, stats) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500);
+                    return;
+                }
+                else {
+                    if (stats.length === 0) {
+                        response.sendStatus(404);
+                        return;
+                    }
+
+                    if (from || to || autCommunity || year || enrolledNumber || degree || master || firstSecondCycle) {
+
+                        aux = find(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
+                        
+                        if (aux.length > 0) {
+                            
+                            aux2 = aux.slice(offset, offset + limit);
+                            response.send(aux2);
+                        }
+                        else {
+
+                            response.send(aux_empty); 
+                            return;
+                        }
+                    }
+                    else {
+                        response.send(stats);
+                    }
+                }
+            });
+
+        }
+        else {
+
+            SpanUNivStatsdb.find({}).toArray(function(err, stats) {
+                if (err) {
+                    console.error('ERROR from database');
+                    response.sendStatus(500); 
+                }
+                else {
+                    if (stats.length === 0) {
+
+                        response.send(stats);
+                        return;
+                    }
+
+                    if (from || to || autCommunity || year || enrolledNumber || degree || master || firstSecondCycle) {
+                        aux = find(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
+                        if (aux.length > 0) {
+                            response.send(aux);
+                        }
+                        else {
+                            response.sendStatus(404); 
+                            return;
+                        }
+                    }
+                    else {
+                        response.send(stats);
+                    }
+                }
+            });
+        }
 
     });
 
