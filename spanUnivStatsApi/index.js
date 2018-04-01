@@ -11,98 +11,92 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     ///////////// SEARCHING FUNCTION
 
-    var find = function(stats, res_stats, _from, _to, _autCommunity, _year, _enrolledNumber, _degree, _master, _firstSecondCycle) {
+    var finder = function(stats, res_stats, _from, _to, _autCommunity, _year, _enrolledNumber, _degree, _master, _firstSecondCycle) {
 
 
         var f = _from;
         var t = _to;
 
-        if (_from != undefined || _to != undefined || _autCommunity != undefined || _year != undefined || _enrolledNumber != undefined || _degree != undefined || _master != undefined || _firstSecondCycle != undefined) {
 
-            for (var j = 0; j < stats.length; j++) {
 
-                var year = stats[j].year;
-                var autCommunity = stats[j].autCommunity;
-                var enrolledNumber = stats[j].enrolledNumber;
-                var degree = stats[j].degree;
-                var master = stats[j].master;
-                var firstSecondCycle = stats[j].firstSecondCycle;
+        for (var j = 0; j < stats.length; j++) {
 
-                if (_from != undefined && _to != undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
+            var year = stats[j].year;
+            var autCommunity = stats[j].autCommunity;
+            var enrolledNumber = stats[j].enrolledNumber;
+            var degree = stats[j].degree;
+            var master = stats[j].master;
+            var firstSecondCycle = stats[j].firstSecondCycle;
 
-                    if (f <= year && t >= year) {
-                        res_stats.push(stats[j]);
-                    }
 
-                    // FROM
-                }
-                else if (_from != undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
 
-                    if (f <= year) {
-                        res_stats.push(stats[j]);
-                    }
-
-                    // TO
-                }
-                else if (_from == undefined && _to != undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
-
-                    if (year <= f) {
-                        res_stats.push(stats[j]);
-                    }
-
-                    // autCom  
-                }
-                else if (_from == undefined && _to == undefined && _autCommunity != undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
-
-                    if (autCommunity == _autCommunity) {
-                        res_stats.push(stats[j]);
-                    }
-
-                    // year    
-                }
-                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year != undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
-
-                    if (year == _year) {
-                        res_stats.push(stats[j]);
-                    }
-
-                    // enrolledNumber
-                }
-
-                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber != undefined && _degree == undefined && _master == undefined && _firstSecondCycle == undefined) {
-
-                    if (enrolledNumber == _enrolledNumber) {
-                        res_stats.push(stats[j]);
-                    }
-
-                    //degree    
-                }
-                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree != undefined && _master == undefined && _firstSecondCycle == undefined) {
-
-                    if (degree == _degree) {
-                        res_stats.push(stats[j]);
-                    }
-
-                    //master    
-                }
-                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master != undefined && _firstSecondCycle == undefined) {
-
-                    if (master == _master) {
-                        res_stats.push(stats[j]);
-                    }
-
-                    //firstSecondCycle
-                }
-                else if (_from == undefined && _to == undefined && _autCommunity == undefined && _year == undefined && _enrolledNumber == undefined && _degree == undefined && _master == undefined && _firstSecondCycle != undefined) {
-
-                    if (firstSecondCycle == _firstSecondCycle) {
-                        res_stats.push(stats[j]);
-                    }
-                }
-
+            if (f <= year && t >= year) {
+                res_stats.push(stats[j]);
             }
 
+            // FROM
+
+
+
+            if (f <= year) {
+                res_stats.push(stats[j]);
+            }
+
+            // TO
+
+
+
+            if (year <= f) {
+                res_stats.push(stats[j]);
+            }
+
+            // autCom  
+
+
+            if (autCommunity == _autCommunity) {
+                res_stats.push(stats[j]);
+            }
+
+            // year    
+
+
+            if (year == _year) {
+                res_stats.push(stats[j]);
+            }
+
+            // enrolledNumber
+
+
+
+            if (enrolledNumber == _enrolledNumber) {
+                res_stats.push(stats[j]);
+            }
+
+            //degree    
+
+
+            if (degree == _degree) {
+                res_stats.push(stats[j]);
+            }
+
+            //master    
+
+
+            if (master == _master) {
+                res_stats.push(stats[j]);
+            }
+
+            //firstSecondCycle
+
+
+            if (firstSecondCycle == _firstSecondCycle) {
+                res_stats.push(stats[j]);
+            }
+
+
         }
+
+
 
 
         return res_stats;
@@ -480,16 +474,16 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
                     if (from || to || autCommunity || year || enrolledNumber || degree || master || firstSecondCycle) {
 
-                        aux = find(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
-                        
+                        aux = finder(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
+
                         if (aux.length > 0) {
-                            
+
                             aux2 = aux.slice(offset, offset + limit);
                             response.send(aux2);
                         }
                         else {
 
-                            response.send(aux_empty); 
+                            response.send(aux_empty);
                             return;
                         }
                     }
@@ -505,7 +499,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
             SpanUNivStatsdb.find({}).toArray(function(err, stats) {
                 if (err) {
                     console.error('ERROR from database');
-                    response.sendStatus(500); 
+                    response.sendStatus(500);
                 }
                 else {
                     if (stats.length === 0) {
@@ -515,12 +509,12 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                     }
 
                     if (from || to || autCommunity || year || enrolledNumber || degree || master || firstSecondCycle) {
-                        aux = find(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
+                        aux = finder(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
                         if (aux.length > 0) {
                             response.send(aux);
                         }
                         else {
-                            response.sendStatus(404); 
+                            response.sendStatus(404);
                             return;
                         }
                     }
