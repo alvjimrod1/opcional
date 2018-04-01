@@ -261,16 +261,13 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
 
     app.get(BASE_API_PATH + "/spanish-universities/:dato", (req, res) => {
         //if (!checkApiKey(req, res)) return;
-
         var limit = parseInt(req.query.limit);
         var offset = parseInt(req.query.offset);
         var from = req.query.yearFund;
         var to = req.query.yearFund;
         var autCommunity = req.query.autCommunity;
         var yearFund = req.query.yearFund;
-        // var hit = req.query.hit;
-        // var run = req.query.run;
-        // var error = req.query.error;
+
 
         var aux = [];
         var aux2 = [];
@@ -297,7 +294,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
 
                         }
                         else {
-                            res.sendStatus(404); // No content 
+                            res.sendStatus(404);
                         }
                     }
                     else {
@@ -326,11 +323,11 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
                             res.send(aux);
                         }
                         else {
-                            res.sendStatus(404); //No content
+                            res.sendStatus(404);
                         }
                     }
                     else {
-                        console.log(Date() + " - GET /baseball-stats/" + dato);
+                        console.log(Date() + " - GET /spanish-universities/" + dato);
                         res.send(universities);
                     }
                 }
@@ -347,7 +344,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     //BUSQUEDA****************************************************************************************
     // GET Collection (WITH SEARCH)
     app.get(BASE_API_PATH + "/spanish-universities", function(request, response) {
-        //if (!checkApiKey(request, response)) return;
+
         console.log("INFO: New GET request to /spanish-universities ");
 
         /*PRUEBA DE BUSQUEDA */
@@ -367,7 +364,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
             univs.find({}).skip(offset).limit(limit).toArray(function(err, universities) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
-                    response.sendStatus(500); // internal server error
+                    response.sendStatus(500);
                     return;
                 }
                 else {
@@ -381,14 +378,12 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
                         aux = buscador(universities, aux, from, to, autCommunity, yearFund);
                         if (aux.length > 0) {
                             aux2 = aux.slice(offset, offset + limit);
-                            //console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
-                            //console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(universities, 2, null));
-                            //console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
+
                             response.send(aux2);
                         }
                         else {
 
-                            response.send(aux3); // No content 
+                            response.send(aux3);
                             return;
                         }
                     }
@@ -404,7 +399,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
             univs.find({}).toArray(function(err, universities) {
                 if (err) {
                     console.error('ERROR from database');
-                    response.sendStatus(500); // internal server error
+                    response.sendStatus(500);
                 }
                 else {
                     if (universities.length === 0) {
@@ -412,14 +407,13 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
                         response.send(universities);
                         return;
                     }
-                    //console.log("INFO: Sending baseball-stats: " + JSON.stringify(universities, 2, null));
                     if (from || to || autCommunity || yearFund) {
                         aux = buscador(universities, aux, from, to, autCommunity, yearFund);
                         if (aux.length > 0) {
                             response.send(aux);
                         }
                         else {
-                            response.sendStatus(404); //No content
+                            response.sendStatus(404);
                             return;
                         }
                     }

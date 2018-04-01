@@ -19,6 +19,7 @@ var spanishUniversitiesApi = require("./spanishUniversitiesApi");
 var openSourceContestsApi = require("./openSourceContestsApi/v2");
 
 var secureSpanUnivStatsApi = require("./secureSpanUnivStatsApi");
+var secureSpanishUniversitiesApi = require("./secureSpanishUniversitiesApi");
 var apikey = require("./apikey");
 
 ////////////////////////////////////////////////////////
@@ -247,7 +248,7 @@ MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) =
     var SpanUNivStatsdb = SpanUnivStatsdatabase.collection("spanUnivStats");
 
     spanUnivStatsApi.register(app, SpanUNivStatsdb, initialStats);
-    secureSpanUnivStatsApi.register(app, SpanUNivStatsdb, initialStats,apikey.checkApiKey);
+    secureSpanUnivStatsApi.register(app, SpanUNivStatsdb, initialStats, apikey.checkApiKey);
 
     console.log("Conected to  spanishUniversities DB");
 
@@ -255,6 +256,7 @@ MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) =
     var univs = SpanishUniversitiesdatabase.collection("spanishUniversities");
 
     spanishUniversitiesApi.register(app, univs, initialUniversities);
+    secureSpanishUniversitiesApi.register(app, univs, initialUniversities, apikey.checkApiKey);
 
     console.log("Conected to  open-source-contests-db");
     var openSourceContestsdb = mlabs.db("span-univ-stats-brrdb");
