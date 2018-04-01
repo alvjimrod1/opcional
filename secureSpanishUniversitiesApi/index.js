@@ -353,7 +353,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     //BUSQUEDA****************************************************************************************
     // GET Collection (WITH SEARCH)
     app.get(BASE_API_PATH + "/spanish-universities", function(req, res) {
-                if (!checkApiKeyFunction(req, res)) return;
+        if (!checkApiKeyFunction(req, res)) return;
         console.log("INFO: New GET request to /spanish-universities ");
 
         /*PRUEBA DE BUSQUEDA */
