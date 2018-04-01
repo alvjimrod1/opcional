@@ -61,16 +61,16 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
                 conjuntoauxiliar.push(base[j]);
 
             }
-            else if (anyoFund == yearFund) {
-                conjuntoauxiliar.push(base[j]);
+            //  else if (anyoFund == yearFund) {
+            //      conjuntoauxiliar.push(base[j]);
 
-            }
-            else if (from <= yearFund) {
-                conjuntoauxiliar.push(base[j]);
-            }
-            else if (to >= yearFund) {
-                conjuntoauxiliar.push(base[j]);
-            }
+            // }
+            //  else if (from <= yearFund) {
+            //     conjuntoauxiliar.push(base[j]);
+            //  }
+            //  else if (to >= yearFund) {
+            //      conjuntoauxiliar.push(base[j]);
+            //  }
             /* else if (anyoFund == yearFund && comunidadAutonoma == autCommunity) {
 
                 conjuntoauxiliar.push(base[j]);
