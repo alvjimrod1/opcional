@@ -1,10 +1,10 @@
 var spanUnivStatsApi = {};
-var BASE_API_PATH = "/api/v1";
+var BASE_API_PATH = "/api/v1/secure";
 
 module.exports = spanUnivStatsApi;
 
 
-spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
+spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats, checkApikeyFunction) {
 
     console.log("Registering routes for span-univ-stats API...");
 
@@ -18,6 +18,8 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
     /////////////   LOADINITIALDATA 
 
     app.get(BASE_API_PATH + "/span-univ-stats/loadInitialData", (req, res) => {
+
+        if (!checkApikeyFunction(req, res)) return;
 
         console.log(Date() + " - GET /span-univ-stats/loadInitialData")
 
@@ -47,6 +49,8 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     app.get(BASE_API_PATH + "/span-univ-stats", (req, res) => {
 
+        if (!checkApikeyFunction(req, res)) return;
+
         console.log(Date() + " - GET /span-univ-stats");
         SpanUNivStatsdb.find({}).toArray((err, stats) => {
 
@@ -66,6 +70,8 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
     });
 
     app.post(BASE_API_PATH + "/span-univ-stats", (req, res) => {
+
+        if (!checkApikeyFunction(req, res)) return;
 
         console.log(Date() + " - POST /span-univ-stats");
         var stat = req.body;
@@ -98,22 +104,19 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
         });
 
     });
-    
-    
-    
-    
 
     app.put(BASE_API_PATH + "/span-univ-stats", (req, res) => {
+
+        if (!checkApikeyFunction(req, res)) return;
 
         console.log(Date() + " - PUT /span-univ-stats");
         res.sendStatus(405);
     });
 
 
-
-
-
     app.delete(BASE_API_PATH + "/span-univ-stats", (req, res) => {
+
+        if (!checkApikeyFunction(req, res)) return;
 
 
         console.log(Date() + " - DELETE /span-univ-stats");
@@ -150,6 +153,8 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
 
+        if (!checkApikeyFunction(req, res)) return;
+
         var autComm = req.params.autCommunity;
         console.log(Date() + " - GET /span-univ-stats/" + autComm);
 
@@ -177,11 +182,11 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
         });
     });
-    
-    
 
 
     app.delete(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
+
+        if (!checkApikeyFunction(req, res)) return;
 
         var autComm = req.params.autCommunity;
 
@@ -216,6 +221,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     app.post(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
 
+        if (!checkApikeyFunction(req, res)) return;
 
         var autComm = req.params.autCommunity;
         console.log(Date() + " - POST /span-univ-stats/" + autComm);
@@ -227,6 +233,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity", (req, res) => {
 
+        if (!checkApikeyFunction(req, res)) return;
 
         var autComm = req.params.autCommunity;
         console.log(Date() + " - PUT /span-univ-stats/" + autComm);
@@ -239,6 +246,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     app.get(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
 
+        if (!checkApikeyFunction(req, res)) return;
 
         var ac = req.params.autCommunity;
         var y = req.params.year;
@@ -272,6 +280,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     app.delete(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
 
+        if (!checkApikeyFunction(req, res)) return;
 
 
         var autComm = req.params.autCommunity;
@@ -305,6 +314,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     app.post(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
 
+        if (!checkApikeyFunction(req, res)) return;
 
         var autComm = req.params.autCommunity;
         var year = req.params.year;
@@ -315,6 +325,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     app.put(BASE_API_PATH + "/span-univ-stats/:autCommunity/:year", (req, res) => {
 
+        if (!checkApikeyFunction(req, res)) return;
 
         var autComm = req.params.autCommunity;
         var year = req.params.year;
