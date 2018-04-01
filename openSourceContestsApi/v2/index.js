@@ -6,7 +6,7 @@ module.exports = openSourceContestsApi;
 
 openSourceContestsApi.register = function(app, collection, initialProjects){
 
-    app.get(BASE_API_PATH + "/help", (req, res) => {
+    app.get(BASE_API_PATH + "/open-source-contests/docs", (req, res) => {
         res.redirect("https://documenter.getpostman.com/view/3898307/collection/RVu1HAgU");
     });
 
