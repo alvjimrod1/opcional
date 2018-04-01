@@ -3,7 +3,7 @@ var BASE_API_PATH = "/api/v1";
 
 module.exports = spanishUniversitiesApi;
 
-spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
+spanishUniversitiesApi.register = function(app, univs, initialUniversities, checkApiKey) {
     console.log("Registering routes for spanishUniversities API");
 
 
@@ -41,29 +41,60 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
         });
     });
 
+    ///////////*********************************FUNCION PARA LAS BUSQUEDAS************************************************************////////////////
+    var buscador = function(base, conjuntoauxiliar, desde, hasta, comunidadAutonoma, anyoFund) {
+
+        console.log("Búsqueda con parametros: from = " + desde + " ,to = " + hasta + ", autCommunity = " + comunidadAutonoma + ", yearFund = " + anyoFund + ".");
+
+        var from = parseInt(desde);
+        var to = parseInt(hasta);
+        // var autCommunity = new String(param_autCommunity);
+
+        for (var j = 0; j < base.length; j++) {
+            var yearFund = base[j].yearFund;
+            var autCommunity = base[j].autCommunity;
+            if (to >= yearFund && from <= yearFund) {
+
+                conjuntoauxiliar.push(base[j]);
+            }
+            else if (comunidadAutonoma == autCommunity) {
+                conjuntoauxiliar.push(base[j]);
+
+            }
+            else if (anyoFund == yearFund) {
+                conjuntoauxiliar.push(base[j]);
+
+            }
+            else if (from <= yearFund) {
+                conjuntoauxiliar.push(base[j]);
+            }
+            else if (to >= yearFund) {
+                conjuntoauxiliar.push(base[j]);
+            }
+            /* else if (anyoFund == yearFund && comunidadAutonoma == autCommunity) {
+
+                conjuntoauxiliar.push(base[j]);
+             }else if ( && comunidadAutonoma == autCommunity && anyoFund == yearFund) {
+
+                conjuntoauxiliar.push(base[j]);
+            */
+        }
+        return conjuntoauxiliar;
+
+    };
+
+
+
+    /*************/ //////////////////////////////////////////////////////////////////////////////////////////////////**********************/
+
+
+    ///////////*********************************************************************************************////////////////
 
 
     //ACCIONES REST
 
     //RECURSOS SIMPLES//////////////////////////////////////////////////////////////
-    app.get(BASE_API_PATH + "/spanish-universities", (req, res) => {
-        console.log(Date() + " - GET /spanish-universities");
-        univs.find({}).toArray((error, universities) => {
 
-            if (error) {
-                console.error(" Error accesing DB");
-                res.sendStatus(500);
-                return;
-            }
-
-
-            res.send(universities.map((s) => {
-                delete s._id;
-                return s;
-            }));
-        });
-
-    });
 
     app.post(BASE_API_PATH + "/spanish-universities", (req, res) => {
         console.log(Date() + " - POST /spanish-universities");
@@ -226,38 +257,187 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities) {
     });
 
 
+    /////******************************************************GET PARA PAGINACION SIN BUSQUEDA**************************************////////////////////
 
+    app.get(BASE_API_PATH + "/spanish-universities/:dato", (req, res) => {
+        //if (!checkApiKey(req, res)) return;
 
-    ////BUSQUEDA IMPLEMENTADA PARA COMM AUTONOMA
-    app.get(BASE_API_PATH + "/spanish-universities/:autCommunity", (req, res) => {
-        var autCommunity = req.params.autCommunity;
+        var limit = parseInt(req.query.limit);
+        var offset = parseInt(req.query.offset);
+        var from = req.query.yearFund;
+        var to = req.query.yearFund;
+        var autCommunity = req.query.autCommunity;
+        var yearFund = req.query.yearFund;
+        // var hit = req.query.hit;
+        // var run = req.query.run;
+        // var error = req.query.error;
 
-        console.log(Date() + " - GET /spanish-universities/" + autCommunity);
+        var aux = [];
+        var aux2 = [];
+        var dato = req.params.dato;
 
-        univs.find({ "autCommunity": autCommunity }).toArray((err, universities) => {
+        if (limit || offset >= 0) {
+            univs.find({ $or: [{ "autCommunity": dato }, { "yearFund": dato }] }).skip(offset).limit(limit).toArray(function(err, universities) {
 
-            if (err) {
-                console.error(" Error accesing DB");
-                res.sendStatus(500);
-                return;
-            }
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    res.sendStatus(500);
+                }
+                else {
+                    if (universities.length === 0) {
+                        res.sendStatus(404);
+                    }
 
-            if (universities.length == 0) {
+                    if (from || to || yearFund || autCommunity) {
 
-                res.sendStatus(404);
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        if (aux.length > 0) {
+                            aux2 = aux.slice(offset, offset + limit);
+                            res.send(aux2);
 
-            }
-            else {
+                        }
+                        else {
+                            res.sendStatus(404); // No content 
+                        }
+                    }
+                    else {
+                        res.send(universities);
+                    }
+                }
+            });
 
-                res.send(universities.filter((c) => {
-                    delete c._id;
-                    return (c.autCommunity == autCommunity);
-                }));
+        }
+        else {
+            //SEGUDA PARTE QUE ES CON OPERADOR OR DE LA BUSQUEDA
+            univs.find({ $or: [{ "autCommunity": dato }, { "yearFund": dato }] }).toArray((err, universities) => {
+                if (err) {
+                    console.error("Error accesing DB");
+                    res.sendStatus(500);
 
-            }
+                }
+                else {
+                    if (universities.length == 0) {
+                        res.sendStatus(404);
+                        return;
+                    }
+                    if (from || to || autCommunity || yearFund) {
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        if (aux.length > 0) {
+                            res.send(aux);
+                        }
+                        else {
+                            res.sendStatus(404); //No content
+                        }
+                    }
+                    else {
+                        console.log(Date() + " - GET /baseball-stats/" + dato);
+                        res.send(universities);
+                    }
+                }
+            });
 
-        });
+        }
     });
+
+
+
+
+
+    ////*******************************************************************************************************************************////////////////////
+    //BUSQUEDA****************************************************************************************
+    // GET Collection (WITH SEARCH)
+    app.get(BASE_API_PATH + "/spanish-universities", function(request, response) {
+        //if (!checkApiKey(request, response)) return;
+        console.log("INFO: New GET request to /spanish-universities ");
+
+        /*PRUEBA DE BUSQUEDA */
+        var limit = parseInt(request.query.limit);
+        var offset = parseInt(request.query.offset);
+        var from = request.query.from;
+        var to = request.query.to;
+        var autCommunity = request.query.autCommunity;
+        var yearFund = request.query.yearFund;
+
+        var aux = [];
+        var aux2 = [];
+        var aux3 = [];
+
+
+        if (limit || offset >= 0) {
+            univs.find({}).skip(offset).limit(limit).toArray(function(err, universities) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500); // internal server error
+                    return;
+                }
+                else {
+                    if (universities.length === 0) {
+                        response.sendStatus(404); //No content
+                        return;
+                    }
+                    console.log("INFO: Sending autCommunities:: " + JSON.stringify(universities, 2, null));
+                    if (from || to || autCommunity || yearFund) {
+
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        if (aux.length > 0) {
+                            aux2 = aux.slice(offset, offset + limit);
+                            //console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
+                            //console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(universities, 2, null));
+                            //console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
+                            response.send(aux2);
+                        }
+                        else {
+
+                            response.send(aux3); // No content 
+                            return;
+                        }
+                    }
+                    else {
+                        response.send(universities);
+                    }
+                }
+            });
+
+        }
+        else {
+
+            univs.find({}).toArray(function(err, universities) {
+                if (err) {
+                    console.error('ERROR from database');
+                    response.sendStatus(500); // internal server error
+                }
+                else {
+                    if (universities.length === 0) {
+
+                        response.send(universities);
+                        return;
+                    }
+                    //console.log("INFO: Sending baseball-stats: " + JSON.stringify(universities, 2, null));
+                    if (from || to || autCommunity || yearFund) {
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        if (aux.length > 0) {
+                            response.send(aux);
+                        }
+                        else {
+                            response.sendStatus(404); //No content
+                            return;
+                        }
+                    }
+                    else {
+                        response.send(universities);
+                    }
+                }
+            });
+        }
+
+    });
+
+
+
+
+
+
+
 
 
 
