@@ -28,71 +28,71 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
             var master = stats[j].master;
             var firstSecondCycle = stats[j].firstSecondCycle;
 
+            
+
+                if (f <= year && t >= year) {
+                    res_stats.push(stats[j]);
+                }
+
+                // FROM
+            
+            
+
+                if (f <= year) {
+                    res_stats.push(stats[j]);
+                }
+
+                // TO
+            
+           
+
+                if (year <= f) {
+                    res_stats.push(stats[j]);
+                }
+
+                // autCom  
+            
+
+                if (autCommunity == _autCommunity) {
+                    res_stats.push(stats[j]);
+                }
+
+                // year    
+            
+
+                if (year == _year) {
+                    res_stats.push(stats[j]);
+                }
+
+                // enrolledNumber
+            
 
 
-            if (f <= year && t >= year) {
-                res_stats.push(stats[j]);
-            }
+                if (enrolledNumber == _enrolledNumber) {
+                    res_stats.push(stats[j]);
+                }
 
-            // FROM
+                //degree    
+            
 
+                if (degree == _degree) {
+                    res_stats.push(stats[j]);
+                }
 
+                //master    
+            
 
-            if (f <= year) {
-                res_stats.push(stats[j]);
-            }
+                if (master == _master) {
+                    res_stats.push(stats[j]);
+                }
 
-            // TO
+                //firstSecondCycle
+            
 
-
-
-            if (year <= f) {
-                res_stats.push(stats[j]);
-            }
-
-            // autCom  
-
-
-            if (autCommunity == _autCommunity) {
-                res_stats.push(stats[j]);
-            }
-
-            // year    
-
-
-            if (year == _year) {
-                res_stats.push(stats[j]);
-            }
-
-            // enrolledNumber
-
-
-
-            if (enrolledNumber == _enrolledNumber) {
-                res_stats.push(stats[j]);
-            }
-
-            //degree    
-
-
-            if (degree == _degree) {
-                res_stats.push(stats[j]);
-            }
-
-            //master    
-
-
-            if (master == _master) {
-                res_stats.push(stats[j]);
-            }
-
-            //firstSecondCycle
-
-
-            if (firstSecondCycle == _firstSecondCycle) {
-                res_stats.push(stats[j]);
-            }
-
+                if (firstSecondCycle == _firstSecondCycle) {
+                    res_stats.push(stats[j]);
+                }
+            
 
         }
 
@@ -130,6 +130,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
             if (stats.length == 0) {
                 console.log(" Empty DB");
                 SpanUNivStatsdb.insert(initialStats);
+                res.sendStatus(200);
 
             }
             else {
