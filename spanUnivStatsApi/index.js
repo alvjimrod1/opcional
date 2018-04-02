@@ -9,102 +9,6 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
     console.log("Registering routes for span-univ-stats API...");
 
 
-    ///////////// SEARCHING FUNCTION
-
-    var finder = function(stats, res_stats, _from, _to, _autCommunity, _year, _enrolledNumber, _degree, _master, _firstSecondCycle) {
-
-
-        var f = _from;
-        var t = _to;
-
-
-
-        for (var j = 0; j < stats.length; j++) {
-
-            var year = stats[j].year;
-            var autCommunity = stats[j].autCommunity;
-            var enrolledNumber = stats[j].enrolledNumber;
-            var degree = stats[j].degree;
-            var master = stats[j].master;
-            var firstSecondCycle = stats[j].firstSecondCycle;
-
-            
-
-                if (f <= year && t >= year) {
-                    res_stats.push(stats[j]);
-                }
-
-                // FROM
-            
-            
-
-                if (f <= year) {
-                    res_stats.push(stats[j]);
-                }
-
-                // TO
-            
-           
-
-                if (year <= f) {
-                    res_stats.push(stats[j]);
-                }
-
-                // autCom  
-            
-
-                if (autCommunity == _autCommunity) {
-                    res_stats.push(stats[j]);
-                }
-
-                // year    
-            
-
-                if (year == _year) {
-                    res_stats.push(stats[j]);
-                }
-
-                // enrolledNumber
-            
-
-
-                if (enrolledNumber == _enrolledNumber) {
-                    res_stats.push(stats[j]);
-                }
-
-                //degree    
-            
-
-                if (degree == _degree) {
-                    res_stats.push(stats[j]);
-                }
-
-                //master    
-            
-
-                if (master == _master) {
-                    res_stats.push(stats[j]);
-                }
-
-                //firstSecondCycle
-            
-
-                if (firstSecondCycle == _firstSecondCycle) {
-                    res_stats.push(stats[j]);
-                }
-            
-
-        }
-
-
-
-
-        return res_stats;
-
-    };
-
-
-
     ///////////// REDIRECT
 
     app.get(BASE_API_PATH + "/span-univ-stats/docs", (req, res) => {
@@ -140,14 +44,80 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
         });
     });
 
+    app.get(BASE_API_PATH + "/span-univ-stats", function(req, res) {
+
+        var dbquery = {};
+
+        if (Object.keys(req.query).includes('from') && Object.keys(req.query).includes('to')) {
+
+            Object.keys(req.query).forEach((at) => {
+
+                if (isNaN(req.query[at]) == false) {
+                    dbquery[at] = parseInt(req.query[at]);
+                }
+                else {
+                    dbquery[at] = req.query[at];
+                }
+
+                delete dbquery.from;
+                delete dbquery.to;
+                dbquery['year'] = { "$lte": parseInt(req.query['to']), "$gte": parseInt(req.query['from']) };
+                //{ "size" : {"$lte": 3} }
+
+            });
+
+        }
+        else if (Object.keys(req.query).includes('from')) {
+
+            Object.keys(req.query).forEach((at) => {
+
+                if (isNaN(req.query[at]) == false) {
+                    dbquery[at] = parseInt(req.query[at]);
+                }
+                else {
+                    dbquery[at] = req.query[at];
+                }
+
+                delete dbquery.from;
+                dbquery['year'] = { "$gte": parseInt(req.query['from']) };
+                //{ "size" : {"$lte": 3} }
+
+            });
+
+        }
+        else if (Object.keys(req.query).includes('to')) {
+
+            Object.keys(req.query).forEach((at) => {
+
+                if (isNaN(req.query[at]) == false) {
+                    dbquery[at] = parseInt(req.query[at]);
+                }
+                else {
+                    dbquery[at] = req.query[at];
+                }
+
+                delete dbquery.to;
+                dbquery['year'] = { "$lte": parseInt(req.query['to']) };
+                //{ "size" : {"$lte": 3} }
+
+            });
+
+        }
+        else {
+            Object.keys(req.query).forEach((at) => {
+
+                if (isNaN(req.query[at]) == false) {
+                    dbquery[at] = parseInt(req.query[at]);
+                }
+                else {
+                    dbquery[at] = req.query[at];
+                }
 
 
-    //////ACCIONES PARA /span-univ-stats
+            });
+        }
 
-    app.get(BASE_API_PATH + "/span-univ-stats", (req, res) => {
-
-        console.log(Date() + " - GET /span-univ-stats");
-        SpanUNivStatsdb.find({}).toArray((err, stats) => {
+        SpanUNivStatsdb.find(dbquery).toArray((err, stats) => {
 
             if (err) {
                 console.error(" Error accesing DB");
@@ -155,14 +125,24 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 return;
             }
 
-            res.send(stats.map((s) => {
-                delete s._id;
-                return s;
-            }));
+            if (stats.length == 0) {
+
+                res.sendStatus(404);
+
+            }
+            else {
+
+                res.send(stats.map((s) => {
+                    delete s._id;
+                    return s;
+                }));
+
+            }
 
         });
 
     });
+
 
     app.post(BASE_API_PATH + "/span-univ-stats", (req, res) => {
 
@@ -437,23 +417,26 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
 
 
+
+
     ////*******************************************************************************************************************************////////////////////
     //BUSQUEDA****************************************************************************************
     // GET (WITH SEARCH)
-    app.get(BASE_API_PATH + "/span-univ-stats", function(request, response) {
+    /*
+    app.get(BASE_API_PATH + "/span-univ-stats", function(req, res) {
 
-        console.log("INFO: New GET request to /span-univ-stats");
+        console.log("INFO: New GET req to /span-univ-stats");
 
-        var limit = parseInt(request.query.limit);
-        var offset = parseInt(request.query.offset);
-        var from = request.query.from;
-        var to = request.query.to;
-        var autCommunity = request.query.autCommunity;
-        var year = request.query.year;
-        var enrolledNumber = request.query.enrolledNumber;
-        var degree = request.query.degree;
-        var master = request.query.master;
-        var firstSecondCycle = request.query.firstSecondCycle;
+        var limit = parseInt(req.query.limit);
+        var offset = parseInt(req.query.offset);
+        var from = req.query.from;
+        var to = req.query.to;
+        var autCommunity = req.query.autCommunity;
+        var year = req.query.year;
+        var enrolledNumber = req.query.enrolledNumber;
+        var degree = req.query.degree;
+        var master = req.query.master;
+        var firstSecondCycle = req.query.firstSecondCycle;
 
         var aux = [];
         var aux2 = [];
@@ -464,12 +447,12 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
             SpanUNivStatsdb.find({}).skip(offset).limit(limit).toArray(function(err, stats) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
-                    response.sendStatus(500);
+                    res.sendStatus(500);
                     return;
                 }
                 else {
                     if (stats.length === 0) {
-                        response.sendStatus(404);
+                        res.sendStatus(404);
                         return;
                     }
 
@@ -480,16 +463,16 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                         if (aux.length > 0) {
 
                             aux2 = aux.slice(offset, offset + limit);
-                            response.send(aux2);
+                            res.send(aux2);
                         }
                         else {
 
-                            response.send(aux_empty);
+                            res.send(aux_empty);
                             return;
                         }
                     }
                     else {
-                        response.send(stats);
+                        res.send(stats);
                     }
                 }
             });
@@ -500,27 +483,27 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
             SpanUNivStatsdb.find({}).toArray(function(err, stats) {
                 if (err) {
                     console.error('ERROR from database');
-                    response.sendStatus(500);
+                    res.sendStatus(500);
                 }
                 else {
                     if (stats.length === 0) {
 
-                        response.send(stats);
+                        res.send(stats);
                         return;
                     }
 
                     if (from || to || autCommunity || year || enrolledNumber || degree || master || firstSecondCycle) {
                         aux = finder(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
                         if (aux.length > 0) {
-                            response.send(aux);
+                            res.send(aux);
                         }
                         else {
-                            response.sendStatus(404);
+                            res.sendStatus(404);
                             return;
                         }
                     }
                     else {
-                        response.send(stats);
+                        res.send(stats);
                     }
                 }
             });
@@ -528,6 +511,6 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     });
 
-
+*/
 
 };
