@@ -127,7 +127,7 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
         let {year, university, project} = req.params;
         let obj = req.body;
         if (project != obj.project){
-            send.status(400)
+            res.status(400)
             console.warn("url name project != (modify) project");
             return;
         };
