@@ -42,43 +42,99 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     });
 
     ///////////*********************************FUNCION PARA LAS BUSQUEDAS************************************************************////////////////
-    var buscador = function(base, conjuntoauxiliar, desde, hasta, comunidadAutonoma, anyoFund) {
+    var buscador = function(base, conjuntoauxiliar, desde, hasta, comunidadAutonoma, anyoFund, sedeCentral, tipo, nombreUniversidad) {
 
-        console.log("Búsqueda con parametros: from = " + desde + " ,to = " + hasta + ", autCommunity = " + comunidadAutonoma + ", yearFund = " + anyoFund + ".");
+        console.log("Búsqueda con parametros: from = " + desde + " ,to = " + hasta + ", autCommunity = " + comunidadAutonoma + ", yearFund = " + anyoFund + ", headquarters = " + sedeCentral + ", type = " + tipo +
+            ", nameUniversity = " + nombreUniversidad + ".");
 
         var from = parseInt(desde);
         var to = parseInt(hasta);
-        // var autCommunity = new String(param_autCommunity);
+        //parametros para mis propiedades
 
-        for (var j = 0; j < base.length; j++) {
-            var yearFund = base[j].yearFund;
-            var autCommunity = base[j].autCommunity;
-            if (to >= yearFund && from <= yearFund) {
 
-                conjuntoauxiliar.push(base[j]);
+        if (desde != undefined || hasta != undefined || comunidadAutonoma != undefined || anyoFund != undefined || sedeCentral != undefined || tipo != undefined || nombreUniversidad != undefined) {
+
+
+            for (var j = 0; j < base.length; j++) {
+                var autCommunity = base[j].autCommunity;
+                var yearFund = base[j].yearFund;
+                var headquar = base[j].headquar;
+                var type = base[j].type;
+                var nameUniversity = base[j].nameUniversity;
+
+
+                if (comunidadAutonoma, anyoFund) {
+                    if (autCommunity == comunidadAutonoma && yearFund == anyoFund)
+                        conjuntoauxiliar.push(base[j]);
+                }
+
+
+                else if (desde == undefined && hasta == undefined && comunidadAutonoma) {
+                    if (autCommunity == comunidadAutonoma) {
+                        conjuntoauxiliar.push(base[j]);
+                    }
+                }
+
+
+                else if (desde && hasta && comunidadAutonoma == undefined) {
+
+                    if (to >= yearFund && from <= yearFund) {
+
+                        conjuntoauxiliar.push(base[j]);
+                    }
+                }
+
+                /*   else if (comunidadAutonoma & hasta && desde == undefined) {
+                       if (autCommunity == comunidadAutonoma && to >= yearFund) {
+                           conjuntoauxiliar.push(base[j]);
+                       }
+                   }
+                   else if (desde && comunidadAutonoma && hasta == undefined) {
+                       if (autCommunity == comunidadAutonoma && from <= yearFund) {
+                           conjuntoauxiliar.push(base[j]);
+                       }
+                   }
+                */
+                else if (hasta) {
+
+                    if (to >= yearFund) {
+
+                        conjuntoauxiliar.push(base[j]);
+                    }
+                }
+                else if (desde) {
+
+                    if (from <= yearFund) {
+
+                        conjuntoauxiliar.push(base[j]);
+                    }
+                }
+                else if (sedeCentral) {
+
+                    if (headquar == sedeCentral) {
+
+                        conjuntoauxiliar.push(base[j]);
+                    }
+                }
+                else if (tipo) {
+
+                    if (type == tipo) {
+
+                        conjuntoauxiliar.push(base[j]);
+                    }
+                }
+                else if (nombreUniversidad) {
+
+                    if (nameUniversity == nombreUniversidad) {
+
+                        conjuntoauxiliar.push(base[j]);
+                    }
+                }
+
+
+
             }
-            else if (comunidadAutonoma == autCommunity) {
-                conjuntoauxiliar.push(base[j]);
-
-            }
-            //  else if (anyoFund == yearFund) {
-            //      conjuntoauxiliar.push(base[j]);
-
-            // }
-            //  else if (from <= yearFund) {
-            //     conjuntoauxiliar.push(base[j]);
-            //  }
-            //  else if (to >= yearFund) {
-            //      conjuntoauxiliar.push(base[j]);
-            //  }
-            /* else if (anyoFund == yearFund && comunidadAutonoma == autCommunity) {
-
-                conjuntoauxiliar.push(base[j]);
-             }else if ( && comunidadAutonoma == autCommunity && anyoFund == yearFund) {
-
-                conjuntoauxiliar.push(base[j]);
-            */
-        }
+        } // llave de cierre de la condicional de los undefined
         return conjuntoauxiliar;
 
     };
@@ -354,6 +410,9 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
         var to = request.query.to;
         var autCommunity = request.query.autCommunity;
         var yearFund = request.query.yearFund;
+        var headquar = request.query.headquar;
+        var type = request.query.type;
+        var nameUniversity = request.query.nameUniversity;
 
         var aux = [];
         var aux2 = [];
@@ -373,9 +432,9 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
                         return;
                     }
                     console.log("INFO: Sending autCommunities:: " + JSON.stringify(universities, 2, null));
-                    if (from || to || autCommunity || yearFund) {
+                    if (from || to || autCommunity || yearFund || headquar || type || nameUniversity) {
 
-                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund, headquar, type, nameUniversity);
                         if (aux.length > 0) {
                             aux2 = aux.slice(offset, offset + limit);
 
@@ -407,8 +466,8 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
                         response.send(universities);
                         return;
                     }
-                    if (from || to || autCommunity || yearFund) {
-                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                    if (from || to || autCommunity || yearFund || headquar || type || nameUniversity) {
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund, headquar, type, nameUniversity);
                         if (aux.length > 0) {
                             response.send(aux);
                         }
