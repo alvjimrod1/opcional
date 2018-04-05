@@ -34,15 +34,32 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
 
     app.get(BASE_API_PATH + "/open-source-contests", (req,res) =>{
         console.log(Date() + " - GET /open-source-contests/");
-        collection.find({}).toArray((err, projects) => {
+        
+        let query = {};
+        let offset = 0; 
+        let limit = Number.MAX_SAFE_INTEGER; 
+        
+        if(req.query.offset){
+            offset = parseInt(req.query.offset);
+            delete req.query.offset;
+        }
+        
+        if(req.query.limit){
+            limit = parseInt(req.query.limit);
+            delete req.query.limit;
+        }
+        
+        for(let attr in req.query){
+                attr === "year" ? query[attr] = parseInt(req.query[attr]) : query[attr] = req.query[attr];
+        }
+
+        collection.find(query).skip(offset).limit(limit).toArray((err, projects) => {
             if(err){
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
             }
-            
             res.send(projects);
-
         });
     });
 
