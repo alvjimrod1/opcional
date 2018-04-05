@@ -1,18 +1,14 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-//var DataStore = require("nedb"); /////////////////////////////////////  BORRAR SI HACEIS MONGODB
 
 var MongoClient = require("mongodb").MongoClient;
 
 var port = (process.env.PORT || 1607);
-//var BASE_API_PATH = "/api/v1"; /////////////////////////////////// HAY QUE BORRARLO CUANDO LO METAIS EN VUESTRAS APIS POR SEPARADO
 
 var mdbSpanUnivStatsURL = "mongodb://balramrom:balramrom@ds121309.mlab.com:21309/span-univ-stats-brrdb";
-var mdbOpenSourceContestURL = "mongodb://dbtest:Admin1234@ds119049.mlab.com:19049/sos1718-rar-sandbox";
 
 
-
-//////////////////////////////////////////////////////// NUEVO L07 : crear variable para ejecución de la api
+/* NUEVO L07 : crear variable para ejecución de la api */
 
 var spanUnivStatsApi = require("./spanUnivStatsApi");
 var spanishUniversitiesApi = require("./spanishUniversitiesApi");
@@ -22,8 +18,6 @@ var secureSpanUnivStatsApi = require("./secureSpanUnivStatsApi");
 var secureSpanishUniversitiesApi = require("./secureSpanishUniversitiesApi");
 var apikey = require("./apikey");
 
-////////////////////////////////////////////////////////
-
 
 var app = express();
 
@@ -32,16 +26,12 @@ app.use(bodyParser.json());
 
 app.use("/", express.static(__dirname + "/public"));
 
-app.get("/hello", (req, res) => {
-    res.send("Hello World")
-});
+//app.get("/hello", (req, res) => {
+//    res.send("Hello World")
+//});
 
+/* API SPANISH UNIVERSITIES */
 
-
-
-
-///////APIS
-////////API SPANISH UNIVERSITIES/////////////////////////////////////////////////
 var initialUniversities = [
 
     {
@@ -102,9 +92,7 @@ var initialUniversities = [
 ];
 
 
-////////////////////////////////////////////////////////////////// SPAN-UNIV-STATS SEPARADA DEL INDEX
-
-
+/* SPAN-UNIV-STATS SEPARADA DEL INDEX */
 
 var initialStats = [
 
@@ -232,8 +220,6 @@ initialProjects = [
             }
             ]
 
-
-//////////////////////////////////////////////////////////////////////////////////////// METED TODO EN LA MISMA CONEXION.
 
 MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) => {
 
