@@ -47,25 +47,217 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats, checkAp
 
     //////ACCIONES PARA /span-univ-stats
 
-    app.get(BASE_API_PATH + "/span-univ-stats", (req, res) => {
+    /////////// GET A RECURSO BASE CON BUSQUEDAS Y PAGINACIÓN IPLEMENTADO
 
+    app.get(BASE_API_PATH + "/span-univ-stats", function(req, res) {
+        
         if (!checkApikeyFunction(req, res)) return;
+        
+        var dbquery = {};
 
-        console.log(Date() + " - GET /span-univ-stats");
-        SpanUNivStatsdb.find({}).toArray((err, stats) => {
+        if (Object.keys(req.query).includes('limit') && Object.keys(req.query).includes('offset')) {
+        
+            var offset = parseInt(req.query.offset);
+            var limit = parseInt(req.query.offset);
+            
+            
+            if (Object.keys(req.query).includes('from') && Object.keys(req.query).includes('to')) {
 
-            if (err) {
-                console.error(" Error accesing DB");
-                res.sendStatus(500);
-                return;
+                Object.keys(req.query).forEach((at) => {
+
+                    if (isNaN(req.query[at]) == false) {
+                        dbquery[at] = parseInt(req.query[at]);
+                    }
+                    else {
+                        dbquery[at] = req.query[at];
+                    }
+
+                    delete dbquery.from;
+                    delete dbquery.to;
+                    delete dbquery.offset;
+                    delete dbquery.limit;
+                    dbquery['year'] = { "$lte": parseInt(req.query['to']), "$gte": parseInt(req.query['from']) };
+                    //{ "size" : {"$lte": 3} }
+
+                });
+
+            }
+            else if (Object.keys(req.query).includes('from')) {
+
+                Object.keys(req.query).forEach((at) => {
+
+                    if (isNaN(req.query[at]) == false) {
+                        dbquery[at] = parseInt(req.query[at]);
+                    }
+                    else {
+                        dbquery[at] = req.query[at];
+                    }
+
+                    delete dbquery.from;
+                    delete dbquery.offset;
+                    delete dbquery.limit;
+                    dbquery['year'] = { "$gte": parseInt(req.query['from']) };
+                    //{ "size" : {"$lte": 3} }
+
+                });
+
+            }
+            else if (Object.keys(req.query).includes('to')) {
+
+                Object.keys(req.query).forEach((at) => {
+
+                    if (isNaN(req.query[at]) == false) {
+                        dbquery[at] = parseInt(req.query[at]);
+                    }
+                    else {
+                        dbquery[at] = req.query[at];
+                    }
+
+                    delete dbquery.to;
+                    delete dbquery.offset;
+                    delete dbquery.limit;
+                    dbquery['year'] = { "$lte": parseInt(req.query['to']) };
+                    //{ "size" : {"$lte": 3} }
+
+                });
+
+            }
+            else {
+                Object.keys(req.query).forEach((at) => {
+
+                    if (isNaN(req.query[at]) == false) {
+                        dbquery[at] = parseInt(req.query[at]);
+                    }
+                    else {
+                        dbquery[at] = req.query[at];
+                    }
+                    
+                    delete dbquery.offset;
+                    delete dbquery.limit;
+
+                });
             }
 
-            res.send(stats.map((s) => {
-                delete s._id;
-                return s;
-            }));
+            SpanUNivStatsdb.find(dbquery).skip(offset).limit(limit).toArray((err, stats) => {
 
-        });
+                if (err) {
+                    console.error(" Error accesing DB");
+                    res.sendStatus(500);
+                    return;
+                }
+
+                if (stats.length == 0) {
+
+                    res.sendStatus(404);
+
+                }
+                else {
+
+                    res.send(stats.map((s) => {
+                        delete s._id;
+                        return s;
+                    }));
+
+                }
+
+            });
+
+        }
+        else {
+            if (Object.keys(req.query).includes('from') && Object.keys(req.query).includes('to')) {
+
+                Object.keys(req.query).forEach((at) => {
+
+                    if (isNaN(req.query[at]) == false) {
+                        dbquery[at] = parseInt(req.query[at]);
+                    }
+                    else {
+                        dbquery[at] = req.query[at];
+                    }
+
+                    delete dbquery.from;
+                    delete dbquery.to;
+                    dbquery['year'] = { "$lte": parseInt(req.query['to']), "$gte": parseInt(req.query['from']) };
+                    //{ "size" : {"$lte": 3} }
+
+                });
+
+            }
+            else if (Object.keys(req.query).includes('from')) {
+
+                Object.keys(req.query).forEach((at) => {
+
+                    if (isNaN(req.query[at]) == false) {
+                        dbquery[at] = parseInt(req.query[at]);
+                    }
+                    else {
+                        dbquery[at] = req.query[at];
+                    }
+
+                    delete dbquery.from;
+                    dbquery['year'] = { "$gte": parseInt(req.query['from']) };
+                    //{ "size" : {"$lte": 3} }
+
+                });
+
+            }
+            else if (Object.keys(req.query).includes('to')) {
+
+                Object.keys(req.query).forEach((at) => {
+
+                    if (isNaN(req.query[at]) == false) {
+                        dbquery[at] = parseInt(req.query[at]);
+                    }
+                    else {
+                        dbquery[at] = req.query[at];
+                    }
+
+                    delete dbquery.to;
+                    dbquery['year'] = { "$lte": parseInt(req.query['to']) };
+                    //{ "size" : {"$lte": 3} }
+
+                });
+
+            }
+            else {
+                Object.keys(req.query).forEach((at) => {
+
+                    if (isNaN(req.query[at]) == false) {
+                        dbquery[at] = parseInt(req.query[at]);
+                    }
+                    else {
+                        dbquery[at] = req.query[at];
+                    }
+
+
+                });
+            }
+
+            SpanUNivStatsdb.find(dbquery).toArray((err, stats) => {
+
+                if (err) {
+                    console.error(" Error accesing DB");
+                    res.sendStatus(500);
+                    return;
+                }
+
+                if (stats.length == 0) {
+
+                    res.sendStatus(404);
+
+                }
+                else {
+
+                    res.send(stats.map((s) => {
+                        delete s._id;
+                        return s;
+                    }));
+
+                }
+
+            });
+
+        }
 
     });
 

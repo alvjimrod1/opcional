@@ -45,7 +45,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
     });
 
 
-    /////////// GET A RECURSO BASE CON BUSQUEDAS IMPLEMENTADAS
+    /////////// GET A RECURSO BASE CON BUSQUEDAS Y PAGINACIÓN IPLEMENTADO
 
     app.get(BASE_API_PATH + "/span-univ-stats", function(req, res) {
 
