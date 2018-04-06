@@ -53,8 +53,6 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
         if (Object.keys(req.query).includes('limit') && Object.keys(req.query).includes('offset')) {
 
-            var offset = parseInt(req.query.offset);
-            var limit = parseInt(req.query.offset);
             
             
             if (Object.keys(req.query).includes('from') && Object.keys(req.query).includes('to')) {
@@ -134,7 +132,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 });
             }
 
-            SpanUNivStatsdb.find(dbquery).skip(offset).limit(limit).toArray((err, stats) => {
+            SpanUNivStatsdb.find(dbquery).skip(parseInt(req.query.offset)).limit(parseInt(req.query.limit)).toArray((err, stats) => {
 
                 if (err) {
                     console.error(" Error accesing DB");
