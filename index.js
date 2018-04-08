@@ -149,76 +149,66 @@ var initialStats = [
 
 /* Initial projects Open Source Contests */
 
-initialProjects = [
-            {
-              "university": "Universidad de Sevilla",
-              "year": 2017,
-              "aut-community": "Andalucia",
-              "city": "Sevilla",
-              "description": "Medición de energía de uno o varios dispositivos de una vivienda, en tiempo real, haciendo uso de microcontroladores de bajo coste. Control remoto a través de una app móvil Android. Procesado de datos en tiempo real en una aplicación web",
-              "project": "Arducontrol",
-              "team": [
-                {
-                    "member": "Fernando Méndez Requena"
-                }
-              ]
+var initialProjects = [{
+        "university": "Universidad de Sevilla",
+        "year": 2017,
+        "aut-community": "Andalucia",
+        "city": "Sevilla",
+        "description": "Medición de energía de uno o varios dispositivos de una vivienda, en tiempo real, haciendo uso de microcontroladores de bajo coste. Control remoto a través de una app móvil Android. Procesado de datos en tiempo real en una aplicación web",
+        "project": "Arducontrol",
+        "team": [{
+            "member": "Fernando Méndez Requena"
+        }]
+    },
+    {
+        "university": "Universidad de Sevilla",
+        "year": 2016,
+        "aut-community": "Andalucia",
+        "city": "Sevilla",
+        "description": "Utilidad para hacer una instalación de forma cómoda y rápida (al estilo windows) de programas a partir del código fuente",
+        "project": "AutoUPI",
+        "team": [{
+                "member": "Juan Alcántara Guijarro"
             },
             {
-              "university": "Universidad de Sevilla",
-              "year": 2016,
-              "aut-community": "Andalucia",
-              "city": "Sevilla",
-              "description": "Utilidad para hacer una instalación de forma cómoda y rápida (al estilo windows) de programas a partir del código fuente",
-              "project": "AutoUPI",
-              "team": [
-                {
-                    "member": "Juan Alcántara Guijarro"
-                },
-                {
-                    "member": "Alejandro Barea Rodríguez"
-                }
-              ]
-            },
-            {
-              "university": "Universidad de La Laguna",
-              "year": 2017,
-              "aut-community": "Canarias",
-              "city": "Santa Cruz de Tenerife",
-              "description": "The main goal of BigHelper is to provide an easy-to-use tool to work in a Big Data environment, in order to give the possibility to perform Business Intelligence matters by non-technical users.",
-              "project": "BigHelper",
-              "team": [
-                {
-                    "member": "Adrián Rodríguez Bazaga"
-                }
-              ]
-            },
-            {
-              "university": "Universidad de La Laguna",
-              "year": 2017,
-              "aut-community": "Canarias",
-              "city": "Santa Cruz de Tenerife",
-              "description": "Aplicación de interacción para personas con dificultades que les impidan la comunicación. Servirá como intermediario para comunicarse usando estructuras elementales, así como para transmitir algunas necesidades básicas, emociones, sensaciones,...",
-              "project": "Bring it out",
-              "team": [
-                {
-                    "member": "Miguel Jiménez Gomis"
-                }
-              ]
-            },
-            {
-              "university": "Universidad Politécnica de Madrid",
-              "year": 2017,
-              "aut-community": "Madrid",
-              "city": "Madrid",
-              "description": "DiedricoApp es una aplicación Android para enseñar diédrico a los alumnos de Bachillerato. El objetivo es potenciar la vista espacial con animaciones interactivas, con material de la asignatura, y con funciones especiales para dispositivos móviles.",
-              "project": "DiedricoAPP",
-              "team": [
-                {
-                    "member": "Francisco Jesús Acién Pérez"
-                }
-              ]
+                "member": "Alejandro Barea Rodríguez"
             }
-            ]
+        ]
+    },
+    {
+        "university": "Universidad de La Laguna",
+        "year": 2017,
+        "aut-community": "Canarias",
+        "city": "Santa Cruz de Tenerife",
+        "description": "The main goal of BigHelper is to provide an easy-to-use tool to work in a Big Data environment, in order to give the possibility to perform Business Intelligence matters by non-technical users.",
+        "project": "BigHelper",
+        "team": [{
+            "member": "Adrián Rodríguez Bazaga"
+        }]
+    },
+    {
+        "university": "Universidad de La Laguna",
+        "year": 2017,
+        "aut-community": "Canarias",
+        "city": "Santa Cruz de Tenerife",
+        "description": "Aplicación de interacción para personas con dificultades que les impidan la comunicación. Servirá como intermediario para comunicarse usando estructuras elementales, así como para transmitir algunas necesidades básicas, emociones, sensaciones,...",
+        "project": "Bring it out",
+        "team": [{
+            "member": "Miguel Jiménez Gomis"
+        }]
+    },
+    {
+        "university": "Universidad Politécnica de Madrid",
+        "year": 2017,
+        "aut-community": "Madrid",
+        "city": "Madrid",
+        "description": "DiedricoApp es una aplicación Android para enseñar diédrico a los alumnos de Bachillerato. El objetivo es potenciar la vista espacial con animaciones interactivas, con material de la asignatura, y con funciones especiales para dispositivos móviles.",
+        "project": "DiedricoAPP",
+        "team": [{
+            "member": "Francisco Jesús Acién Pérez"
+        }]
+    }
+]
 
 
 MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) => {
