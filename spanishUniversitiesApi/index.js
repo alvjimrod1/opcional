@@ -20,7 +20,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     app.get(BASE_API_PATH + "/spanish-universities/loadInitialData", (req, res) => {
 
         console.log(Date() + " - GET /spanish-universities/loadInitialData");
-
+        res.sendStatus(200);
         univs.find({}).toArray((err, universities) => {
 
             if (err) {
