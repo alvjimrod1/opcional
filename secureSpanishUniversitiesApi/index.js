@@ -3,7 +3,7 @@ var BASE_API_PATH = "/api/v1/secure";
 
 module.exports = spanishUniversitiesApi;
 
-spanishUniversitiesApi.register = function(app, univs, initialUniversities, checkApiKey) {
+spanishUniversitiesApi.register = function(app, univs, initialUniversities, checkApiKeyFunction) {
     console.log("Registering routes for spanishUniversities API");
 
 
@@ -18,8 +18,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     /////////////   LOADINITIALDATA 
 
     app.get(BASE_API_PATH + "/spanish-universities/loadInitialData", (req, res) => {
-        if (!checkApiKey(req, res)) return;
-
+        if (!checkApiKeyFunction(req, res)) return;
         console.log(Date() + " - GET /spanish-universities/loadInitialData");
 
         univs.find({}).toArray((err, universities) => {
@@ -42,85 +41,63 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
         });
     });
 
+    ///////////*********************************FUNCION PARA LAS BUSQUEDAS************************************************************////////////////
+    var buscador = function(base, conjuntoauxiliar, desde, hasta, comunidadAutonoma, anyoFund) {
+
+        console.log("Búsqueda con parametros: from = " + desde + " ,to = " + hasta + ", autCommunity = " + comunidadAutonoma + ", yearFund = " + anyoFund + ".");
+
+        var from = parseInt(desde);
+        var to = parseInt(hasta);
+        // var autCommunity = new String(param_autCommunity);
+
+        for (var j = 0; j < base.length; j++) {
+            var yearFund = base[j].yearFund;
+            var autCommunity = base[j].autCommunity;
+            if (to >= yearFund && from <= yearFund) {
+
+                conjuntoauxiliar.push(base[j]);
+            }
+            else if (comunidadAutonoma == autCommunity) {
+                conjuntoauxiliar.push(base[j]);
+
+            }
+            else if (anyoFund == yearFund) {
+                conjuntoauxiliar.push(base[j]);
+
+            }
+            else if (from <= yearFund) {
+                conjuntoauxiliar.push(base[j]);
+            }
+            else if (to >= yearFund) {
+                conjuntoauxiliar.push(base[j]);
+            }
+            /* else if (anyoFund == yearFund && comunidadAutonoma == autCommunity) {
+
+                conjuntoauxiliar.push(base[j]);
+             }else if ( && comunidadAutonoma == autCommunity && anyoFund == yearFund) {
+
+                conjuntoauxiliar.push(base[j]);
+            */
+        }
+        return conjuntoauxiliar;
+
+    };
+
+
+
+    /*************/ //////////////////////////////////////////////////////////////////////////////////////////////////**********************/
+
+
+    ///////////*********************************************************************************************////////////////
+
 
     //ACCIONES REST
-    /////////// GET A RECURSO BASE CON BUSQUEDAS Y PAGINACIÓN IPLEMENTADO
-
-    app.get(BASE_API_PATH + "/spanish-universities", function(req, res) {
-        if (!checkApiKey(req, res)) return;
-        var dbquery = {};
-        let offset = 0;
-        let limit = Number.MAX_SAFE_INTEGER;
-
-        if (req.query.offset) {
-            offset = parseInt(req.query.offset);
-            delete req.query.offset;
-        }
-        if (req.query.limit) {
-            limit = parseInt(req.query.limit);
-            delete req.query.limit;
-        }
-
-        Object.keys(req.query).forEach((at) => {
-
-
-            dbquery[at] = req.query[at];
-
-
-        });
-
-        if (Object.keys(req.query).includes('from') && Object.keys(req.query).includes('to')) {
-
-            delete dbquery.from;
-            delete dbquery.to;
-            dbquery['yearFund'] = { "$lte": (req.query['to']), "$gte": (req.query['from']) };
-
-        }
-        else if (Object.keys(req.query).includes('from')) {
-
-            delete dbquery.from;
-            dbquery['yearFund'] = { "$gte": (req.query['from']) };
-
-        }
-        else if (Object.keys(req.query).includes('to')) {
-
-            delete dbquery.to;
-            dbquery['yearFund'] = { "$lte": (req.query['to']) };
-
-        }
-
-        univs.find(dbquery).skip(offset).limit(limit).toArray((err, universities) => {
-
-            if (err) {
-                console.error(" Error accesing DB");
-                res.sendStatus(500);
-                return;
-            }
-
-            if (universities.length == 0) {
-
-                res.sendStatus(404);
-
-            }
-            else {
-
-                res.send(universities.map((s) => {
-                    delete s._id;
-                    return s;
-                }));
-
-            }
-
-        });
-
-    });
-
 
     //RECURSOS SIMPLES//////////////////////////////////////////////////////////////
 
 
     app.post(BASE_API_PATH + "/spanish-universities", (req, res) => {
-        if (!checkApiKey(req, res)) return;
+        if (!checkApiKeyFunction(req, res)) return;
         console.log(Date() + " - POST /spanish-universities");
         var univ = req.body;
 
@@ -158,14 +135,14 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
 
 
     app.put(BASE_API_PATH + "/spanish-universities", (req, res) => {
-        if (!checkApiKey(req, res)) return;
+        if (!checkApiKeyFunction(req, res)) return;
         console.log(Date() + " - PUT /spanish-universities");
         res.sendStatus(405);
 
     });
 
     app.delete(BASE_API_PATH + "/spanish-universities", (req, res) => {
-        if (!checkApiKey(req, res)) return;
+        if (!checkApiKeyFunction(req, res)) return;
         console.log(Date() + " - DELETE /spanish-universities");
         univs.find({}).toArray((err, universities) => {
 
@@ -191,7 +168,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     });
     //RECURSO ESPECIFICO PARA 2 PROPIEDADES //////////////////////////////
     app.get(BASE_API_PATH + "/spanish-universities/:autCommunity/:yearFund", (req, res) => {
-        if (!checkApiKey(req, res)) return;
+        if (!checkApiKeyFunction(req, res)) return;
 
         var autCommunity = req.params.autCommunity;
         var yearFund = req.params.yearFund;
@@ -224,7 +201,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     });
 
     app.delete(BASE_API_PATH + "/spanish-universities/:autCommunity/:yearFund", (req, res) => {
-        if (!checkApiKey(req, res)) return;
+        if (!checkApiKeyFunction(req, res)) return;
         var autCommunity = req.params.autCommunity;
         var yearFund = req.params.yearFund;
 
@@ -258,7 +235,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
 
 
     app.post(BASE_API_PATH + "/spanish-universities/:autCommunity/:yearFund", (req, res) => {
-        if (!checkApiKey(req, res)) return;
+        if (!checkApiKeyFunction(req, res)) return;
         var autCommunity = req.params.autCommunity;
         var yearFund = req.params.yearFund;
         console.log(Date() + " - POST /spanish-universities" + autCommunity + "/" + yearFund);
@@ -266,7 +243,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     });
 
     app.put(BASE_API_PATH + "/spanish-universities/:autCommunity/:yearFund", (req, res) => {
-        if (!checkApiKey(req, res)) return;
+        if (!checkApiKeyFunction(req, res)) return;
         var autCommunity = req.params.autCommunity;
         var yearFund = req.params.yearFund;
         var university = req.body;
@@ -285,6 +262,186 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
         res.sendStatus(200);
 
     });
+
+
+    /////******************************************************GET PARA PAGINACION SIN BUSQUEDA**************************************////////////////////
+
+    app.get(BASE_API_PATH + "/spanish-universities/:dato", (req, res) => {
+        if (!checkApiKeyFunction(req, res)) return;
+
+
+        var limit = parseInt(req.query.limit);
+        var offset = parseInt(req.query.offset);
+        var from = req.query.yearFund;
+        var to = req.query.yearFund;
+        var autCommunity = req.query.autCommunity;
+        var yearFund = req.query.yearFund;
+
+
+        var aux = [];
+        var aux2 = [];
+        var dato = req.params.dato;
+
+        if (limit || offset >= 0) {
+            univs.find({ $or: [{ "autCommunity": dato }, { "yearFund": dato }] }).skip(offset).limit(limit).toArray(function(err, universities) {
+
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    res.sendStatus(500);
+                }
+                else {
+                    if (universities.length === 0) {
+                        res.sendStatus(404);
+                    }
+
+                    if (from || to || yearFund || autCommunity) {
+
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        if (aux.length > 0) {
+                            aux2 = aux.slice(offset, offset + limit);
+                            res.send(aux2);
+
+                        }
+                        else {
+                            res.sendStatus(404);
+                        }
+                    }
+                    else {
+                        res.send(universities);
+                    }
+                }
+            });
+
+        }
+        else {
+            //SEGUDA PARTE QUE ES CON OPERADOR OR DE LA BUSQUEDA
+            univs.find({ $or: [{ "autCommunity": dato }, { "yearFund": dato }] }).toArray((err, universities) => {
+                if (err) {
+                    console.error("Error accesing DB");
+                    res.sendStatus(500);
+
+                }
+                else {
+                    if (universities.length == 0) {
+                        res.sendStatus(404);
+                        return;
+                    }
+                    if (from || to || autCommunity || yearFund) {
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        if (aux.length > 0) {
+                            res.send(aux);
+                        }
+                        else {
+                            res.sendStatus(404);
+                        }
+                    }
+                    else {
+                        console.log(Date() + " - GET /spanish-universities/" + dato);
+                        res.send(universities);
+                    }
+                }
+            });
+
+        }
+    });
+
+
+
+
+
+    ////*******************************************************************************************************************************////////////////////
+    //BUSQUEDA****************************************************************************************
+    // GET Collection (WITH SEARCH)
+    app.get(BASE_API_PATH + "/spanish-universities", function(req, res) {
+        if (!checkApiKeyFunction(req, res)) return;
+        console.log("INFO: New GET request to /spanish-universities ");
+
+        /*PRUEBA DE BUSQUEDA */
+        var limit = parseInt(req.query.limit);
+        var offset = parseInt(req.query.offset);
+        var from = req.query.from;
+        var to = req.query.to;
+        var autCommunity = req.query.autCommunity;
+        var yearFund = req.query.yearFund;
+
+        var aux = [];
+        var aux2 = [];
+        var aux3 = [];
+
+
+        if (limit || offset >= 0) {
+            univs.find({}).skip(offset).limit(limit).toArray(function(err, universities) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    res.sendStatus(500); // internal server error
+                    return;
+                }
+                else {
+                    if (universities.length === 0) {
+                        res.sendStatus(404); //No content
+                        return;
+                    }
+                    console.log("INFO: Sending autCommunities:: " + JSON.stringify(universities, 2, null));
+                    if (from || to || autCommunity || yearFund) {
+
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        if (aux.length > 0) {
+                            aux2 = aux.slice(offset, offset + limit);
+                            res.send(aux2);
+                        }
+                        else {
+
+                            res.send(aux3); // No content 
+                            return;
+                        }
+                    }
+                    else {
+                        res.send(universities);
+                    }
+                }
+            });
+
+        }
+        else {
+
+            univs.find({}).toArray(function(err, universities) {
+                if (err) {
+                    console.error('ERROR from database');
+                    res.sendStatus(500);
+                }
+                else {
+                    if (universities.length === 0) {
+
+                        res.send(universities);
+                        return;
+                    }
+
+                    if (from || to || autCommunity || yearFund) {
+                        aux = buscador(universities, aux, from, to, autCommunity, yearFund);
+                        if (aux.length > 0) {
+                            res.send(aux);
+                        }
+                        else {
+                            res.sendStatus(404);
+                            return;
+                        }
+                    }
+                    else {
+                        res.send(universities);
+                    }
+                }
+            });
+        }
+
+    });
+
+
+
+
+
+
+
+
 
 
 };
