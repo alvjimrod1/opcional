@@ -37,7 +37,8 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats, checkAp
 
             }
             else {
-                console.log("DB initialized with " + stats.length + " stats")
+                console.log("DB initialized with " + stats.length + " stats");
+                res.sendStatus(200);
             }
 
         });
