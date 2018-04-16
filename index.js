@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var path = require("path");
 
 var MongoClient = require("mongodb").MongoClient;
 
@@ -24,11 +25,8 @@ var app = express();
 app.use(bodyParser.json());
 
 
-app.use("/", express.static(__dirname + "/public"));
+app.use("/",express.static(path.join(__dirname,"public")));
 
-//app.get("/hello", (req, res) => {
-//    res.send("Hello World")
-//});
 
 /* API SPANISH UNIVERSITIES */
 
