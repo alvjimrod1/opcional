@@ -1,0 +1,36 @@
+<table class="table">
+
+    <thead>
+        <th>AutCommunity</th>
+        <th>Year</th>
+        <th>Enrolled Number</th>
+        <th>Degree</th>
+        <th>Master</th>
+        <th>First-Second Cycle</th>
+        <th>Actions</th>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td><input class="form-control" type="text" ng-model="newStat.autCommunity"/></td>
+            <td><input class="form-control" type="number" ng-model="newStat.year"/></td>
+            <td><input class="form-control" type="number" ng-model="newStat.enrolledNumber"/></td>
+            <td><input class="form-control" type="number" ng-model="newStat.degree"/></td>
+            <td><input class="form-control" type="number" ng-model="newStat.master"/></td>
+            <td><input class="form-control" type="number" ng-model="newStat.firstSecondCycle"/></td>
+            <td><button class="button btn-primary" ng-click="addStat()">ADD</button></td>
+        </tr>
+        <tr ng-repeat="stat in stats">
+            <td>{{stat.autCommunity}}</td>
+            <td>{{stat.year}}</td>
+            <td>{{stat.enrolledNumber}}</td>
+            <td>{{stat.degree}}</td>
+            <td>{{stat.master}}</td>
+            <td>{{stat.firstSecondCycle}}</td>
+            <td><button class="button btn-danger" ng-click="deleteStat(stat.autCommunity,stat.year)">DELETE</button></td>
+        </tr>
+    </tbody>
+</table>
+<hr/>
+<br/>
+<b><i>{{status}}</i></b>
