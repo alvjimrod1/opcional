@@ -7,7 +7,7 @@ angular
             .when("/", {
                 templateUrl: "list.html",
                 controller: "ListCtrl"
-            }).when("/spanUnivStats/:autCommunity/:year", {
+            }).when("/span-univ-stats/:autCommunity/:year", {
                 templateUrl: "edit.html",
                 controller: "EditCtrl"
             });
