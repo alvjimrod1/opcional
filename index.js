@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 
 
 app.use("/",express.static(path.join(__dirname,"public")));
+app.use("/susfront",express.static(path.join(__dirname,"public/spanUnivStats")));
+
 
 
 /* API SPANISH UNIVERSITIES */

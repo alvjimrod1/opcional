@@ -1,0 +1,28 @@
+<h1> Edit Spanish University Stat</h1>
+<table class="table">
+
+    <thead>
+        <th>AutCommunity</th>
+        <th>Year</th>
+        <th>Enrolled Number</th>
+        <th>Degree</th>
+        <th>Master</th>
+        <th>First-Second Cycle</th>
+        <th>Actions</th>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>{{updatedStat.autCommunity}}</td>
+            <td>{{updatedStat.year}}</td>
+            <td><input class="form-control" type="number" ng-model="updatedStat.enrolledNumber"/></td>
+            <td><input class="form-control" type="number" ng-model="updatedStat.degree"/></td>
+            <td><input class="form-control" type="number" ng-model="updatedStat.master"/></td>
+            <td><input class="form-control" type="number" ng-model="updatedStat.firstSecondCycle"/></td>
+            <td><button class="button btn-primary" ng-click="updateStat()">UPDATE</button></td>
+        </tr>
+    </tbody>
+</table>
+<hr/>
+<br/>
+<b><i>{{status}}</i></b>

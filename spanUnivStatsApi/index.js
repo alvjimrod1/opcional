@@ -100,13 +100,13 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 console.error(" Error accesing DB");
                 res.sendStatus(500);
                 return;
-            }
+            }/*
 
             if (stats.length == 0) {
 
                 res.sendStatus(404);
 
-            }
+            }*/
             else {
 
                 res.send(stats.map((s) => {
