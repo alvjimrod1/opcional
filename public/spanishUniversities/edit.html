@@ -1,0 +1,27 @@
+<h1>Edit Spanish Universities List</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Autonomous Community</th>
+            <th>Year Fundation</th>
+            <th>Headquarters</th>
+            <th>Type</th>
+            <th>University name</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{updatedUniv.autCommunity}}</td>
+            <td>{{updatedUniv.yearFund}}</td>
+            <td><input class="form-control" ng-model="updatedUniv.headquar" /></td>
+            <td><input class="form-control" ng-model="updatedUniv.type" /></td>
+            <td><input class="form-control" ng-model="updatedUniv.nameUniversity" /></td>
+
+            <td><button class="button btn-primary" ng-click="updateUniv()"> Add</button></td>
+
+        </tr>
+    </tbody>
+</table>
+<hr/>
+<div>{{status}}</div>
