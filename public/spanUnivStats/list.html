@@ -13,16 +13,16 @@
 
     <tbody>
         <tr>
-            <td><input class="form-control" type="text" ng-model="newStat.autCommunity"/></td>
-            <td><input class="form-control" type="number" ng-model="newStat.year"/></td>
-            <td><input class="form-control" type="number" ng-model="newStat.enrolledNumber"/></td>
-            <td><input class="form-control" type="number" ng-model="newStat.degree"/></td>
-            <td><input class="form-control" type="number" ng-model="newStat.master"/></td>
-            <td><input class="form-control" type="number" ng-model="newStat.firstSecondCycle"/></td>
+            <td><input class="form-control" type="text" ng-model="newStat.autCommunity" /></td>
+            <td><input class="form-control" type="number" ng-model="newStat.year" /></td>
+            <td><input class="form-control" type="number" ng-model="newStat.enrolledNumber" /></td>
+            <td><input class="form-control" type="number" ng-model="newStat.degree" /></td>
+            <td><input class="form-control" type="number" ng-model="newStat.master" /></td>
+            <td><input class="form-control" type="number" ng-model="newStat.firstSecondCycle" /></td>
             <td><button class="button btn-primary" ng-click="addStat()">ADD</button></td>
         </tr>
         <tr ng-repeat="stat in stats">
-            <td><a href="/#!/span-univ-stat/{{stat.autCommunity}}/{{stat.year}}">{{stat.autCommunity}}</a></td>
+            <td><a href="/#!/stat/{{stat.autCommunity}}/{{stat.year}}">{{stat.autCommunity}}</a></td>
             <td>{{stat.year}}</td>
             <td>{{stat.enrolledNumber}}</td>
             <td>{{stat.degree}}</td>
