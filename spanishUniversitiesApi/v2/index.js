@@ -128,12 +128,12 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
 
             if (Object.keys(univ).length !== 5) {
 
-                console.warn("Stat does not have the expected fields");
+                console.warn("University do not have the expected fields");
                 res.sendStatus(400);
 
             }
             else if (universities.length !== 0) {
-
+                console.warn("University already exists!!!");
                 res.sendStatus(409);
 
             }

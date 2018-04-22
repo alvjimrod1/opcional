@@ -9,21 +9,31 @@
     $scope.status = "Status : " + response.status + "( University added correctly)";
     getSpanishUniversities();
    }, function errorCallback(response) {
-    $scope.status = "Status : " + response.status + "( FAIL: University already added)";
-    getSpanishUniversities();
+    console.log(response.status);
+    if (response.status == 400) {
+
+     $scope.status = "Status : " + response.status + "( FAIL: University dont have expected fields)";
+     getSpanishUniversities();
+    }
+    if (response.status == 409) {
+
+     $scope.status = "Status : " + response.status + "( FAIL: University already exists!!!)";
+     getSpanishUniversities();
+    }
+
     // console.log(JSON.stringify(response, null, 2))
    });
 
-  }
+  };
 
   $scope.deleteUniv = function(autCommunity, yearFund) {
-   console.log("Spanish university to be deleted: " + autCommunity + "-" + yearFund)
+   console.log("Spanish university to be deleted: " + autCommunity + "-" + yearFund);
    $http.delete(api + "/" + autCommunity + "/" + yearFund).then(function(response) {
     $scope.status = "Status : " + response.status + "( University deleted correctly)";
     //console.log(JSON.stringify(response, null, 2))
     getSpanishUniversities();
    });
-  }
+  };
 
   $scope.deleteAllUnivs = function() {
    $http.delete(api).then(function successCallback(response) {
