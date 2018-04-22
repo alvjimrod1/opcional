@@ -4,11 +4,27 @@ angular.module("openSourceContestsApp").controller("ListCtrl", ["$scope","$http"
             console.log("List Ctrl initialized!");
             var api = "/api/v2/open-source-contests";
 
-            $scope.addContest = () => {
-                $http.post(api, $scope.newContest).then((response) => {
-                        $scope.status = "Status:" + response.status;
-                        getContests();
-                    });
+            //$scope.addContest = () => {
+            //    $http.post(api, $scope.newContest).then((response) => {
+            //            $scope.status = "Status:" + response.status;
+            //            getContests();
+            //        });
+            //};
+
+            $scope.addContest = function() {
+                $http.post(api, $scope.newContest).then(function successCallback(response) {
+                    $scope.status = "Status : " + response.status + "( Contest added correctly)";
+                    getContests();
+                }, function errorCallback(response) {
+                    console.log(response.status);
+                    if (response.status == 400) {
+                        $scope.status = "Status : " + response.status + "( FAIL: Contest expected 7 fields)";
+                    }
+                    if (response.status == 409) {
+                        $scope.status = "Status : " + response.status + "( Error: Contest already exists!!!)";
+                     }
+                });
+                getContests();
             };
 
             $scope.removeContest = (contest) => {
