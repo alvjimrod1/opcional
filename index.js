@@ -11,13 +11,13 @@ var mdbSpanUnivStatsURL = "mongodb://balramrom:balramrom@ds121309.mlab.com:21309
 
 /* NUEVO L07 : crear variable para ejecución de la api */
 
-var spanUnivStatsApi = require("./spanUnivStatsApi");
+var spanUnivStatsApi = require("./spanUnivStatsApi/v1");
 var spanishUniversitiesApi = require("./spanishUniversitiesApi/v1");
 var openSourceContestsApi = require("./openSourceContestsApi/v2");
 
 //for v2
 var spanishUniversitiesApiV2 = require("./spanishUniversitiesApi/v2");
-
+var spanUnivStatsApiV2 = require("./spanUnivStatsApi/v2");
 
 var secureSpanUnivStatsApi = require("./secureSpanUnivStatsApi");
 var secureSpanishUniversitiesApi = require("./secureSpanishUniversitiesApi");
@@ -230,6 +230,7 @@ MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) =
     var SpanUNivStatsdb = SpanUnivStatsdatabase.collection("spanUnivStats");
 
     spanUnivStatsApi.register(app, SpanUNivStatsdb, initialStats);
+    spanUnivStatsApiV2.register(app, SpanUNivStatsdb, initialStats);
     secureSpanUnivStatsApi.register(app, SpanUNivStatsdb, initialStats, apikey.checkApiKey);
 
     console.log("Conected to  spanishUniversities DB");

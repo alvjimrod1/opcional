@@ -2,7 +2,7 @@
 
 angular.module("SpanUnivStatsManagerApp").controller("EditCtrl", ["$scope", "$http", "$routeParams","$location", function($scope, $http, $routeParams,$location) {
     console.log("Edit Ctrl initialized!");
-    var statURL = "/api/v1/span-univ-stats/" + $routeParams.autCommunity + "/" + $routeParams.year;
+    var statURL = "/api/v2/span-univ-stats/" + $routeParams.autCommunity + "/" + $routeParams.year;
     
     
      $http.get(statURL).then(function(response) {

@@ -1,5 +1,5 @@
 var spanUnivStatsApi = {};
-var BASE_API_PATH = "/api/v1";
+var BASE_API_PATH = "/api/v2";
 
 module.exports = spanUnivStatsApi;
 
@@ -100,13 +100,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 console.error(" Error accesing DB");
                 res.sendStatus(500);
                 return;
-            }/*
-
-            if (stats.length == 0) {
-
-                res.sendStatus(404);
-
-            }*/
+            }
             else {
 
                 res.send(stats.map((s) => {
@@ -132,7 +126,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 console.error(" Error accesing DB");
                 res.sendStatus(500);
                 return;
-            }
+            }/*
 
             if (Object.keys(stat).length !== 6) {
 
@@ -144,7 +138,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
                 res.sendStatus(409);
 
-            }
+            }*/
             else {
 
                 SpanUNivStatsdb.insert(stat);
@@ -396,98 +390,5 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
 
 
-    ////*******************************************************************************************************************************////////////////////
-    //BUSQUEDA****************************************************************************************
-    // GET (WITH SEARCH)
-    /*
-    app.get(BASE_API_PATH + "/span-univ-stats", function(req, res) {
-
-        console.log("INFO: New GET req to /span-univ-stats");
-
-        var limit = parseInt(req.query.limit);
-        var offset = parseInt(req.query.offset);
-        var from = req.query.from;
-        var to = req.query.to;
-        var autCommunity = req.query.autCommunity;
-        var year = req.query.year;
-        var enrolledNumber = req.query.enrolledNumber;
-        var degree = req.query.degree;
-        var master = req.query.master;
-        var firstSecondCycle = req.query.firstSecondCycle;
-
-        var aux = [];
-        var aux2 = [];
-        var aux_empty = [];
-
-
-        if (limit || offset >= 0) {
-            SpanUNivStatsdb.find({}).skip(offset).limit(limit).toArray(function(err, stats) {
-                if (err) {
-                    console.error('WARNING: Error getting data from DB');
-                    res.sendStatus(500);
-                    return;
-                }
-                else {
-                    if (stats.length === 0) {
-                        res.sendStatus(404);
-                        return;
-                    }
-
-                    if (from || to || autCommunity || year || enrolledNumber || degree || master || firstSecondCycle) {
-
-                        aux = finder(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
-
-                        if (aux.length > 0) {
-
-                            aux2 = aux.slice(offset, offset + limit);
-                            res.send(aux2);
-                        }
-                        else {
-
-                            res.send(aux_empty);
-                            return;
-                        }
-                    }
-                    else {
-                        res.send(stats);
-                    }
-                }
-            });
-
-        }
-        else {
-
-            SpanUNivStatsdb.find({}).toArray(function(err, stats) {
-                if (err) {
-                    console.error('ERROR from database');
-                    res.sendStatus(500);
-                }
-                else {
-                    if (stats.length === 0) {
-
-                        res.send(stats);
-                        return;
-                    }
-
-                    if (from || to || autCommunity || year || enrolledNumber || degree || master || firstSecondCycle) {
-                        aux = finder(stats, aux, from, to, autCommunity, year, enrolledNumber, degree, master, firstSecondCycle);
-                        if (aux.length > 0) {
-                            res.send(aux);
-                        }
-                        else {
-                            res.sendStatus(404);
-                            return;
-                        }
-                    }
-                    else {
-                        res.send(stats);
-                    }
-                }
-            });
-        }
-
-    });
-
-*/
 
 };
