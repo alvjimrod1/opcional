@@ -18,15 +18,15 @@
             <td><input class="form-control" ng-model="newUniv.type" /></td>
             <td><input class="form-control" ng-model="newUniv.nameUniversity" /></td>
 
-            <td><button class="button btn-primary" ng-click="newUniv()"> Add</button></td>
+            <td><button class="button btn-primary" ng-click="addUniv()"> Add</button></td>
 
         </tr>
         <tr ng-repeat="univ in univs">
             <td><a href="/spanishUniversities/#!/univ/{{univ.autCommunity}}/{{univ.yearFund}}">{{univ.autCommunity}}</a></td>
-            <td>{{univ.autCommunity}}</td>
             <td>{{univ.yearFund}}</td>
-            <td>{{univ.yearType}}</td>
-            <td>{{univ.yearNameUniversity}}</td>
+            <td>{{univ.headquar}}</td>
+            <td>{{univ.type}}</td>
+            <td>{{univ.nameUniversity}}</td>
 
             <td><button class="button btn-danger" ng-click="deleteUniv(univ.autCommunity,univ.yearFund)">Delete</button></td>
         </tr>
