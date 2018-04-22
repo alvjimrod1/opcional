@@ -117,6 +117,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     app.post(BASE_API_PATH + "/spanish-universities", (req, res) => {
         console.log(Date() + " - POST /spanish-universities");
         var univ = req.body;
+        var camposVacios = req.body.headquar == "" || req.body.type == "" || req.body.nameUniversity == "";
 
         univs.find({ "autCommunity": univ.autCommunity, "yearFund": univ.yearFund }).toArray((err, universities) => {
 
@@ -126,12 +127,14 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
                 return;
             }
 
-            if (Object.keys(univ).length !== 5) {
 
+            if (Object.keys(univ).length !== 5 || camposVacios) {
                 console.warn("University do not have the expected fields");
                 res.sendStatus(400);
 
+
             }
+
             else if (universities.length !== 0) {
                 console.warn("University already exists!!!");
                 res.sendStatus(409);
