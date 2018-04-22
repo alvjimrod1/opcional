@@ -12,12 +12,18 @@ var mdbSpanUnivStatsURL = "mongodb://balramrom:balramrom@ds121309.mlab.com:21309
 /* NUEVO L07 : crear variable para ejecución de la api */
 
 var spanUnivStatsApi = require("./spanUnivStatsApi");
-var spanishUniversitiesApi = require("./spanishUniversitiesApi");
+var spanishUniversitiesApi = require("./spanishUniversitiesApi/v1");
 var openSourceContestsApi = require("./openSourceContestsApi/v2");
+
+//for v2
+var spanishUniversitiesApiV2 = require("./spanishUniversitiesApi/v2");
+
 
 var secureSpanUnivStatsApi = require("./secureSpanUnivStatsApi");
 var secureSpanishUniversitiesApi = require("./secureSpanishUniversitiesApi");
 var apikey = require("./apikey");
+
+
 
 
 var app = express();
@@ -149,7 +155,7 @@ var initialStats = [
 
 /* Initial projects Open Source Contests */
 
-initialProjects = [{
+var initialProjects = [{
         "university": "Universidad de Sevilla",
         "year": 2017,
         "aut-community": "Andalucia",
@@ -232,6 +238,7 @@ MongoClient.connect(mdbSpanUnivStatsURL, { native_parser: true }, (err, mlabs) =
     var univs = SpanishUniversitiesdatabase.collection("spanishUniversities");
 
     spanishUniversitiesApi.register(app, univs, initialUniversities);
+    spanishUniversitiesApiV2.register(app, univs, initialUniversities);
     secureSpanishUniversitiesApi.register(app, univs, initialUniversities, apikey.checkApiKey);
 
     console.log("Conected to  open-source-contests-db");
