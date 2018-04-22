@@ -10,7 +10,7 @@ angular.module("spanishUniversitiesManagerApp")
                 $scope.updatedUniv = response.data;
             }, function errorCallback(response) {
                 $scope.status = "FAIL of charge" + response.status;
-            });;
+            });
 
             $scope.updateUniv = function() {
                 $http.put(univUrl, $scope.updatedUniv).then(function successCallback(response) {
@@ -26,7 +26,7 @@ angular.module("spanishUniversitiesManagerApp")
                     $scope.status = "Status : " + response.status + "(FAIL: update error)";
 
                 });
-            }
+            };
 
 
 
