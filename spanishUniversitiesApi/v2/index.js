@@ -249,20 +249,23 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
         var autCommunity = req.params.autCommunity;
         var yearFund = req.params.yearFund;
         var university = req.body;
+        var camposVacios = req.body.headquar == "" || req.body.type == "" || req.body.nameUniversity == "";
 
 
-
-        if (autCommunity != university.autCommunity || yearFund != university.yearFund || Object.keys(university).length !== 5) {
+        if (Object.keys(university).length !== 5 || camposVacios) {
+            console.warn("University do not have the expected fields");
             res.sendStatus(400);
-            console.warn(Date() + "  - Hacking attemp!");
-            return;
+
         }
+        else {
 
-        univs.update({ "autCommunity": autCommunity, "yearFund": yearFund }, university, (err, numUpdated) => {
-            console.log(" - Updated" + numUpdated);
-        });
-        res.sendStatus(200);
+            univs.update({ "autCommunity": autCommunity, "yearFund": yearFund }, university, (err, numUpdated) => {
+                console.log(" - Updated" + numUpdated);
+            });
 
+            res.sendStatus(200);
+
+        }
     });
 
 

@@ -11,18 +11,13 @@
    }, function errorCallback(response) {
     console.log(response.status);
     if (response.status == 400) {
-
      $scope.status = "Status : " + response.status + "( FAIL: University dont have expected fields)";
-     getSpanishUniversities();
     }
     if (response.status == 409) {
-
      $scope.status = "Status : " + response.status + "( FAIL: University already exists!!!)";
-     getSpanishUniversities();
     }
-
-    // console.log(JSON.stringify(response, null, 2))
    });
+   getSpanishUniversities();
 
   };
 
