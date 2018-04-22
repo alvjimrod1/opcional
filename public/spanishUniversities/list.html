@@ -18,7 +18,7 @@
             <td><input class="form-control" ng-model="newUniv.type" /></td>
             <td><input class="form-control" ng-model="newUniv.nameUniversity" /></td>
 
-            <td><button class="button btn-primary" ng-click="addUniv()"> Add</button></td>
+            <td><button class="button btn-primary btn-lg" ng-click="addUniv()"> Add</button></td>
 
         </tr>
         <tr ng-repeat="univ in univs">
@@ -31,7 +31,7 @@
             <td><button class="button btn-danger" ng-click="deleteUniv(univ.autCommunity,univ.yearFund)">Delete</button></td>
         </tr>
         <tr>
-            <td><button ng-click="deleteAllUnivs()" class="button btn-danger">Delete all</button></td>
+            <td><button ng-click="deleteAllUnivs()" class="button btn-danger btn-xs">Delete all</button></td>
         </tr>
     </tbody>
 </table>
