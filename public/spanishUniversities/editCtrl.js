@@ -14,13 +14,13 @@ angular.module("spanishUniversitiesManagerApp")
 
             $scope.updateUniv = function() {
                 $http.put(univUrl, $scope.updatedUniv).then(function successCallback(response) {
-                    $scope.status = "UPDATE method status :  Correctly updated (" + response.status + ")";
+                    $scope.status = "Status : " + response.status + "(Update correctly)";
                     console.log("Todo OK");
                     $location.path("/");
 
                 }, function errorCallback(response) {
                     console.log("ERRRRRRRRRRRROR");
-                    $scope.status = "ERROR updated (" + response.status + ")";
+                    $scope.status = "Status : " + response.status + "(FAIL: update error)";
 
                 });
             }

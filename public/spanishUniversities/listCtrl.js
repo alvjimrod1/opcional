@@ -11,7 +11,7 @@
    }, function errorCallback(response) {
     console.log(response.status);
     if (response.status == 400) {
-     $scope.status = "Status : " + response.status + "( FAIL: University dont have expected fields)";
+     $scope.status = "Status : " + response.status + "( FAIL: University does not have expected fields)";
     }
     if (response.status == 409) {
      $scope.status = "Status : " + response.status + "( FAIL: University already exists!!!)";
