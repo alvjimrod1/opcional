@@ -12,7 +12,7 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
 
     app.get(BASE_API_PATH + "/open-source-contests/loadInitialData", (req, res) => {
         console.log(Date() + " - GET /open-source-contests/loadInitialData")
-        
+
         collection.find({}).toArray((err, projects) => {
             if(err){
                 console.error("Error accesing to DB");
@@ -29,26 +29,26 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
                 res.sendStatus(200);
             }
         });
-    
+
     });
 
     app.get(BASE_API_PATH + "/open-source-contests", (req,res) =>{
         console.log(Date() + " - GET /open-source-contests/");
-        
+
         let query = {};
-        let offset = 0; 
-        let limit = Number.MAX_SAFE_INTEGER; 
-        
+        let offset = 0;
+        let limit = Number.MAX_SAFE_INTEGER;
+
         if(req.query.offset){
             offset = parseInt(req.query.offset);
             delete req.query.offset;
         }
-        
+
         if(req.query.limit){
             limit = parseInt(req.query.limit);
             delete req.query.limit;
         }
-        
+
         for(let attr in req.query){
                 attr === "year" ? query[attr] = parseInt(req.query[attr]) : query[attr] = req.query[attr];
         }
@@ -72,7 +72,7 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
                 res.sendStatus(500);
                 return;
             }
-           
+
             if (projects.length !== 0){
                 res.send(projects[0]);
             }else{
@@ -80,7 +80,7 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
             }
         });
 
-  
+
     });
 
     app.get(BASE_API_PATH + "/open-source-contests/:year/:university", (req, res) => {
@@ -92,7 +92,7 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
                 res.sendStatus(500);
                 return;
             }
-            
+
             res.send(projects);
         });
 
@@ -107,7 +107,7 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
                 res.sendStatus(500);
                 return;
             }
-            
+
             res.send(projects);
         });
     });
@@ -121,12 +121,14 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
                 res.sendStatus(500);
                 return;
             }
-           
+
             if(Object.keys(project).length !== 7){
                 console.error("Project need 7 fields");
                 res.sendStatus(400);
+                return;
             }else if(projects.length !== 0){
                 res.sendStatus(409);
+                return;
             }else{
                 collection.insert(project);
                 res.sendStatus(201);
@@ -143,13 +145,15 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
         console.log(Date() + " - PUT /open-source-contests/:year/:university/:project");
         let {year, university, project} = req.params;
         let obj = req.body;
-        if (project != obj.project){
+        if (project != obj.project | year != obj.year | university != obj.university){
             res.sendStatus(400);
             console.warn("url name project != (modify) project");
             return;
         };
-        
-        collection.update({ "year": parseInt(year), "university": university, "project": project }, obj, (err, n) => console.log("PUT - Update " + err));
+
+        collection.update({ "year": parseInt(year), "university": university, "project": project }, obj, (err, n) => {
+            console.log("PUT - Update " + err);
+        });
 
         res.sendStatus(200);
     });
@@ -169,7 +173,7 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
             }
 
             if(projects.length == 0){
-                res.sendStatus(404); 
+                res.sendStatus(404);
             }else{
                 collection.remove({});
                 res.sendStatus(200);
@@ -186,11 +190,11 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
                 res.sendStatus(500);
                 return;
             }
-            
+
             if(projects.length == 0){
-                res.sendStatus(404); 
+                res.sendStatus(404);
             }else{
-                
+
                 collection.remove({ "year": parseInt(year), "university": university, "project": project });
                 res.sendStatus(200);
             }
