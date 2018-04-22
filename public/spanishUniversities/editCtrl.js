@@ -7,13 +7,13 @@ angular.module("spanishUniversitiesManagerApp")
             var univUrl = "/api/v2/spanish-universities/" + $routeParams.autCommunity + "/" + $routeParams.yearFund;
 
 
-            $scope.getListUniversities = function() {
-                $http.get(univUrl).then(function successCallback(response) {
-                    $scope.updatedUniv = response.data;
-                }, function errorCallback(response) {
-                    $scope.status = "FAIL of charge" + response.status;
-                });
-            }
+
+            $http.get(univUrl).then(function successCallback(response) {
+                $scope.updatedUniv = response.data;
+            }, function errorCallback(response) {
+                $scope.status = "FAIL of charge" + response.status;
+            });
+
             $scope.updateUniv = function() {
                 $http.put(univUrl, $scope.updatedUniv).then(function successCallback(response) {
                     console.log(response.status);
