@@ -5,27 +5,25 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     var api = "/api/v2/span-univ-stats";
 
     $scope.addStat = function() {
-        $http.post(api, $scope.newStat).then(function(response) {
-            console.log("response.status = " + response.status);
-            console.log(Object.values($scope.newStat).length);
-            if (response.status == 201) {
-                $scope.status = "ADD method status :  Correctly created (" + response.status + ")";
+        $http.post(api,$scope.newStat).then(function seccessCallback(response){
+            $scope.status = "ADDED CORRECTLY --> status: "+ response.status;
+            delete $scope.newStat;
+            getSpanUnivStats();
+        },function errorCallback(response){
+            console.log(response.status);
+            if(response.status==400){
+                $scope.status = " FAIL: It´s necesary to fill in all the fields --> status: "+ response.status;
             }
-            
+            if(response.status==409){
+                $scope.status = " FAIL: Stat already exist --> status: "+ response.status;
+            }
+            delete $scope.newStat;
             getSpanUnivStats();
         });
-    };
-      /*    switch (response.status) {
-                    case 500:
-                        $scope.status = "Error accesing database. Sorry, try it later (" + response.status + ")";
-                    case 400:
-                        $scope.status = "It is necesary to fill in all the fields (" + response.status + ")";
-                    case 409:
-                        $scope.status = "Conflict. There is already a stat for " + $scope.newStat.autCommunity + ", " + $scope.newStat.year + " (" + response.status + ")";
-                    case 201:
-                        $scope.status = "ADD method status :  Correctly created (" + response.status + ")";
+        
 
-                }*/
+    };
+
 
     $scope.deleteStat = function(autCommunity, year) {
         console.log("Stat to be deleted: Stat of " + autCommunity + " in " + year);

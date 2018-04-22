@@ -101,6 +101,12 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 res.sendStatus(500);
                 return;
             }
+            /*
+                        if (stats.length == 0) {
+
+                            res.sendStatus(404);
+
+                        }*/
             else {
 
                 res.send(stats.map((s) => {
@@ -126,7 +132,8 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
                 console.error(" Error accesing DB");
                 res.sendStatus(500);
                 return;
-            }/*
+            }
+
 
             if (Object.keys(stat).length !== 6) {
 
@@ -138,7 +145,7 @@ spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
                 res.sendStatus(409);
 
-            }*/
+            }
             else {
 
                 SpanUNivStatsdb.insert(stat);
