@@ -12,7 +12,7 @@ angular.module("spanishUniversitiesManagerApp")
             });;
 
             $scope.updateUniv = function() {
-                $http.put(univUrl, $scope.updatedStat).then(function(response) {
+                $http.put(univUrl, $scope.updatedUniv).then(function(response) {
 
                     $scope.status = "UPDATE method status :  Correctly updated (" + response.status + ")";
                     $location.path("/");
