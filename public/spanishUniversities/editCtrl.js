@@ -17,6 +17,7 @@ angular.module("spanishUniversitiesManagerApp")
                     $scope.status = "Status : " + response.status + "(Update correctly)";
                     console.log("Todo OK");
                     $location.path("/");
+                    $scope.status = "Status : " + response.status + "(Update correctly!!!)";
 
                 }, function errorCallback(response) {
                     console.log("ERRRRRRRRRRRROR");
