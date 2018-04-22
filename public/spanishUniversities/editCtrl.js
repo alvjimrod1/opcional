@@ -1,6 +1,6 @@
 /* global angular */
 
-angular.module("SpanishUniversitiesManagerApp")
+angular.module("spanishUniversitiesManagerApp")
     .controller("EditCtrl", ["$scope", "$http", "$routeParams", "$location",
         function($scope, $http, $routeParams, $location) {
             console.log("Edit Ctrl initialized!");
