@@ -31,17 +31,8 @@
   };
 
   $scope.deleteAllUnivs = function() {
-   $http.delete(api).then(function successCallback(response) {
-    $scope.status = "Status : " + response.status + "(All universities deleted correctly)";
-    getSpanishUniversities();
-   }, function errorCallback(response) {
-    $scope.status = "Status : " + response.status + "(FAIL: you can not delte all universities)";
-    getSpanishUniversities();
-
-   });
-  }
-
-
+   confirmDelete();
+  };
 
   function getSpanishUniversities() {
    $http.get(api).then(function(response) {
@@ -51,6 +42,22 @@
 
   getSpanishUniversities();
 
+  function confirmDelete() {
+   var mensaje = confirm("Are you sure?");
+   if (mensaje) {
+    $http.delete(api).then(function successCallback(response) {
+     $scope.status = "Status : " + response.status + "(All universities deleted correctly)";
+     getSpanishUniversities();
+    }, function errorCallback(response) {
+     $scope.status = "Status : " + response.status + "(FAIL: you can not delte all universities)";
+     getSpanishUniversities();
+
+    });
+   }
+   else {
+    alert("You have canceled");
+   }
+  }
 
 
  }]);
