@@ -28,6 +28,7 @@ angular.module("openSourceContestsApp").controller("ListCtrl", ["$scope","$http"
                         $scope.status = "Status : " + response.status + "( Error: Contest already exists!!!)";
                      }
                 });
+                delete $scope.newContest;
                 getContests();
             };
 
