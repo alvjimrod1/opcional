@@ -19,6 +19,7 @@ angular.module("SpanUnivStatsManagerApp").controller("EditCtrl", ["$scope", "$ht
             $http.put(statURL, $scope.updatedStat).then(function(response) {
                 console.log(Object.values($scope.updatedStat))
                 $scope.status = "UPDATE method status :  Correctly updated (" + response.status + ")";
+                window.alert("edited correctly");
                 $location.path("/");
 
             });
