@@ -12,7 +12,11 @@ angular.module("openSourceContestsApp").controller("ListCtrl", ["$scope","$http"
             //};
 
             $scope.addContest = function() {
-                $http.post(api, $scope.newContest).then(function successCallback(response) {
+                console.log($scope.newContest);
+                nc = {...$scope.newContest};
+                nc.team = [{"member": nc.team}];
+                console.log(nc)
+                $http.post(api, nc).then(function successCallback(response) {
                     $scope.status = "Status : " + response.status + "( Contest added correctly)";
                     getContests();
                 }, function errorCallback(response) {
