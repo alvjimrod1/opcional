@@ -12,7 +12,7 @@ angular.module("SpanUnivStatsManagerApp").controller("EditCtrl", ["$scope", "$ht
 
     $scope.updateStat = function() {
         if (Object.values($scope.updatedStat).includes(null)) {
-            $scope.status = " FAIL: It´s necesary to fill in all the fields --> status: (400)";
+            $scope.status = " FAIL: It´s necesary to fill in all the fields";
 
         }
         else {
