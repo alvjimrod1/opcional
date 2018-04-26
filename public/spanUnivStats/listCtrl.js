@@ -8,6 +8,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     var limit = 10;
     var offset = 0;
     var paginationString="";
+    $scope.currentPage = 1;
     
 
 
@@ -97,12 +98,20 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     $scope.nextPage = function (){
         offset += limit;
         getSpanUnivStats();
-    }
+        $scope.currentPage += 1;
+    };
     
     $scope.previousPage = function (){
         offset -= limit;
         getSpanUnivStats();
-    }
+        $scope.currentPage -= 1;
+    };
+    
+    $scope.findPage = function (){
+        offset = $scope.currentPage * limit -10;
+        getSpanUnivStats();
+        
+    };
 
 
 }]);

@@ -2,8 +2,12 @@
     <h1 style="background-color:black">
         <font color=white>Spanish Universities Stats List</font>
     </h1>
-    <button class="waves-effect waves-light btn-small" ng-click="previousPage()"><i class="material-icons left">navigate_before</i></button>
-    <button class="waves-effect waves-light btn-small" ng-click="nextPage()"><i class="material-icons left">navigate_next</i></button>
+    <div>
+        <button class="waves-effect waves-light btn-small" ng-click="previousPage()"><i class="material-icons left">navigate_before</i></button>
+        <button class="waves-effect waves-light btn-small" ng-click="nextPage()"><i class="material-icons right">navigate_next</i></button>
+        <label>Page Number: <input ng-model="currentPage" type="number" min="1"/></label>
+        <button class="waves-effect waves-light btn-small" ng-click="findPage()"><i class="material-icons right">find_in_page</i></button>
+    </div>
 </center>
 <table class="table">
 
@@ -19,12 +23,12 @@
 
     <tbody>
         <tr>
-            <td><input class="form-control" type="text" ng-model="newStat.autCommunity" /></td>
-            <td><input class="form-control" type="number" ng-model="newStat.year" /></td>
-            <td><input class="form-control" type="number" ng-model="newStat.enrolledNumber" /></td>
-            <td><input class="form-control" type="number" ng-model="newStat.degree" /></td>
-            <td><input class="form-control" type="number" ng-model="newStat.master" /></td>
-            <td><input class="form-control" type="number" ng-model="newStat.firstSecondCycle" /></td>
+            <td><input placeholder=" Ej.: andalucia" class="form-control" type="text" ng-model="newStat.autCommunity" /></td>
+            <td><input placeholder=" Ej.: 2016" class="form-control" type="number" min="1" ng-model="newStat.year" /></td>
+            <td><input placeholder=" Ej.: 123" class="form-control" type="number" min="1" ng-model="newStat.enrolledNumber" /></td>
+            <td><input placeholder=" Ej.: 123" class="form-control" type="number" min="1" ng-model="newStat.degree" /></td>
+            <td><input placeholder=" Ej.: 123" class="form-control" type="number" min="1" ng-model="newStat.master" /></td>
+            <td><input placeholder=" Ej.: 123" class="form-control" type="number" min="1" ng-model="newStat.firstSecondCycle" /></td>
             <td><button class="btn btn-primary" ng-click="addStat()">ADD</button></td>
 
         </tr>
@@ -42,13 +46,13 @@
         </tr>
         <tr>
             <td><label class="form-control"><b><i>Autonomous Community</i></b></label><input class="form-control" name="autcom" type="text" ng-model="searchedStat.autCommunity" /></td>
-            <td><label class="form-control"><b><i>Year</i></b></label><input class="form-control" type="number" ng-model="searchedStat.year" /></td>
-            <td><label class="form-control"><b><i>Enrolled Number</i></b></label><input class="form-control" type="number" ng-model="searchedStat.enrolledNumber" /></td>
-            <td><label class="form-control"><b><i>Degree</i></b></label><input class="form-control" type="number" ng-model="searchedStat.degree" /></td>
-            <td><label class="form-control"><b><i>Master</i></b></label><input class="form-control" type="number" ng-model="searchedStat.master" /></td>
-            <td><label class="form-control"><b><i>First-Second Cycle</i></b></label><input type="number" ng-model="searchedStat.firstSecondCycle" /></td>
-            <td><label class="form-control"><b><i>From(Year)</i></b></label><input class="form-control" type="number" ng-model="searchedStat.from" /></td>
-            <td><label class="form-control"><b><i>To(Year)</i></b></label><input class="form-control" type="number" ng-model="searchedStat.to" /></td>
+            <td><label class="form-control"><b><i>Year</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.year" /></td>
+            <td><label class="form-control"><b><i>Enrolled Number</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.enrolledNumber" /></td>
+            <td><label class="form-control"><b><i>Degree</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.degree" /></td>
+            <td><label class="form-control"><b><i>Master</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.master" /></td>
+            <td><label class="form-control"><b><i>First-Second Cycle</i></b></label><input type="number" min="1" ng-model="searchedStat.firstSecondCycle" /></td>
+            <td><label class="form-control"><b><i>From(Year)</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.from" /></td>
+            <td><label class="form-control"><b><i>To(Year)</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.to" /></td>
             <br/>
             <td><button class="btn-floating btn-large waves-effect waves-light green" ng-click="searchStat()"><i class="material-icons">search</i></button></td>
         </tr>
