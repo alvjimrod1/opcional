@@ -4,7 +4,11 @@
 angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
     console.log("List Ctrl initialized!");
     var api = "/api/v2/span-univ-stats";
-    var search = "";
+    var search = "?";
+    var limit = 10;
+    var offset = 0;
+    var paginationString="";
+    
 
 
     $scope.addStat = function() {
@@ -45,10 +49,11 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
 
     function getSpanUnivStats() {
-        $http.get(api+search).then(function(response) {
+        paginationString="&limit="+limit+"&offset="+offset;
+        $http.get(api+search+paginationString).then(function(response) {
             $scope.stats = response.data;
         });
-        search="";
+        search="?";
     };
 
     getSpanUnivStats();
@@ -57,7 +62,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
     $scope.searchStat = function() {
 
-        search = "?";
+        
 
         if ($scope.searchedStat.autCommunity) {
             search += ("&autCommunity=" + $scope.searchedStat.autCommunity);
@@ -88,6 +93,16 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
 
     };
+    
+    $scope.nextPage = function (){
+        offset += limit;
+        getSpanUnivStats();
+    }
+    
+    $scope.previousPage = function (){
+        offset -= limit;
+        getSpanUnivStats();
+    }
 
 
 }]);
