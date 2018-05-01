@@ -1,10 +1,11 @@
+/*eslint no-console: "off"*/
 var openSourceContestsApi = {};
 
 var BASE_API_PATH = "/api/v2";
 
 module.exports = openSourceContestsApi;
 
-openSourceContestsApi.register = function(app, collection, initialProjects){
+openSourceContestsApi.register = function (app, collection, initialProjects) {
 
     app.get(BASE_API_PATH + "/open-source-contests/docs", (req, res) => {
         res.redirect("https://documenter.getpostman.com/view/3898307/collection/RVu1HAgU");
@@ -14,47 +15,47 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
         console.log(Date() + " - GET /open-source-contests/loadInitialData")
 
         collection.find({}).toArray((err, projects) => {
-            if(err){
+            if (err) {
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
             }
 
-            if(projects.length == 0){
+            if (projects.length == 0) {
                 console.log("Empty DB");
                 collection.insert(initialProjects);
                 res.sendStatus(200);
-            }else{
+            } else {
                 console.log("Number of projects: " + projects.length);
-                res.sendStatus(200);
+                res.sendStatus(418);
             }
         });
 
     });
 
-    app.get(BASE_API_PATH + "/open-source-contests", (req,res) =>{
+    app.get(BASE_API_PATH + "/open-source-contests", (req, res) => {
         console.log(Date() + " - GET /open-source-contests/");
 
-        let query = {};
+        var query = {};
         let offset = 0;
         let limit = Number.MAX_SAFE_INTEGER;
 
-        if(req.query.offset){
+        if (req.query.offset) {
             offset = parseInt(req.query.offset);
             delete req.query.offset;
         }
 
-        if(req.query.limit){
+        if (req.query.limit) {
             limit = parseInt(req.query.limit);
             delete req.query.limit;
         }
 
-        for(let attr in req.query){
-                attr === "year" ? query[attr] = parseInt(req.query[attr]) : query[attr] = req.query[attr];
+        for (let attr in req.query) {
+            attr === "year" ? query[attr] = parseInt(req.query[attr]) : query[attr] = req.query[attr];
         }
 
         collection.find(query).skip(offset).limit(limit).toArray((err, projects) => {
-            if(err){
+            if (err) {
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
@@ -65,17 +66,17 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
 
     app.get(BASE_API_PATH + "/open-source-contests/:year/:university/:project", (req, res) => {
         console.log(Date() + " - GET /open-source-contests/:year/:university/:project");
-        let {year, university, project} = req.params;
+        let { year, university, project } = req.params;
         collection.find({ "year": parseInt(year), "university": university, "project": project }).toArray((err, projects) => {
-            if(err){
+            if (err) {
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
             }
 
-            if (projects.length !== 0){
+            if (projects.length !== 0) {
                 res.send(projects[0]);
-            }else{
+            } else {
                 res.sendStatus(404);
             }
         });
@@ -85,9 +86,9 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
 
     app.get(BASE_API_PATH + "/open-source-contests/:year/:university", (req, res) => {
         console.log(Date() + " - GET /open-source-contests/:year/:university");
-        let {year, university} = req.params;
+        let { year, university } = req.params;
         collection.find({ "year": parseInt(year), "university": university }).toArray((err, projects) => {
-            if(err){
+            if (err) {
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
@@ -100,9 +101,9 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
 
     app.get(BASE_API_PATH + "/open-source-contests/:year", (req, res) => {
         console.log(Date() + " - GET /open-source-contests/:year");
-        let {year} = req.params;
+        let { year } = req.params;
         collection.find({ "year": parseInt(year) }).toArray((err, projects) => {
-            if(err){
+            if (err) {
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
@@ -116,40 +117,40 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
         console.log(Date() + " - POST /open-source-contests");
         let project = req.body;
         collection.find({ "year": parseInt(project.year), "university": project.university, "project": project.project }).toArray((err, projects) => {
-            if(err){
+            if (err) {
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
             }
 
-            if(Object.keys(project).length !== 7){
+            if (Object.keys(project).length !== 7) {
                 console.error("Project need 7 fields");
                 res.sendStatus(400);
                 return;
-            }else if(projects.length !== 0){
+            } else if (projects.length !== 0) {
                 res.sendStatus(409);
                 return;
-            }else{
+            } else {
                 collection.insert(project);
                 res.sendStatus(201);
             }
         });
     });
 
-    app.post(BASE_API_PATH + "/open-source-contests/:year/:university/:project",(req,res)=>{
+    app.post(BASE_API_PATH + "/open-source-contests/:year/:university/:project", (req, res) => {
         console.log(Date() + "POST - /open-source-contests/:year/:university/:project");
         res.sendStatus(405);
     });
 
     app.put(BASE_API_PATH + "/open-source-contests/:year/:university/:project", (req, res) => {
         console.log(Date() + " - PUT /open-source-contests/:year/:university/:project");
-        let {year, university, project} = req.params;
+        let { year, university, project } = req.params;
         let obj = req.body;
-        if (project != obj.project | year != obj.year | university != obj.university){
+        if (project != obj.project | year != obj.year | university != obj.university) {
             res.sendStatus(400);
             console.warn("url name project != (modify) project");
             return;
-        };
+        }
 
         collection.update({ "year": parseInt(year), "university": university, "project": project }, obj, (err, n) => {
             console.log("PUT - Update " + err);
@@ -158,42 +159,42 @@ openSourceContestsApi.register = function(app, collection, initialProjects){
         res.sendStatus(200);
     });
 
-    app.put(BASE_API_PATH + "/open-source-contests",(req,res)=>{
+    app.put(BASE_API_PATH + "/open-source-contests", (req, res) => {
         console.log(Date() + "PUT - /open-source-contests");
         res.sendStatus(405);
     });
 
-    app.delete(BASE_API_PATH + "/open-source-contests",(req,res)=>{
+    app.delete(BASE_API_PATH + "/open-source-contests", (req, res) => {
         console.log(Date() + " - DELETE /open-source-contests");
         collection.find({}).toArray((err, projects) => {
-            if(err){
+            if (err) {
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
             }
 
-            if(projects.length == 0){
+            if (projects.length == 0) {
                 res.sendStatus(404);
-            }else{
+            } else {
                 collection.remove({});
                 res.sendStatus(200);
             }
         });
     });
 
-    app.delete(BASE_API_PATH + "/open-source-contests/:year/:university/:project",(req,res)=>{
-        let {year, university, project} = req.params;
+    app.delete(BASE_API_PATH + "/open-source-contests/:year/:university/:project", (req, res) => {
+        let { year, university, project } = req.params;
         console.log(Date() + " - DELETE /open-source-contests/:year/:university/:project");
         collection.find({ "year": parseInt(year), "university": university, "project": project }).toArray((err, projects) => {
-            if(err){
+            if (err) {
                 console.error("Error accesing to DB");
                 res.sendStatus(500);
                 return;
             }
 
-            if(projects.length == 0){
+            if (projects.length == 0) {
                 res.sendStatus(404);
-            }else{
+            } else {
 
                 collection.remove({ "year": parseInt(year), "university": university, "project": project });
                 res.sendStatus(200);

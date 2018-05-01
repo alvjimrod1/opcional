@@ -2,7 +2,7 @@
 
 angular
     .module("openSourceContestsApp", ["ngRoute"])
-    .config(function($routeProvider){
+    .config(function ($routeProvider) {
         $routeProvider.when("/", {
             templateUrl: "list/list.html",
             controller: "ListCtrl"
