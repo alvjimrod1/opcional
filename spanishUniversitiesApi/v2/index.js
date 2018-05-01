@@ -117,7 +117,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
     app.post(BASE_API_PATH + "/spanish-universities", (req, res) => {
         console.log(Date() + " - POST /spanish-universities");
         var univ = req.body;
-        var camposVacios = req.body.headquar == "" || req.body.type == "" || req.body.nameUniversity == "";
+        var camposVacios = req.body.autCommunity == "" || req.body.yearFund == "" || req.body.headquar == "" || req.body.type == "" || req.body.nameUniversity == "";
 
         univs.find({ "autCommunity": univ.autCommunity, "yearFund": univ.yearFund }).toArray((err, universities) => {
 
