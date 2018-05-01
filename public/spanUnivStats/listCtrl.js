@@ -7,9 +7,9 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     var search = "?";
     var limit = 10;
     var offset = 0;
-    var paginationString="";
+    var paginationString = "";
     $scope.currentPage = 1;
-    
+
 
 
     $scope.addStat = function() {
@@ -50,11 +50,12 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
 
     function getSpanUnivStats() {
-        paginationString="&limit="+limit+"&offset="+offset;
-        $http.get(api+search+paginationString).then(function(response) {
+        paginationString = "&limit=" + limit + "&offset=" + offset;
+        $http.get(api + search + paginationString).then(function(response) {
             $scope.stats = response.data;
+            console.log($scope.stats.length);
         });
-        search="?";
+        search = "?";
     };
 
     getSpanUnivStats();
@@ -63,7 +64,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
     $scope.searchStat = function() {
 
-        
+
 
         if ($scope.searchedStat.autCommunity) {
             search += ("&autCommunity=" + $scope.searchedStat.autCommunity);
@@ -94,23 +95,27 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
 
     };
-    
-    $scope.nextPage = function (){
-        offset += limit;
-        getSpanUnivStats();
-        $scope.currentPage += 1;
+
+    $scope.nextPage = function() {
+        if ($scope.stats.length == 10) {
+            offset += limit;
+            getSpanUnivStats();
+            $scope.currentPage += 1;
+        }
     };
-    
-    $scope.previousPage = function (){
-        offset -= limit;
-        getSpanUnivStats();
-        $scope.currentPage -= 1;
+
+    $scope.previousPage = function() {
+        if ($scope.currentPage > 1) {
+            offset -= limit;
+            getSpanUnivStats();
+            $scope.currentPage -= 1;
+        }
     };
-    
-    $scope.findPage = function (){
-        offset = $scope.currentPage * limit -10;
+
+    $scope.findPage = function() {
+        offset = $scope.currentPage * limit - 10;
         getSpanUnivStats();
-        
+
     };
 
 
