@@ -1,4 +1,24 @@
-<h1>Edit Spanish Universities List</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Edit an university</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
 <table class="table">
     <thead>
         <tr>
@@ -7,6 +27,32 @@
             <th>Headquarters</th>
             <th>Type</th>
             <th>University name</th>
+            <button class="btn btn-info" data-toggle="modal" data-target="#v1">BOTON DE PRUEBA</button>
+
+
+            <div class="modal fade" id="v1" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4>MI VENTANA MODAL</h4>
+                            <div class="modal-body">
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex
+                                ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent
+                                luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam;
+                                est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.
+                                Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
+                                in futurum.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </tr>
     </thead>
@@ -20,27 +66,8 @@
 
 
 
-<div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    Título del botón <span class="caret"></span>
-  </button>
-
-    <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Acción #1</a></li>
-        <li><a href="#">Acción #2</a></li>
-        <li><a href="#">Acción #3</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Acción #4</a></li>
-    </ul></div>
-
-
-
-
-
-
-
-            <td><button class="button btn-primary" ng-click="updateUniv()"> Update</button></td>
-            <td><button href="/" class="button btn-secondary" ng-click="getListUniversities"> Cancel</button></td>
+            <td><button class="btn btn-info btn-sm" ng-click="updateUniv()"> Update</button></td>
+            <td><button href="/" class="btn btn-outline-secondary btn-sm" ng-click="getListUniversities"> Cancel</button></td>
         </tr>
     </tbody>
 </table>
