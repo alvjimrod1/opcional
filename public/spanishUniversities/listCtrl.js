@@ -68,29 +68,15 @@
   $scope.searchUniversity1 = function() {
 
    $('#search').modal('show');
-
    getSpanishUniversities();
 
   };
 
   $scope.searchUniversity2 = function() {
-
-   for (var i = 0; i <= $scope.univs.length; i++) {
-    var mySet = new Set();
-    console.log(($scope.univs[i].autCommunity));
-    //  console.log("Mi conjunto: " + mySet);
-    //var b = ($scope.searchForm.autCommunity);
-   }
-   // }
-
    $('#search').modal('show');
-   console.log($scope.univs);
-   console.log(String($scope.searchForm.autCommunity));
+   getSpanishUniversities();
    if ($scope.searchForm.autCommunity) {
     search += ("&autCommunity=" + $scope.searchForm.autCommunity);
-    // (!$scope.univs.includes($scope.searchForm.autCommunity)) {
-    //  $('#notFound').modal('show');
-    //   }
    }
    if ($scope.searchForm.yearFund) {
     search += ("&yearFund=" + $scope.searchForm.yearFund);
@@ -110,28 +96,9 @@
    if ($scope.searchForm.to) {
     search += ("&to=" + $scope.searchForm.to);
    }
-   if ($scope.searchForm.autCommunity != $scope.searchForm.autCommunity) {
-    $('#notFound').modal('show');
-   }
 
    getSpanishUniversities();
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getSpanishUniversities();
 
 
