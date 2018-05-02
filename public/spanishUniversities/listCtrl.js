@@ -36,12 +36,19 @@
    $btn.on("click", function() {
     $http.delete(api);
     getSpanishUniversities();
-    $('#confirm').modal('show');
 
    });
+
    getSpanishUniversities();
 
   };
+  $scope.deleteAllUnivs2 = function() {
+   $('#confirm').modal('show');
+   getSpanishUniversities();
+
+  };
+
+
 
   $scope.loadInitialData = function() {
    $http.get(api + "/loadInitialData").then(function(response) {
