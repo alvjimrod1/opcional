@@ -3,6 +3,7 @@
  angular.module("spanishUniversitiesManagerApp").controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
   console.log("List Ctrl initialited");
   var api = "/api/v2/spanish-universities";
+  var search = "?";
 
   $scope.addUniv = function() {
    $http.post(api, $scope.newUniv).then(function successCallback(response) {
@@ -50,10 +51,57 @@
   };
 
   function getSpanishUniversities() {
-   $http.get(api).then(function(response) {
+   $http.get(api + search).then(function(response) {
     $scope.univs = response.data;
    });
+   search = "?";
   }
+
+
+  $scope.searchUniversity1 = function() {
+   for (var i = 0; i < $scope.searchForm.length; i++)
+    var todos = $scope.searchForm[i];
+   //SEEGUIR AQUI EN EL FOR
+
+   $('#search').modal('show');
+
+   getSpanishUniversities();
+
+  };
+
+  $scope.searchUniversity2 = function() {
+
+   $('#search').modal('show');
+   if ($scope.searchForm.autCommunity) {
+    search += ("&autCommunity=" + $scope.searchForm.autCommunity);
+   }
+   if ($scope.searchForm.yearFund) {
+    search += ("&yearFund=" + $scope.searchForm.yearFund);
+   }
+   if ($scope.searchForm.headquar) {
+    search += ("&headquar=" + $scope.searchForm.headquar);
+   }
+   if ($scope.searchForm.type) {
+    search += ("&type=" + $scope.searchedStat.type);
+   }
+   if ($scope.searchForm.nameUniversity) {
+    search += ("&nameUniversityr=" + $scope.searchedStat.nameUniversity);
+   }
+   if ($scope.searchForm.from) {
+    search += ("&from=" + $scope.searchedStat.from);
+   }
+   if ($scope.searchForm.to) {
+    search += ("&to=" + $scope.searchedStat.to);
+   }
+   if (!Object.values($scope.univs[i]).includes($scope.searchForm.autCommunity)) {
+    $('#notFound').modal('show');
+   }
+
+
+   getSpanishUniversities();
+
+  };
+
 
 
 

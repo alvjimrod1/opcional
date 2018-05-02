@@ -17,8 +17,9 @@
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+
+            <button class="btn btn-secondary my-2 my-sm-0" ng-click="searchUniversity1()">Search</button>
+
         </form>
     </div>
 </nav>
@@ -61,139 +62,182 @@
 
 <button ng-click="deleteAllUnivs() " class="btn btn-primary btn-sm">Delete all</button>
 <button ng-click="loadInitialData() " class="btn btn-warning btn-sm">Load Initial Data</button>
+<div class="modal-header">
 
-<br/>
+    <br/>
 
 
 
 
-<!-- MODAL UNIVERSIDAD INSERTADA  CORRECTAMENTE-->
+    <!-- MODAL UNIVERSIDAD INSERTADA  CORRECTAMENTE-->
 
-<div class="modal fade" id="added" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/check.png" width="50" height="50"></img>
+    <div class="modal fade" id="added" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body"><img src="/spanishUniversities/images_alvaro/check.png" width="50" height="50"></img>
 
-                    University added correctly!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        University added correctly!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- MODAL LOAD INITIAL DATA-->
-
-<div class="modal fade" id="addedAll" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/bd.png" width="50" height="50"></img>
-
-                    Initial data has been charged correctly!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- MODAL LOAD INITIAL DATA-->
 
-<!-- MODAL USUARIO BORRADO -->
+    <div class="modal fade" id="addedAll" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body"><img src="/spanishUniversities/images_alvaro/bd.png" width="50" height="50"></img>
 
-<div class="modal fade" id="deleted">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-body">
-                    University has been deleted successfully!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        Initial data has been charged correctly!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- FALLO EN INSERCION UNIVERSIDAD POR CAMPOS NO ESPERADOS -->
-
-<div class="modal fade" id="fail_400" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
-                    University does not have expected fields
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- FALLO EN INSERCION UNIVERSIDAD = YA EXISTE!  -->
-
-<div class="modal fade" id="fail_409" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
-                    University already exists!!!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- PREGUNTA BORRAR TODO-->
-
-<div class="modal fade" id="deleteAll" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/warning.png" width="50" height="50"></img>
-                    Are you sure that you want to delete all universities?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-successfully" id="yes" data-dismiss="modal" relatedTarget="yes">Confirm</button>
-
-                    <button type="button" class="btn btn-primary" id="no" data-dismiss="modal">Deny</button>
-
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
+    <!-- MODAL USUARIO BORRADO -->
 
-<!-- CONFIRMACION BORRAR TODO-->
+    <div class="modal fade" id="deleted">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body">
+                        University has been deleted successfully!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 
-<div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/check.png" width="50" height="50"></img>
-
-                    All universities has been deleted correctly!!!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+
+
+    <!-- FALLO EN INSERCION UNIVERSIDAD POR CAMPOS NO ESPERADOS -->
+
+    <div class="modal fade" id="fail_400" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
+                        University does not have expected fields
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FALLO EN INSERCION UNIVERSIDAD = YA EXISTE!  -->
+
+    <div class="modal fade" id="fail_409" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
+                        University already exists!!!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PREGUNTA BORRAR TODO-->
+
+    <div class="modal fade" id="deleteAll" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body"><img src="/spanishUniversities/images_alvaro/warning.png" width="50" height="50"></img>
+                        Are you sure that you want to delete all universities?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-successfully" id="yes" data-dismiss="modal" relatedTarget="yes">Confirm</button>
+
+                        <button type="button" class="btn btn-primary" id="no" data-dismiss="modal">Deny</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONFIRMACION BORRAR TODO-->
+
+    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body"><img src="/spanishUniversities/images_alvaro/check.png" width="50" height="50"></img>
+
+                        All universities has been deleted correctly!!!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FORMULARIO BUSQUEDAS-->
+
+    <div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <div class="modal-body">
+                        <td>Autonomous Community<input class="form-control" ng-model="searchForm.autCommunity" /></td>
+                        <td>Year of Fundation<input class="form-control" ng-model="searchForm.yearFund" /></td>
+                        <td>Headquarters<input class="form-control" ng-model="searchForm.headquar" /></td>
+                        <td>Type<input class="form-control" ng-model="searchForm.type" /></td>
+                        <td>University name<input class="form-control" ng-model="searchForm.nameUniversity" /></td>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="searchUniversity2()">Search</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- NOT FOUND-->
+
+    <div class="modal fade" id="notFound" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
+                        There is no university with those search fields !!!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
