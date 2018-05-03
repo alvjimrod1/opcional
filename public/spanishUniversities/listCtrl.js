@@ -69,12 +69,13 @@
 
    $('#search').modal('show');
    getSpanishUniversities();
-
   };
+
 
   $scope.searchUniversity2 = function() {
    $('#search').modal('show');
-   getSpanishUniversities();
+   //getSpanishUniversities();
+
    if ($scope.searchForm.autCommunity) {
     search += ("&autCommunity=" + $scope.searchForm.autCommunity);
    }
@@ -88,7 +89,7 @@
     search += ("&type=" + $scope.searchForm.type);
    }
    if ($scope.searchForm.nameUniversity) {
-    search += ("&nameUniversityr=" + $scope.searchForm.nameUniversity);
+    search += ("&nameUniversity=" + $scope.searchForm.nameUniversity);
    }
    if ($scope.searchForm.from) {
     search += ("&from=" + $scope.searchForm.from);
@@ -99,6 +100,10 @@
 
    getSpanishUniversities();
   };
+
+
+
+
   getSpanishUniversities();
 
 
