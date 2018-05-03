@@ -6,7 +6,8 @@
   var search = "?";
   var limit = 10;
   var offset = 0;
-  //var actualPage = 1;
+  var paginationString = "";
+  $scope.currentPage = 1;
 
   $scope.addUniv = function() {
    $http.post(api, $scope.newUniv).then(function successCallback(response) {
@@ -61,12 +62,13 @@
   };
 
   function getSpanishUniversities() {
-   $http.get(api + search + "&limit=" + limit + "$offset=" + offset)
-    .then(function(response) {
-     $scope.univs = response.data;
-    });
+   paginationString = "&limit=" + limit + "&offset=" + offset;
+   $http.get(api + search + paginationString).then(function(response) {
+    $scope.univs = response.data;
+    console.log($scope.univs.length);
+   });
    search = "?";
-  }
+  };
 
 
   $scope.searchUniversity1 = function() {
@@ -76,7 +78,7 @@
   };
 
 
-  $scope.pagination = function() {
+  /*$scope.pagination = function() {
    if ($scope.univs.length == 10) {
     offset += limit;
     getSpanishUniversities();
@@ -90,7 +92,7 @@
 
   };
 
-
+*/
 
   $scope.searchUniversity2 = function() {
    $('#search').modal('show');
@@ -120,7 +122,27 @@
 
    getSpanishUniversities();
   };
+  $scope.nextPage = function() {
+   if ($scope.stats.length == 10) {
+    offset += limit;
+    getSpanishUniversities();
+    $scope.currentPage += 1;
+   }
+  };
 
+  $scope.previousPage = function() {
+   if ($scope.currentPage > 1) {
+    offset -= limit;
+    getSpanishUniversities();
+    $scope.currentPage -= 1;
+   }
+  };
+
+  $scope.findPage = function() {
+   offset = $scope.currentPage * limit - 10;
+   getSpanishUniversities();
+
+  };
 
 
 
