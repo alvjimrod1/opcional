@@ -4,6 +4,9 @@
   console.log("List Ctrl initialited");
   var api = "/api/v2/spanish-universities";
   var search = "?";
+  var limit = 10;
+  var offset = 0;
+  //var actualPage = 1;
 
   $scope.addUniv = function() {
    $http.post(api, $scope.newUniv).then(function successCallback(response) {
@@ -58,9 +61,10 @@
   };
 
   function getSpanishUniversities() {
-   $http.get(api + search).then(function(response) {
-    $scope.univs = response.data;
-   });
+   $http.get(api + search + "&limit=" + limit + "$offset=" + offset)
+    .then(function(response) {
+     $scope.univs = response.data;
+    });
    search = "?";
   }
 
@@ -70,6 +74,22 @@
    $('#search').modal('show');
    getSpanishUniversities();
   };
+
+
+  $scope.pagination = function() {
+   if ($scope.univs.length == 10) {
+    offset += limit;
+    getSpanishUniversities();
+    $scope.actualPage++;
+   }
+   if ($scope.actualPage > 1) {
+    offset -= limit;
+    getSpanishUniversities();
+    $scope.actualPage--;
+   }
+
+  };
+
 
 
   $scope.searchUniversity2 = function() {
