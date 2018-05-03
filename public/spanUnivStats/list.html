@@ -16,7 +16,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
 
-                <button class="btn-floating btn-large waves-effect waves-light green" ng-click="searchStat()"><i class="material-icons">search</i></button>
+                <button class="btn-floating btn-large waves-effect waves-light purple" ng-click="openSearchModal()"><i class="material-icons">search</i></button>
 
             </form>
         </div>
@@ -48,7 +48,7 @@
             <td><input placeholder=" Ej.: 123" class="form-control" type="number" min="1" ng-model="newStat.degree" /></td>
             <td><input placeholder=" Ej.: 123" class="form-control" type="number" min="1" ng-model="newStat.master" /></td>
             <td><input placeholder=" Ej.: 123" class="form-control" type="number" min="1" ng-model="newStat.firstSecondCycle" /></td>
-            <td><button class="btn btn-primary" ng-click="addStat()">ADD</button></td>
+            <td><button class="btn btn-large" ng-click="addStat()"><i class="material-icons">add</i></button></td>
 
         </tr>
         <tr ng-repeat="stat in stats">
@@ -61,21 +61,136 @@
             <td><button class="btn-floating btn-small waves-effect waves-light red" ng-click="deleteStat(stat.autCommunity,stat.year)"><i class="material-icons">delete</i></button></td>
         </tr>
         <tr>
-            <td><button type="button"  class="waves-effect waves-light btn red" ng-click="deleteAllStats()">DELETE ALL</button></td>
-        </tr>
-        <tr>
-            <td><label class="form-control"><b><i>Autonomous Community</i></b></label><input class="form-control" name="autcom" type="text" ng-model="searchedStat.autCommunity" /></td>
-            <td><label class="form-control"><b><i>Year</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.year" /></td>
-            <td><label class="form-control"><b><i>Enrolled Number</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.enrolledNumber" /></td>
-            <td><label class="form-control"><b><i>Degree</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.degree" /></td>
-            <td><label class="form-control"><b><i>Master</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.master" /></td>
-            <td><label class="form-control"><b><i>First-Second Cycle</i></b></label><input type="number" min="1" ng-model="searchedStat.firstSecondCycle" /></td>
-            <td><label class="form-control"><b><i>From(Year)</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.from" /></td>
-            <td><label class="form-control"><b><i>To(Year)</i></b></label><input class="form-control" type="number" min="1" ng-model="searchedStat.to" /></td>
-            
+            <td><button type="button" class="waves-effect waves-light btn red" ng-click="deleteAllStats()">DELETE ALL</button></td>
+            <td><button type="button" class="waves-effect waves-light btn yellow" ng-click="loadInitialStats()">LOAD</button></td>
         </tr>
     </tbody>
 </table>
 <hr/>
 <br/>
 <b><i>{{status}}</i></b>
+
+
+<!-- MODAL SEARCH -->
+
+<div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <div class="modal-body">
+                    <label class="form-control"><b><i>Autonomous Community</i></b><input class="form-control" name="autcom" type="text" ng-model="searchedStat.autCommunity" /></label>
+                    <label class="form-control"><b><i>Year</i></b><input class="form-control" type="number" min="1" ng-model="searchedStat.year" /></label>
+                    <label class="form-control"><b><i>Enrolled Number</i></b><input class="form-control" type="number" min="1" ng-model="searchedStat.enrolledNumber" /></label>
+                    <label class="form-control"><b><i>Degree</i></b><input class="form-control" type="number" min="1" ng-model="searchedStat.degree" /></label>
+                    <label class="form-control"><b><i>Master</i></b><input class="form-control" type="number" min="1" ng-model="searchedStat.master" /></label>
+                    <label class="form-control"><b><i>First-Second Cycle</i></b><input type="number" min="1" ng-model="searchedStat.firstSecondCycle" /></label>
+                    <label class="form-control"><b><i>From(Year)</i></b><input class="form-control" type="number" min="1" ng-model="searchedStat.from" /></label>
+                    <label class="form-control"><b><i>To(Year)</i></b><input class="form-control" type="number" min="1" ng-model="searchedStat.to" /></label>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-small" data-dismiss="modal" ng-click="searchStat()">Search</button>
+                    <button type="button" class="btn btn-small red" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DELETED ALL -->
+
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/check.png" width="50" height="50"></img>
+                    <p>All universities has been deleted correctly!!!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STAT ADDED CORRECTLY -->
+
+<div class="modal fade" id="addedCorrectly" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/check.png" width="50" height="50"></img>
+                    <p>University added correctly!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- UNEXPECTED FIELDS -->
+
+<div class="modal fade" id="unexpectedFields" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/fail.png" width="50" height="50"></img>
+                    <p>It´s necesary to fill in all the fields</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- STAT ALREADY EXIST -->
+
+<div class="modal fade" id="statAlreadyExist" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/fail.png" width="50" height="50"></img>
+                    <p>Stat already exist</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- STAT ALREADY EXIST -->
+
+<div class="modal fade" id="statDeleted" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/check.png" width="50" height="50"></img>
+                    <p>Stat deleted correctly</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

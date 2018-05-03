@@ -1,4 +1,5 @@
 /* global angular */
+/* global $ */
 
 
 angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$http", function($scope, $http) {
@@ -14,16 +15,19 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
     $scope.addStat = function() {
         $http.post(api, $scope.newStat).then(function seccessCallback(response) {
-            $scope.status = "ADDED CORRECTLY --> status: " + response.status;
+            //$scope.status = "ADDED CORRECTLY --> status: " + response.status;
+            $('#addedCorrectly').modal('show');
             delete $scope.newStat;
             getSpanUnivStats();
         }, function errorCallback(response) {
             console.log(response.status);
             if (response.status == 400) {
-                $scope.status = " FAIL: It´s necesary to fill in all the fields";
+                //$scope.status = " FAIL: It´s necesary to fill in all the fields";
+                $('#unexpectedFields').modal('show');
             }
             if (response.status == 409) {
-                $scope.status = " FAIL: Stat already exist";
+                //$scope.status = " FAIL: Stat already exist";
+                $('#statAlreadyExist').modal('show');
             }
             delete $scope.newStat;
             getSpanUnivStats();
@@ -35,6 +39,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
     $scope.deleteStat = function(autCommunity, year) {
         console.log("Stat to be deleted: Stat of " + autCommunity + " in " + year);
+        $('statDeleted').modal('show');
         $http.delete(api + "/" + autCommunity + "/" + year).then(function(response) {
             $scope.status = "DELETE method status :  Correctly deleted ";
             getSpanUnivStats();
@@ -43,7 +48,8 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
     $scope.deleteAllStats = function() {
         $http.delete(api).then(function(response) {
-            $scope.status = "DELETE method status :  Correctly deleted";
+            $('#confirmDelete').modal('show');
+            // $scope.status = "DELETE method status :  Correctly deleted";
             getSpanUnivStats();
         });
     };
@@ -64,7 +70,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
     $scope.searchStat = function() {
 
-
+        $('#search').modal('show');
 
         if ($scope.searchedStat.autCommunity) {
             search += ("&autCommunity=" + $scope.searchedStat.autCommunity);
@@ -117,6 +123,19 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
         getSpanUnivStats();
 
     };
+
+    $scope.loadInitialStats = function() {
+        $http.get(api + "/loadInitialData").then(function(response) {
+            getSpanUnivStats();
+        });
+
+    }
+
+    $scope.openSearchModal = function() {
+        $('#search').modal('show');
+        getSpanUnivStats();
+        delete $scope.searchedStat;
+    }
 
 
 }]);
