@@ -23,12 +23,6 @@
         </form>
     </div>
 </nav>
-<div>
-    <button class="button btn-outline-success btn-lg" ng-click="previousPage()"><i class="button btn-outline-success btn-lg">navigate_before</i></button>
-    <button class="button btn-outline-success btn-lg" ng-click="nextPage()"><i class="button btn-outline-success btn-lg">navigate_next</i></button>
-    <label>Page Number: <input ng-model="actualPage" type="number" min="1"/></label>
-    <button class="button btn-outline-success btn-lg" ng-click="findPage()"><i class="button btn-outline-success btn-lg">find_in_page</i></button>
-</div>
 
 <table class="table">
 
@@ -74,26 +68,31 @@
             <a class="page-link" href="#">&laquo;</a>
         </li>
         <li class="page-item active">
-            <a class="page-link" href="#">1</a>
+            <a class="page-link" ng-click="page1()">1</a>
         </li>
         <li class="page-item">
-            <a class="page-link" ng-click="nextPage()" href="#">2</a>
+            <a class="page-link" ng-click="page2()">2</a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="#">3</a>
+            <a class="page-link" ng-click="page3()">3</a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="#">4</a>
+            <a class="page-link" ng-click="page4()">4</a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="#">5</a>
+            <a class="page-link" ng-click="page5()">5</a>
         </li>
         <li class="page-item">
             <a class="page-link" href="#">&raquo;</a>
         </li>
     </ul>
 </div>
-
+<div>
+    <button class="button btn-outline-success btn-lg" ng-click="previousPage()"><i>navigate_before</i></button>
+    <button class="button btn-outline-success btn-lg" ng-click="nextPage()"><i>navigate_next</i></button>
+    <label>Page Number: <input ng-model="actualPage" type="number" min="1"/></label>
+    <button class="button btn-outline-success btn-lg" ng-click="findPage()"><i>find_in_page</i></button>
+</div>
 
 
 

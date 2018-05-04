@@ -65,7 +65,6 @@
    paginationString = "&limit=" + limit + "&offset=" + offset;
    $http.get(api + search + paginationString).then(function(response) {
     $scope.univs = response.data;
-    console.log($scope.univs.length);
    });
    search = "?";
   };
@@ -75,24 +74,9 @@
 
    $('#search').modal('show');
    getSpanishUniversities();
+   delete $scope.searchForm;
   };
 
-
-  /*$scope.pagination = function() {
-   if ($scope.univs.length == 10) {
-    offset += limit;
-    getSpanishUniversities();
-    $scope.actualPage++;
-   }
-   if ($scope.actualPage > 1) {
-    offset -= limit;
-    getSpanishUniversities();
-    $scope.actualPage--;
-   }
-
-  };
-
-*/
 
   $scope.searchUniversity2 = function() {
    $('#search').modal('show');
@@ -123,12 +107,48 @@
    getSpanishUniversities();
   };
   $scope.nextPage = function() {
-   if ($scope.stats.length == 10) {
+   if ($scope.univs.length == 10) {
     offset += limit;
     getSpanishUniversities();
     $scope.currentPage += 1;
    }
   };
+
+  //PAGINATION NUMBERS 
+
+
+  $scope.page1 = function() {
+
+   getSpanishUniversities();
+   $scope.currentPage == 1;
+
+  };
+
+  $scope.page2 = function() {
+   offset = 10;
+   getSpanishUniversities();
+   $scope.currentPage == 1;
+
+  };
+  $scope.page3 = function() {
+   offset = 20;
+   getSpanishUniversities();
+   $scope.currentPage == 1;
+
+
+  };
+  $scope.page4 = function() {
+   offset = 30;
+   getSpanishUniversities();
+   $scope.currentPage == 1;
+
+  };
+  $scope.page5 = function() {
+   offset = 40;
+   getSpanishUniversities();
+   $scope.currentPage == 1;
+  };
+
 
   $scope.previousPage = function() {
    if ($scope.currentPage > 1) {
