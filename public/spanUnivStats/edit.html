@@ -26,3 +26,41 @@
 <hr/>
 <br/>
 <b><i>{{status}}</i></b>
+
+
+<!-- UNEXPECTED FIELDS -->
+
+<div class="modal fade" id="unexpectedFields" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/fail.png" width="50" height="50"></img>
+                    <p>It´s necesary to fill in all the fields</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- UPDATED CORRECTLY -->
+
+<div class="modal fade" id="statUpdated" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/check.png" width="50" height="50"></img>
+                    <p>Stat has been updated correctly</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" ng-click="statUpdated()" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

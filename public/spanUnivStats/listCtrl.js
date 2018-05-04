@@ -39,9 +39,9 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
     $scope.deleteStat = function(autCommunity, year) {
         console.log("Stat to be deleted: Stat of " + autCommunity + " in " + year);
-        $('statDeleted').modal('show');
         $http.delete(api + "/" + autCommunity + "/" + year).then(function(response) {
-            $scope.status = "DELETE method status :  Correctly deleted ";
+            $('#statDeleted').modal('show');
+            //$scope.status = "DELETE method status :  Correctly deleted ";
             getSpanUnivStats();
         });
     };
@@ -126,6 +126,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
 
     $scope.loadInitialStats = function() {
         $http.get(api + "/loadInitialData").then(function(response) {
+            $('#loadInitial').modal('show');
             getSpanUnivStats();
         });
 
