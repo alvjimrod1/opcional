@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Edit an university</a>
+    <a class="navbar-brand" href="#">Spanish Universities API</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -14,8 +14,9 @@
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+
+            <button class="btn btn-secondary my-2 my-sm-0" ng-click="searchUniversity1()">Search</button>
+
         </form>
     </div>
 </nav>
@@ -27,32 +28,7 @@
             <th>Headquarters</th>
             <th>Type</th>
             <th>University name</th>
-            <button class="btn btn-info" data-toggle="modal" data-target="#v1">BOTON DE PRUEBA</button>
 
-
-            <div class="modal fade" id="v1" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4>MI VENTANA MODAL</h4>
-                            <div class="modal-body">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex
-                                ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent
-                                luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam;
-                                est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.
-                                Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
-                                in futurum.
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </tr>
     </thead>
@@ -67,9 +43,43 @@
 
 
             <td><button class="btn btn-info btn-sm" ng-click="updateUniv()"> Update</button></td>
-            <td><button href="/" class="btn btn-outline-secondary btn-sm" ng-click="getListUniversities"> Cancel</button></td>
+            <td><button href="/" class="btn btn-outline-secondary btn-sm" onclick="history.back(-1)"> Cancel</button></td>
         </tr>
     </tbody>
 </table>
 <hr/>
 <b><i>{{status}}</i></b>
+
+<div class="modal fade" id="changed" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/check.png" width="50" height="50"></img>
+
+                    University changed correctly!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="history.back(-1)">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="missField" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
+
+
+                    All fields must be filled !
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

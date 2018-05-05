@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="/spanishUniversities/modals.html" type="text/css" />
-<script type="text/javascript" src="/spanishUniversities/modals.html"></script>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Spanish Universities API</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,35 +61,12 @@
 </table>
 <div>
     <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link" href="#">&laquo;</a>
-        </li>
-        <li class="page-item active">
-            <a class="page-link" ng-click="page1()">1</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" ng-click="page2()">2</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" ng-click="page3()">3</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" ng-click="page4()">4</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" ng-click="page5()">5</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">&raquo;</a>
-        </li>
+        <button class="btn btn-outline-secondary" ng-click="previousPage()"><i>Previous Page</i></button>
+        <button class="btn btn-outline-secondary" ng-click="nextPage()"><i>Next Page</i></button>
+
     </ul>
 </div>
-<div>
-    <button class="button btn-outline-success btn-lg" ng-click="previousPage()"><i>navigate_before</i></button>
-    <button class="button btn-outline-success btn-lg" ng-click="nextPage()"><i>navigate_next</i></button>
-    <label>Page Number: <input ng-model="actualPage" type="number" min="1"/></label>
-    <button class="button btn-outline-success btn-lg" ng-click="findPage()"><i>find_in_page</i></button>
-</div>
+
 
 
 
@@ -102,7 +76,7 @@
 
 
 
-
+ 
 <!-- MODAL UNIVERSIDAD INSERTADA  CORRECTAMENTE-->
 
 <div class="modal fade" id="added" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
@@ -140,7 +114,7 @@
     </div>
 </div>
 
-<!-- MODAL USUARIO BORRADO -->
+<!-- MODAL UNIVERSIDAD BORRADO -->
 
 <div class="modal fade" id="deleted">
     <div class="modal-dialog">

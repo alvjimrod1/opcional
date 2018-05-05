@@ -106,48 +106,6 @@
 
    getSpanishUniversities();
   };
-  $scope.nextPage = function() {
-   if ($scope.univs.length == 10) {
-    offset += limit;
-    getSpanishUniversities();
-    $scope.currentPage += 1;
-   }
-  };
-
-  //PAGINATION NUMBERS 
-
-
-  $scope.page1 = function() {
-
-   getSpanishUniversities();
-   $scope.currentPage == 1;
-
-  };
-
-  $scope.page2 = function() {
-   offset = 10;
-   getSpanishUniversities();
-   $scope.currentPage == 1;
-
-  };
-  $scope.page3 = function() {
-   offset = 20;
-   getSpanishUniversities();
-   $scope.currentPage == 1;
-
-
-  };
-  $scope.page4 = function() {
-   offset = 30;
-   getSpanishUniversities();
-   $scope.currentPage == 1;
-
-  };
-  $scope.page5 = function() {
-   offset = 40;
-   getSpanishUniversities();
-   $scope.currentPage == 1;
-  };
 
 
   $scope.previousPage = function() {
@@ -158,10 +116,12 @@
    }
   };
 
-  $scope.findPage = function() {
-   offset = $scope.currentPage * limit - 10;
-   getSpanishUniversities();
-
+  $scope.nextPage = function() {
+   if ($scope.univs.length == 10) {
+    offset += limit;
+    getSpanishUniversities();
+    $scope.currentPage += 1;
+   }
   };
 
 
