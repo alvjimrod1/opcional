@@ -10,6 +10,9 @@ angular
             }).when("/stat/:autCommunity/:year", {
                 templateUrl: "edit.html",
                 controller: "EditCtrl"
+            }).when("/graphs", {
+                templateUrl: "graphs.html",
+                controller: "GraphsCtrl"
             });
 
     });
