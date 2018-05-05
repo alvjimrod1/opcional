@@ -1,13 +1,14 @@
 /* global angular */
 /* global $ */
 /* global Highcharts */
+/* global google */
 
-angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$http","$location", function($scope, $http, $location) {
+angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
     console.log("Graph Controller Initialized!");
     var api = "/api/v2/span-univ-stats";
-    
-    
-    $scope.return = function(){
+
+
+    $scope.return = function() {
         $location.path("/");
     };
 
@@ -36,9 +37,9 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
 
     var enr = [];
     var years = [];
+    var googleChartData = [["Region","EnrolledNumber"]];
 
     $http.get(api).then(function(response) {
-        console.log(response.data[0].enrolledNumber);
         for (var i = 0; i < response.data.length; i++) {
             years.push(response.data[i].year);
 
@@ -56,6 +57,17 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
             totalEnrolledNumber.push(yearEnrolledNumber);
 
         }
+        
+        for (var i = 0; i<response.data.length; i++){
+            if(response.data[i].year == years[years.length-1]){
+                googleChartData.push([response.data[i].autCommunity, response.data[i].enrolledNumber])
+            }
+        }
+        
+        
+        
+
+        /*HIGHCHARTS*/
 
         Highcharts.chart('highcharts', {
 
@@ -106,6 +118,35 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
             }
 
         });
+
+
+//var cadenaPrueba=[["Region","EnrolledNumber"],["murcia",200],["cataluña",200]]
+console.log(googleChartData)
+        /*GOOGLE CHARTS*/
+
+        google.charts.load('current', {
+            'packages': ['geochart'],
+            // Note: you will need to get a mapsApiKey for your project.
+            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+            'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+        });
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+            var data = google.visualization.arrayToDataTable(googleChartData);
+
+            var options = {
+                region: 'ES',
+                displayMode: 'markers',
+                colorAxis: { colors: ['green', 'blue'] }
+            };
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+            chart.draw(data, options);
+        }
+
+
     });
 
 

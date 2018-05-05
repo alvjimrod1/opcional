@@ -115,7 +115,7 @@ var initialStats = [
 
     {
 
-        "autCommunity": "andalucia",
+        "autCommunity": "andalusia",
         "year": 2015,
         "enrolledNumber": 250785,
         "degree": 182591,
@@ -133,7 +133,7 @@ var initialStats = [
 
     },
     {
-        "autCommunity": "andalucia",
+        "autCommunity": "andalusia",
         "year": 2014,
         "enrolledNumber": 249138,
         "degree": 146474,
@@ -142,7 +142,70 @@ var initialStats = [
 
     },
     {
-        "autCommunity": "aragon",
+        "autCommunity": "extremadura",
+        "year": 2014,
+        "enrolledNumber": 33798,
+        "degree": 22482,
+        "master": 1657,
+        "firstSecondCycle": 9659
+
+    },
+    {
+        "autCommunity": "canarias",
+        "year": 2013,
+        "enrolledNumber": 33798,
+        "degree": 22482,
+        "master": 1657,
+        "firstSecondCycle": 9659
+
+    }, 
+    {
+        "autCommunity": "galicia",
+        "year": 2016,
+        "enrolledNumber": 33755598,
+        "degree": 22482,
+        "master": 1657,
+        "firstSecondCycle": 9659
+
+    }, 
+    {
+        "autCommunity": "castilla la mancha",
+        "year": 2016,
+        "enrolledNumber": 3375598,
+        "degree": 22482,
+        "master": 1657,
+        "firstSecondCycle": 9659
+
+    }, 
+    {
+        "autCommunity": "galicia",
+        "year": 2012,
+        "enrolledNumber": 33333798,
+        "degree": 22482,
+        "master": 1657,
+        "firstSecondCycle": 9659
+
+    }, 
+    {
+        "autCommunity": "extremadura",
+        "year": 2014,
+        "enrolledNumber": 3372398,
+        "degree": 22482,
+        "master": 1657,
+        "firstSecondCycle": 9659
+
+    }, 
+    {
+        "autCommunity": "murcia",
+        "year": 2013,
+        "enrolledNumber": 322798,
+        "degree": 22482,
+        "master": 1657,
+        "firstSecondCycle": 9659
+
+    },
+    {
+        "autCommunity": "cataluña",
         "year": 2014,
         "enrolledNumber": 33798,
         "degree": 22482,

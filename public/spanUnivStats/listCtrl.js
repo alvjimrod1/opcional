@@ -70,6 +70,9 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     $scope.searchStat = function() {
 
         $('#search').modal('show');
+        if($scope.searchedStat==undefined){
+            $scope.searchedStat= new Object();
+        }
 
         if ($scope.searchedStat.autCommunity) {
             search += ("&autCommunity=" + $scope.searchedStat.autCommunity);
