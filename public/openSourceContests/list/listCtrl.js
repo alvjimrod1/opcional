@@ -1,6 +1,6 @@
 /* global angular */
 
-angular.module("openSourceContestsApp").controller("ListCtrl", ["$scope", "$http", function ($scope, $http) {
+angular.module("AppManager").controller("ListCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("List Ctrl initialized!");
     var api = "/api/v2/open-source-contests";
     var pageSize = 10;
