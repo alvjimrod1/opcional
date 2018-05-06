@@ -18,18 +18,13 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
 
     /*ordenar array*/
 
-    Array.prototype.sortNumbers = function() {
-        return this.sort(
-            function(a, b) {
-                return a - b;
-            }
-        );
-    };
+
 
     var autCommunities = [];
 
 
     $http.get(api).then(function(response) {
+        console.log(response.data);
         for (var i = 0; i < response.data.length; i++) {
             autCommunities.push(response.data[i].autCommunity);
 
@@ -38,17 +33,17 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
         var totalPublicas = [];
         var totalPrivadas = [];
 
-        for (var i = 0; i < autCommunities.sortNumbers().unique().length; i++) {
+        for (var i = 0; i < autCommunities.unique().length; i++) {
             var acumPublicas = 0;
             var acumPrivadas = 0;
             for (var j = 0; j < response.data.length; j++) {
-                if ((response.data[j].autCommunity) == autCommunities.sortNumbers().unique()[i]) {
+                if ((response.data[j].autCommunity) == autCommunities.unique()[i]) {
                     if (response.data[j].type == "publica")
 
                         acumPublicas += 1;
                 }
 
-                if ((response.data[j].autCommunity) == autCommunities.sortNumbers().unique()[i]) {
+                if ((response.data[j].autCommunity) == autCommunities.unique()[i]) {
                     if (response.data[j].type == "privada")
                         acumPrivadas += 1;
                 }
@@ -59,6 +54,18 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
 
         }
 
+        var totalPublicUniversities = 0;
+        for (var i = 0; i < totalPublicas.length; i++) {
+            totalPublicUniversities += totalPublicas[i];
+        }
+
+        console.log(totalPublicUniversities)
+
+        var totalPrivateUniversities = 0;
+        for (var i = 0; i < totalPrivadas.length; i++) {
+            totalPrivateUniversities += totalPrivadas[i];
+        }
+        console.log(totalPrivateUniversities)
 
         Highcharts.chart('container', {
             chart: {
