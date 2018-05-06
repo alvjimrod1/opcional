@@ -1,6 +1,6 @@
 /* global angular */
 
-angular.module("openSourceContestsApp")
+angular.module("AppManager")
     .controller("EditCtrl", ["$scope", "$http", "$routeParams",
         function ($scope, $http, $routeParams) {
             console.log("edit Ctrl initialized!");

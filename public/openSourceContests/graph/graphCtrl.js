@@ -1,7 +1,7 @@
 /* global angular */
 
 
-angular.module("openSourceContestsApp")
+angular.module("AppManager")
     .controller("GraphCtrl", ["$scope", "$http", "$routeParams",
         function ($scope, $http, $routeParams) {
             var api = "/api/v2/open-source-contests";
