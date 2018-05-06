@@ -32,18 +32,14 @@ angular
             .when("/spanishUniversitiesGraphs", {
                 templateUrl: "spanishUniversitiesGraphs.html",
                 controller: "spanishUniversitiesGraphsCtrl"
-            })
-
-
-
-
-
-
-        ;
-
-
-
-
-
-
+            }).when("/openSourceContests", {
+                templateUrl: "openSourceContests/list/list.html",
+                controller: "ListCtrl"
+            }).when("/contest/:year/:university/:project", {
+                templateUrl: "openSourceContests/edit/edit.html",
+                controller: "EditCtrl"
+            }).when("/graph", {
+                templateUrl: "openSourceContests/graph/graph.html",
+                controller: "GraphCtrl"
+            });
     });
