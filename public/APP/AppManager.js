@@ -7,6 +7,8 @@ angular
             /*BALTA */
             .when("/", {
                 templateUrl: "AppMenu.html"
+            }).when("/analytics", {
+                templateUrl: "analytics.html"
             })
             .when("/spanUnivStats", {
                 templateUrl: "spanUnivStatsList.html",
@@ -20,6 +22,8 @@ angular
                 templateUrl: "spanUnivStatsGraphs.html",
                 controller: "spanUnivStatsGraphsCtrl"
 
+
+
                 /*ALVARO*/
             }).when("/spanishUniversities", {
                 templateUrl: "spanishUniversitiesList.html",
@@ -32,6 +36,11 @@ angular
             .when("/spanishUniversitiesGraphs", {
                 templateUrl: "spanishUniversitiesGraphs.html",
                 controller: "spanishUniversitiesGraphsCtrl"
+                
+                
+                
+                
+                /*RAFA*/
             }).when("/openSourceContests", {
                 templateUrl: "../openSourceContests/list/list.html",
                 controller: "ListCtrl"
