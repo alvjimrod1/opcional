@@ -23,7 +23,7 @@ angular
                 /*ALVARO*/
             }).when("/spanishUniversities", {
                 templateUrl: "spanishUniversitiesList.html",
-                controller: "spanishUniversitiesListCtrl.js"
+                controller: "spanishUniversitiesListCtrl"
             })
             .when("/univ/:autCommunity/:yearFund", {
                 templateUrl: "spanishUniversitiesEdit.html",
