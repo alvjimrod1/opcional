@@ -12,7 +12,7 @@ openSourceContestsApi.register = function (app, collection, initialProjects) {
     });
 
     app.get(BASE_API_PATH + "/open-source-contests/loadInitialData", (req, res) => {
-        console.log(Date() + " - GET /open-source-contests/loadInitialData")
+        console.log(Date() + " - GET /open-source-contests/loadInitialData");
 
         collection.find({}).toArray((err, projects) => {
             if (err) {
