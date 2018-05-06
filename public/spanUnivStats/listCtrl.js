@@ -3,7 +3,7 @@
 /* global Highcharts */
 
 
-angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$http","$location", function($scope, $http, $location) {
+angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
     console.log("List Ctrl initialized!");
     var api = "/api/v2/span-univ-stats";
     var search = "?";
@@ -29,7 +29,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
             }
             delete $scope.newStat;
             getSpanUnivStats();
-            
+
         });
 
 
@@ -64,8 +64,8 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     };
 
     getSpanUnivStats();
-    
-    $scope.getAll = function(){
+
+    $scope.getAll = function() {
         $http.get(api).then(function(response) {
             $scope.stats = response.data;
         });
@@ -76,8 +76,8 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     $scope.searchStat = function() {
 
         $('#search').modal('show');
-        if($scope.searchedStat==undefined){
-            $scope.searchedStat= new Object();
+        if ($scope.searchedStat == undefined) {
+            $scope.searchedStat = new Object();
         }
 
         if ($scope.searchedStat.autCommunity) {
@@ -133,21 +133,23 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     };
 
     $scope.loadInitialStats = function() {
-        $http.get(api + "/loadInitialData").then(function(response) {
-            $('#loadInitial').modal('show');
-            getSpanUnivStats();
-        });
+        if ($scope.stats.length == 0) {
+            $http.get(api + "/loadInitialData").then(function(response) {
+                $('#loadInitial').modal('show');
+                getSpanUnivStats();
 
-    }
+            });
+        }
+    };
 
     $scope.openSearchModal = function() {
         $('#search').modal('show');
         getSpanUnivStats();
         delete $scope.searchedStat;
-    }
-    
-    $scope.getGraphs = function (){
+    };
+
+    $scope.getGraphs = function() {
         $location.path("/graphs");
-    }
+    };
 
 }]);
