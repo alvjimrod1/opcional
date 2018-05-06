@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Spanish Universities API</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+
+        </form>
+    </div>
+</nav>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Autonomous Community</th>
+            <th>Year Fundation</th>
+            <th>Headquarters</th>
+            <th>Type</th>
+            <th>University name</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{updatedUniv.autCommunity}}</td>
+            <td>{{updatedUniv.yearFund}}</td>
+            <td><input class="form-control" ng-model="updatedUniv.headquar" /></td>
+            <td><input class="form-control" ng-model="updatedUniv.type" /></td>
+            <td><input class="form-control" ng-model="updatedUniv.nameUniversity" /></td>
+
+
+
+            <td><button class="btn btn-info btn-sm" ng-click="updateUniv()"> Update</button></td>
+            <td><button href="/" class="btn btn-outline-secondary btn-sm" onclick="history.back(-1)"> Cancel</button></td>
+        </tr>
+    </tbody>
+</table>
+<hr/>
+<b><i>{{status}}</i></b>
+
+<div class="modal fade" id="changed" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/check.png" width="50" height="50"></img>
+
+                    University changed correctly!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="history.back(-1)">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="missField" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
+
+
+                    All fields must be filled !
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
