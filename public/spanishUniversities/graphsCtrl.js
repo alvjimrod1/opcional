@@ -18,7 +18,7 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
 
 
     var autCommunities = [];
-    var hq = [];
+  //  var hq = [];
     var googleChartData = [
         ["Aut Community", "Number of universities"]
     ];
@@ -30,7 +30,7 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
         // console.log(response.data);
         for (var i = 0; i < response.data.length; i++) {
             autCommunities.push(response.data[i].autCommunity);
-            hq.push(response.data[i].headquar);
+         //   hq.push(response.data[i].headquar);
 
         }
         console.log("AUTCOMUNITIES" + autCommunities)
