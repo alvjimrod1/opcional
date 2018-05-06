@@ -46,7 +46,26 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
             years.push(response.data[i].year);
 
         }
-        console.log(years);
+
+        var totalEnrolledNumber = [];
+
+        for (var i = 0; i < years.sortNumbers().unique().length; i++) {
+            var yearEnrolledNumber = 0;
+            for (var j = 0; j < response.data.length; j++) {
+                if (response.data[j].year == years.sortNumbers().unique()[i]) {
+                    yearEnrolledNumber += response.data[j].enrolledNumber;
+                }
+            }
+            totalEnrolledNumber.push(yearEnrolledNumber);
+
+        }
+
+        for (var i = 0; i < response.data.length; i++) {
+            if (response.data[i].year == years[years.length - 1]) {
+                googleChartData.push([response.data[i].autCommunity, response.data[i].enrolledNumber])
+            }
+        }
+
 
 
 

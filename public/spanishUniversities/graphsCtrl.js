@@ -11,29 +11,33 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
     var publicas = [];
     var privadas = [];
     var categoriesArray = [];
-    var n = 0;
+
+    Array.prototype.unique = function(a) {
+        return function() { return this.filter(a) }
+    }(function(a, b, c) {
+        return c.indexOf(a, b + 1) < 0
+    });
+
+
 
 
     $http.get(api).then(function(response) {
 
         for (var i = 0; i < response.data.length; i++) {
             arrayDeTipos.push(response.data[i].type);
-            categoriesArray.push(response.data[i].autCommunity)
+            categoriesArray.push(response.data[i].autCommunity);
         }
+        console.log("PROBANDO NO REPETIDOS = " + categoriesArray.unique())
 
+        console.log("PROBANDO CON REPETIDOS = " + categoriesArray);
 
         for (var i = 0; i < arrayDeTipos.length; i++) {
-            function repetidos() {
-                if (response.data[i].includes(response.data[i].autCommunity == "publica")) {
-                    n++;
-                }
-            }
             console.log("TIPOS :" + arrayDeTipos[i]);
-            if (arrayDeTipos[i] == "publica" & repetidos()) {
-                publicas.push(n);
+            if (arrayDeTipos[i] == "publica") {
+                publicas.push(3);
             }
             else {
-                publicas.push();
+                publicas.push(0);
             }
 
 
