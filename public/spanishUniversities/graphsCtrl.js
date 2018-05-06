@@ -7,52 +7,57 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
     console.log("Graph Controller Initialized!");
     var api = "/api/v2/spanish-universities";
     /* CHARTS */
-    var arrayDeTipos = [];
-    var publicas = [];
-    var privadas = [];
-    var categoriesArray = [];
 
     Array.prototype.unique = function(a) {
-        return function() { return this.filter(a) }
+        return function() {
+            return this.filter(a)
+        }
     }(function(a, b, c) {
-        return c.indexOf(a, b + 1) < 0
+        return c.indexOf(a, b + 1) < 0;
     });
 
+    /*ordenar array*/
 
+    Array.prototype.sortNumbers = function() {
+        return this.sort(
+            function(a, b) {
+                return a - b;
+            }
+        );
+    };
+
+    var autCommunities = [];
 
 
     $http.get(api).then(function(response) {
-
         for (var i = 0; i < response.data.length; i++) {
-            arrayDeTipos.push(response.data[i].type);
-            categoriesArray.push(response.data[i].autCommunity);
-        }
-        console.log("PROBANDO NO REPETIDOS = " + categoriesArray.unique())
-
-        console.log("PROBANDO CON REPETIDOS = " + categoriesArray);
-
-        for (var i = 0; i < arrayDeTipos.length; i++) {
-            console.log("TIPOS :" + arrayDeTipos[i]);
-            if (arrayDeTipos[i] == "publica") {
-                publicas.push(3);
-            }
-            else {
-                publicas.push(0);
-            }
-
-
-            if (arrayDeTipos[i] == "privada") {
-                privadas.push(1);
-            }
-            else {
-                privadas.push(0);
-            }
+            autCommunities.push(response.data[i].autCommunity);
 
         }
-        // console.log(contPublicas);
-        console.log("Numero de privadas :   " + privadas);
 
-        console.log("Numero de publicas :   " + publicas);
+        var totalPublicas = [];
+        var totalPrivadas = [];
+
+        for (var i = 0; i < autCommunities.sortNumbers().unique().length; i++) {
+            var acumPublicas = 0;
+            var acumPrivadas = 0;
+            for (var j = 0; j < response.data.length; j++) {
+                if ((response.data[j].autCommunity) == autCommunities.sortNumbers().unique()[i]) {
+                    if (response.data[j].type == "publica")
+
+                        acumPublicas += 1;
+                }
+
+                if ((response.data[j].autCommunity) == autCommunities.sortNumbers().unique()[i]) {
+                    if (response.data[j].type == "privada")
+                        acumPrivadas += 1;
+                }
+            }
+
+            totalPublicas.push(acumPublicas);
+            totalPrivadas.push(acumPrivadas);
+
+        }
 
 
         Highcharts.chart('container', {
@@ -60,10 +65,10 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
                 type: 'bar'
             },
             title: {
-                text: 'Number of Universities in Autcommunities per year'
+                text: 'Number of Universities per type in autonomous communities'
             },
             xAxis: {
-                categories: categoriesArray
+                categories: autCommunities.unique()
             },
             yAxis: {
                 min: 0,
@@ -81,12 +86,11 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
             },
             series: [{
                 name: 'Publicas',
-                //data: [5, 3, 4, 7, 2] //sacar las universidades publicas
-                data: publicas
+                data: totalPublicas //sacar las universidades publicas
 
             }, {
                 name: 'Privadas',
-                data: privadas //sacar las universidades privadas 
+                data: totalPrivadas //sacar las universidades privadas 
             }, ]
         });
 
