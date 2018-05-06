@@ -9,6 +9,9 @@ angular
             }).when("/univ/:autCommunity/:yearFund", {
                 templateUrl: "edit.html",
                 controller: "EditCtrl"
+            }).when("/graphs", {
+                templateUrl: "graphs.html",
+                controller: "graphsCtrl"
             });
 
     });

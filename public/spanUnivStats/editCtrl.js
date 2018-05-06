@@ -15,7 +15,7 @@ angular.module("SpanUnivStatsManagerApp").controller("EditCtrl", ["$scope", "$ht
         if (Object.values($scope.updatedStat).includes(null)) {
             //$scope.status = " FAIL: It´s necesary to fill in all the fields";
             $('#unexpectedFields').modal('show');
-        
+
         }
         else {
             $http.put(statURL, $scope.updatedStat).then(function(response) {
