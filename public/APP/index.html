@@ -1,0 +1,44 @@
+<html ng-app="AppManager">
+
+<head>
+    <title>Spanish Universities Statatistics Aplication</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+
+    <link rel="stylesheet" href="/bower_components/materialize/dist/css/materialize.min.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="/bower_components/materialize/dist/js/materialize.min.js"></script>
+
+
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="AppManager.js"></script>
+    <script src="spanUnivStatsListCtrl.js"></script>
+    <script src="spanUnivStatsEditCtrl.js"></script>
+    <script src="spanUnivStatsGraphsCtrl.js"></script>
+
+    <!--HIGHCHARTS-->
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <!--GOOGLECHARTS-->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!--CHARTIST-->
+    <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
+    <script src="/bower_components/chartist/dist/chartist.min.js"></script>
+
+</head>
+
+<body>
+    <div ng-view>
+
+    </div>
+</body>
+
+</html>

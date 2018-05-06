@@ -3,7 +3,7 @@
 /* global Highcharts */
 
 
-angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+angular.module("AppManager").controller("spanUnivStatsListCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
     console.log("List Ctrl initialized!");
     var api = "/api/v2/span-univ-stats";
     var search = "?";
@@ -152,7 +152,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     };
 
     $scope.getGraphs = function() {
-        $location.path("/graphs");
+        $location.path("/spanUnivStatsGraphs");
     };
 
 }]);
