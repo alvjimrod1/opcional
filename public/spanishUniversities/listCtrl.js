@@ -22,7 +22,9 @@
      $('#fail_409').modal('show');
     }
    });
+   delete $scope.newUniv;
    getSpanishUniversities();
+
 
   };
 
