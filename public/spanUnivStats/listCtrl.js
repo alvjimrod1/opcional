@@ -108,7 +108,7 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
             search += ("&to=" + $scope.searchedStat.to);
         }
 
-        getSpanUnivStats();
+        $scope.getAll();
 
 
     };

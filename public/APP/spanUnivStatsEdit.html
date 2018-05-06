@@ -1,0 +1,80 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#"><strong><h3>Spanish Universities Stats List</h3></strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="https://sos1718-09-brr-sos171811brr.c9users.io/APP/#!/spanUnivStats">Home<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<table class="table">
+
+    <thead>
+        <th>AutCommunity</th>
+        <th>Year</th>
+        <th>Enrolled Number</th>
+        <th>Degree</th>
+        <th>Master</th>
+        <th>First-Second Cycle</th>
+        <th>Actions</th>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>{{updatedStat.autCommunity}}</td>
+            <td>{{updatedStat.year}}</td>
+            <td><input class="form-control" type="number" ng-model="updatedStat.enrolledNumber" /></td>
+            <td><input class="form-control" type="number" ng-model="updatedStat.degree" /></td>
+            <td><input class="form-control" type="number" ng-model="updatedStat.master" /></td>
+            <td><input class="form-control" type="number" ng-model="updatedStat.firstSecondCycle" /></td>
+            <td><button class="button btn-primary" ng-click="updateStat()">UPDATE</button></td>
+        </tr>
+    </tbody>
+</table>
+<hr/>
+<br/>
+<b><i>{{status}}</i></b>
+
+
+<!-- UNEXPECTED FIELDS -->
+
+<div class="modal fade" id="unexpectedFields" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/fail.png" width="50" height="50"></img>
+                    <p>It´s necesary to fill in all the fields</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- UPDATED CORRECTLY -->
+
+<div class="modal fade" id="statUpdated" tabindex="-1" role="dialog" aria-labelledby="v1label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body"><img src="/spanUnivStats/images_balta/check.png" width="50" height="50"></img>
+                    <p>Stat has been updated correctly</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-small red" ng-click="statUpdated()" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
