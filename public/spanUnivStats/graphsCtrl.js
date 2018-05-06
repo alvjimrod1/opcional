@@ -2,6 +2,7 @@
 /* global $ */
 /* global Highcharts */
 /* global google */
+/* global Chartist */
 
 angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
     console.log("Graph Controller Initialized!");
@@ -37,7 +38,10 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
 
     var enr = [];
     var years = [];
-    var googleChartData = [["Region","EnrolledNumber"]];
+    var googleChartData = [
+        ["Region", "EnrolledNumber"]
+    ];
+    var chartistData = [];
 
     $http.get(api).then(function(response) {
         for (var i = 0; i < response.data.length; i++) {
@@ -46,26 +50,31 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
         }
 
         var totalEnrolledNumber = [];
+        var totalMaster=[];
 
         for (var i = 0; i < years.sortNumbers().unique().length; i++) {
             var yearEnrolledNumber = 0;
+            var yearMaster=0;
             for (var j = 0; j < response.data.length; j++) {
                 if (response.data[j].year == years.sortNumbers().unique()[i]) {
                     yearEnrolledNumber += response.data[j].enrolledNumber;
+                    yearMaster += response.data[j].master;
                 }
             }
+            
             totalEnrolledNumber.push(yearEnrolledNumber);
+            totalMaster.push(yearMaster);
 
         }
-        
-        for (var i = 0; i<response.data.length; i++){
-            if(response.data[i].year == years[years.length-1]){
+
+        for (var i = 0; i < response.data.length; i++) {
+            if (response.data[i].year == years[years.length - 1]) {
                 googleChartData.push([response.data[i].autCommunity, response.data[i].enrolledNumber])
             }
         }
-        
-        
-        
+
+
+
 
         /*HIGHCHARTS*/
 
@@ -120,8 +129,10 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
         });
 
 
-//var cadenaPrueba=[["Region","EnrolledNumber"],["murcia",200],["cataluña",200]]
-console.log(googleChartData)
+        //var cadenaPrueba=[["Region","EnrolledNumber"],["murcia",200],["cataluña",200]]
+
+
+
         /*GOOGLE CHARTS*/
 
         google.charts.load('current', {
@@ -147,9 +158,18 @@ console.log(googleChartData)
         }
 
 
+
+        /*CHARTIST*/
+        
+        var chartistSeries=[];
+        chartistSeries.push(totalMaster);
+
+        new Chartist.Line('#chart1', {
+            labels: years.unique().sortNumbers(),
+            series: chartistSeries
+        });
+
+
+
     });
-
-
-
-
 }]);

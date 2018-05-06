@@ -1,6 +1,6 @@
 <center>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#"><strong>Spanish Universities Stats List</strong></a>
+        <a class="navbar-brand" href="#"><strong><h3>Spanish Universities Stats List</h3></strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -8,11 +8,14 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="https://sos1718-09-brr-sos171811brr.c9users.io/spanUnivStats/">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-
+                <li class="nav-item active">
+                    <a class="nav-link" href="https://sos1718-09-brr-sos171811brr.c9users.io/spanUnivStats/#!/graphs">Charts<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" ng-click="loadInitialStats()">Load<span class="sr-only">(current)</span></a>
+                </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
 
@@ -63,7 +66,6 @@
         <tr>
             <td><button type="button" class="waves-effect waves-light btn red" ng-click="deleteAllStats()">DELETE ALL</button></td>
             <td><button type="button" class="waves-effect waves-light btn yellow" ng-click="loadInitialStats()">LOAD</button></td>
-            <td><button type="button" class="waves-effect waves-light btn green" ng-click="getGraphs()">GRAPHS</button></td>
         </tr>
     </tbody>
 </table>
