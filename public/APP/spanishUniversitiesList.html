@@ -10,7 +10,7 @@
                 <a class="nav-link" href="#">Data list <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="https://sos1718-09.herokuapp.com/APP/#!/spanishUniversities">Analytics</a>
+                <a class="nav-link" href="https://sos1718-09.herokuapp.com/APP/#!/spanishUniversitiesGraphs">Analytics</a>
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -45,7 +45,7 @@
 
         </tr>
         <tr ng-repeat="univ in univs">
-            <td><a href="/spanishUniversities/#!/univ/{{univ.autCommunity}}/{{univ.yearFund}}">{{univ.autCommunity}}</a></td>
+            <td><a href="/APP/#!/univ/{{univ.autCommunity}}/{{univ.yearFund}}">{{univ.autCommunity}}</a></td>
             <td>{{univ.yearFund}}</td>
             <td>{{univ.headquar}}</td>
             <td>{{univ.type}}</td>
