@@ -64,6 +64,12 @@ angular.module("SpanUnivStatsManagerApp").controller("ListCtrl", ["$scope", "$ht
     };
 
     getSpanUnivStats();
+    
+    $scope.getAll = function(){
+        $http.get(api).then(function(response) {
+            $scope.stats = response.data;
+        });
+    };
 
 
 

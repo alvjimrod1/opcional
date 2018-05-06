@@ -50,18 +50,18 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
         }
 
         var totalEnrolledNumber = [];
-        var totalMaster=[];
+        var totalMaster = [];
 
         for (var i = 0; i < years.sortNumbers().unique().length; i++) {
             var yearEnrolledNumber = 0;
-            var yearMaster=0;
+            var yearMaster = 0;
             for (var j = 0; j < response.data.length; j++) {
                 if (response.data[j].year == years.sortNumbers().unique()[i]) {
                     yearEnrolledNumber += response.data[j].enrolledNumber;
                     yearMaster += response.data[j].master;
                 }
             }
-            
+
             totalEnrolledNumber.push(yearEnrolledNumber);
             totalMaster.push(yearMaster);
 
@@ -79,6 +79,10 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
         /*HIGHCHARTS*/
 
         Highcharts.chart('highcharts', {
+
+            chart: {
+                type: 'line'
+            },
 
             title: {
                 text: 'Spanish Universities Statistics'
@@ -160,8 +164,8 @@ angular.module("SpanUnivStatsManagerApp").controller("GraphsCtrl", ["$scope", "$
 
 
         /*CHARTIST*/
-        
-        var chartistSeries=[];
+
+        var chartistSeries = [];
         chartistSeries.push(totalMaster);
 
         new Chartist.Line('#chart1', {
