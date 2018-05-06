@@ -42,18 +42,19 @@ var initialUniversities = [
 
     {
 
-        "autCommunity": "aragon",
+        "autCommunity": "ES-AR",
         "yearFund": "1542",
         "headquar": "zaragoza",
         "type": "publica",
         "nameUniversity": "universidad de zaragoza"
+        
 
 
     },
 
     {
 
-        "autCommunity": "catalunya",
+        "autCommunity": "ES-CT",
         "yearFund": "2003",
         "headquar": "barcelona",
         "type": "privada",
@@ -64,7 +65,7 @@ var initialUniversities = [
 
     {
 
-        "autCommunity": "andalucia",
+        "autCommunity": "ES-AN",
         "yearFund": "1505",
         "headquar": "sevilla",
         "type": "publica",
@@ -75,7 +76,7 @@ var initialUniversities = [
 
     {
 
-        "autCommunity": "andalucia",
+        "autCommunity": "ES-AN",
         "yearFund": "2011",
         "headquar": "sevilla",
         "type": "privada",
@@ -86,7 +87,7 @@ var initialUniversities = [
 
     {
 
-        "autCommunity": "galicia",
+        "autCommunity": "ES-GA",
         "yearFund": "1990",
         "headquar": "vigo",
         "type": "publica",

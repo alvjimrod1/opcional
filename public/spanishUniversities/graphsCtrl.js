@@ -6,7 +6,7 @@
 angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
     console.log("Graph Controller Initialized!");
     var api = "/api/v2/spanish-universities";
-    /* CHARTS */
+    /* HIGCHARTS */
 
     Array.prototype.unique = function(a) {
         return function() {
@@ -16,19 +16,24 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
         return c.indexOf(a, b + 1) < 0;
     });
 
-    /*ordenar array*/
-
-
 
     var autCommunities = [];
+    var hq = [];
+    var googleChartData = [
+        ["Aut Community", "Number of universities"]
+    ];
+
+
 
 
     $http.get(api).then(function(response) {
-        console.log(response.data);
+        // console.log(response.data);
         for (var i = 0; i < response.data.length; i++) {
             autCommunities.push(response.data[i].autCommunity);
+            hq.push(response.data[i].headquar);
 
         }
+        console.log("AUTCOMUNITIES" + autCommunities)
 
         var totalPublicas = [];
         var totalPrivadas = [];
@@ -37,13 +42,13 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
             var acumPublicas = 0;
             var acumPrivadas = 0;
             for (var j = 0; j < response.data.length; j++) {
-                if ((response.data[j].autCommunity) == autCommunities.unique()[i]) {
+                if ((response.data[j].autCommunity) == autCommunities.sort().unique()[i]) {
                     if (response.data[j].type == "publica")
 
                         acumPublicas += 1;
                 }
 
-                if ((response.data[j].autCommunity) == autCommunities.unique()[i]) {
+                if ((response.data[j].autCommunity) == autCommunities.sort().unique()[i]) {
                     if (response.data[j].type == "privada")
                         acumPrivadas += 1;
                 }
@@ -66,6 +71,21 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
             totalPrivateUniversities += totalPrivadas[i];
         }
         console.log(totalPrivateUniversities)
+
+        //////GOOGLE CHARTS/////
+
+        for (var i = 0; i < response.data.length; i++) {
+            var cont = 0;
+            for (var j = 0; j < response.data.length; j++) {
+                if (response.data[j].autCommunity == response.data[i].autCommunity) {
+                    cont++;
+                }
+            }
+            googleChartData.push([response.data[i].autCommunity, cont])
+        }
+
+        // console.log(cont)
+
 
         Highcharts.chart('container', {
             chart: {
@@ -105,15 +125,35 @@ angular.module("spanishUniversitiesManagerApp").controller("graphsCtrl", ["$scop
 
     })
 
+    /*GOOGLE CHARTS*/
+
+    google.charts.load('current', {
+        'packages': ['geochart'],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+        'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+    });
+    google.charts.setOnLoadCallback(drawRegionsMap);
 
 
+    function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable(googleChartData);
+
+        var options = {
+            region: 'ES',
+            resolution: 'provinces',
 
 
+            colorAxis: {
+                minValue: 0,
+                maxValue: 10
+            }
+        };
 
 
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 
-
-
-    /*HIGHCHARTS*/
+        chart.draw(data, options);
+    }
 
 }]);
