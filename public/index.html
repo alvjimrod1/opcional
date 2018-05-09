@@ -1,70 +1,79 @@
-<html>
+<html ng-app="AppManager">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Information of the team</title>
+    <title>Spanish Universities Statatistics Aplication</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="AppManager.js"></script>
+    <script src="spanUnivStatsListCtrl.js"></script>
+    <script src="spanUnivStatsEditCtrl.js"></script>
+    <script src="spanUnivStatsGraphsCtrl.js"></script>
+
+    <!-- APP y controladores -->
+    <script src="spanishUniversitiesListCtrl.js"></script>
+    <script src="spanishUniversitiesEditCtrl.js"></script>
+    <script src="spanishUniversitiesGraphsCtrl.js"></script>
+    <!--HIGHCHARTS-->
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+
+
+
+    <!--GOOGLECHARTS-->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!--CHARTIST-->
+    <link rel="stylesheet" href="/bower_components/chartist/dist/chartist.min.css">
+    <script src="/bower_components/chartist/dist/chartist.min.js"></script>
+
+    <!-- ANGULAR CHARTS.JS imports  -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
+
+    <!-- openSourceContests -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+    <!-- <script type="text/javascript" src="openSourceContestsApp.js"></script> -->
+    <script type="text/javascript" src="../openSourceContests/list/listCtrl.js"></script>
+    <script type="text/javascript" src="../openSourceContests/edit/editCtrl.js"></script>
+    <script type="text/javascript" src="../openSourceContests/graph/graphCtrl.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.css" />
+
 </head>
 
 <body>
-    <h1 align="left">SOS1718-09</h1>
-    <ul>
-        <li type="disc">
-            <Strong>Team</Strong>
-            <ul>
-                <li type="circle"><a href="https://github.com/balramrom">Baltasar Ramírez Romero</a> <img src="balta.jpg" width="40" height="40"></li>
-                <br/>
-                <li type="circle"><a href="https://github.com/alvjimrod1">Álvaro Jiménez Rodríguez</a> <img src="alvaro.jpg" width="40" height="40"></li>
-                <br/>
-                <li type="circle"><a href="https://github.com/rarellano">Rafael Arellano Romero</a> <img src="rafa.jpg" width="40" height="40"></li>
-            </ul>
-        </li>
-        <br/>
-        <li type="disc">
-            <Strong>Project description:</Strong> processing data of Spanish universities.</li>
-        <br/>
-        <li type="disc">
-            <Strong>Repository:</Strong><a href="https://github.com/gti-sos/SOS1718-09">SOS1617/SOS1718-09</a></li>
-        <br/>
-        <li type="disc">
-            <Strong>Url:</Strong><a href="http://sos1718-09.herokuapp.com/">http://sos1718-09.herokuapp.com/</a></li>
-        <br/>
-        <li type="disc">
-            <Strong>APIS</Strong>
-            <ul>
-                <br/>
-                <li type="circle"><a href="https://sos1718-09.herokuapp.com/api/v1/span-univ-stats">Span-univ-stats</a> </li>
-                <br/>
-                <li type="circle"><a href="https://sos1718-09.herokuapp.com/api/v1/spanish-universities">spanish universities</a></li>
-                <br/>
-                <li type="circle"><a href="https://sos1718-09.herokuapp.com/api/v2/open-source-contests">open-source-contests</a></li>
-            </ul>
-        </li>
-        <br/>
-        <li type="disc">
-            <Strong>DOCS</Strong>
-            <ul>
-                <br/>
-                <li type="circle"><a href="https://sos1718-09.herokuapp.com/api/v1/span-univ-stats/docs">Span-univ-stats (developed by Baltasar Ramirez Romero)</a> </li>
-                <br/>
-                <li type="circle"><a href="https://sos1718-09.herokuapp.com/api/v1/spanish-universities/docs">Spanish-universities (developed by Alvaro Jimenez Rodriguez)</a> </li>
-                <br/>
-                <li type="circle"><a href="https://sos1718-09.herokuapp.com/api/v2/open-source-contests/docs">Open Source Contests (developed by Rafael Arellano Romero)</a> </li>
-                <br/>
-            </ul>
-        </li>
-        <li type="disc">
-            <Strong>FRONT-END</Strong>
-            <ul>
-                <br/>
-                <li type="circle"><a href="https://sos1718-09.herokuapp.com/APP/#!/"> Spanish Universities App (developed by the team SOS1718-09)</a> </li>
-                <br/>
+    <div ng-view>
 
-            </ul>
-        </li>
-
-
-    </ul>
-
+    </div>
 </body>
 
 </html>
