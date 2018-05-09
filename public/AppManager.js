@@ -42,13 +42,13 @@ angular
 
                 /*RAFA*/
             }).when("/openSourceContests", {
-                templateUrl: "/openSourceContests/list/list.html",
-                controller: "/openSourceContests/list/ListCtrl"
+                templateUrl: "../openSourceContests/list/list.html",
+                controller: "ListCtrl"
             }).when("/openSourceContests/contest/:year/:university/:project", {
-                templateUrl: "/openSourceContests/edit/edit.html",
-                controller: "/openSourceContests/edit/EditCtrl"
+                templateUrl: "../openSourceContests/edit/edit.html",
+                controller: "EditCtrl"
             }).when("/openSourceContests/graph", {
-                templateUrl: "/openSourceContests/graph/graph.html",
+                templateUrl: "../openSourceContests/graph/graph.html",
                 controller: "GraphCtrl"
             });
     });
