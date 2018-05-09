@@ -1,6 +1,6 @@
- <link rel="stylesheet" href="/styles_css/css_alvaro/css_alvaro.css" type="text/css" />
+<link rel="stylesheet" href="/styles_css/css_alvaro/css_alvaro.css" type="text/css" />
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="https://sos1718-09.herokuapp.com/APP/#!/">Spanish Universities</a>
+    <a class="navbar-brand" href="https://sos1718-09.herokuapp.com/#!/">Spanish Universities</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="https://sos1718-09.herokuapp.com/APP/#!/spanishUniversities">Data list <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="https://sos1718-09.herokuapp.com/#!/spanishUniversities">Data list <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="https://sos1718-09.herokuapp.com/APP/#!/spanishUniversitiesGraphs">Analytics</a>
+                <a class="nav-link" href="https://sos1718-09.herokuapp.com/#!/spanishUniversitiesGraphs">Analytics</a>
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -46,7 +46,7 @@
 
         </tr>
         <tr ng-repeat="univ in univs">
-            <td><a href="/APP/#!/univ/{{univ.autCommunity}}/{{univ.yearFund}}">{{univ.autCommunity}}</a></td>
+            <td><a href="/#!/univ/{{univ.autCommunity}}/{{univ.yearFund}}">{{univ.autCommunity}}</a></td>
             <td>{{univ.yearFund}}</td>
             <td>{{univ.headquar}}</td>
             <td>{{univ.type}}</td>
@@ -141,7 +141,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
+                <div class="modal-body"><img src="/images_alvaro/fail.png" width="50" height="50"></img>
                     University does not have expected fields
                 </div>
                 <div class="modal-footer">
@@ -158,7 +158,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
+                <div class="modal-body"><img src="/images_alvaro/fail.png" width="50" height="50"></img>
                     University already exists!!!
                 </div>
                 <div class="modal-footer">
@@ -175,7 +175,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/warning.png" width="50" height="50"></img>
+                <div class="modal-body"><img src="/images_alvaro/warning.png" width="50" height="50"></img>
                     Are you sure that you want to delete all universities?
                 </div>
                 <div class="modal-footer">
@@ -196,7 +196,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/check.png" width="50" height="50"></img>
+                <div class="modal-body"><img src="/images_alvaro/check.png" width="50" height="50"></img>
 
                     All universities has been deleted correctly!!!
                 </div>
@@ -239,7 +239,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-body"><img src="/spanishUniversities/images_alvaro/fail.png" width="50" height="50"></img>
+                <div class="modal-body"><img src="/images_alvaro/fail.png" width="50" height="50"></img>
                     There is no university with those search fields !!!
                 </div>
                 <div class="modal-footer">
@@ -250,3 +250,4 @@
         </div>
     </div>
 </div>
+ 

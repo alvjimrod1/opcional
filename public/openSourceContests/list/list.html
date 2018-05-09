@@ -12,7 +12,11 @@
             <button class="btn btn-secondary" ng-click="searchContest()">Buscar</button>
         </div>
     </div>
-    <div class="row"><div class="col-xl-12"><div style="font-size: 14px" ng-bind-html="text"></div></div></div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div style="font-size: 14px" ng-bind-html="text"></div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xl-12">
             <table class="table table-hover">
@@ -57,7 +61,7 @@
                     </tr>
                     <tr ng-repeat="contest in contests">
                         <th scope="col">
-                            <a href="/APP/#!/openSourceContests/contest/{{contest.year}}/{{contest.university}}/{{contest.project}}">{{contest.project}}</a>
+                            <a href="/openSourceContests/#!/contest/{{contest.year}}/{{contest.university}}/{{contest.project}}">{{contest.project}}</a>
                             </td>
                             <td scope="col">{{contest.university}}</td>
                             <td scope="col">{{contest.year}}</td>
