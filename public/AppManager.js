@@ -43,10 +43,10 @@ angular
                 /*RAFA*/
             }).when("/openSourceContests", {
                 templateUrl: "/openSourceContests/list/list.html",
-                controller: "ListCtrl"
+                controller: "/openSourceContests/list/ListCtrl"
             }).when("/openSourceContests/contest/:year/:university/:project", {
                 templateUrl: "/openSourceContests/edit/edit.html",
-                controller: "EditCtrl"
+                controller: "/openSourceContests/edit/EditCtrl"
             }).when("/openSourceContests/graph", {
                 templateUrl: "/openSourceContests/graph/graph.html",
                 controller: "GraphCtrl"
