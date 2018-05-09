@@ -44,7 +44,7 @@ angular
             }).when("/openSourceContests", {
                 templateUrl: "../openSourceContests/list/list.html",
                 controller: "ListCtrl"
-            }).when("/openSourceContests/contest/:year/:university/:project", {
+            }).when("/contest/:year/:university/:project", {
                 templateUrl: "../openSourceContests/edit/edit.html",
                 controller: "EditCtrl"
             }).when("/openSourceContests/graph", {
