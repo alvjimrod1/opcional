@@ -36,10 +36,10 @@ angular
             .when("/spanishUniversitiesGraphs", {
                 templateUrl: "spanishUniversitiesGraphs.html",
                 controller: "spanishUniversitiesGraphsCtrl"
-                
-                
-                
-                
+
+
+
+
                 /*RAFA*/
             }).when("/openSourceContests", {
                 templateUrl: "../openSourceContests/list/list.html",
