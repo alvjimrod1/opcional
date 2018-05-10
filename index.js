@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
+var cors = require("cors");
 
 var MongoClient = require("mongodb").MongoClient;
 
@@ -29,6 +30,7 @@ var apikey = require("./apikey");
 var app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 
 app.use("/", express.static(path.join(__dirname, "public")));
