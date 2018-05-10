@@ -1,8 +1,7 @@
 /* global angular */
 /* global $ */
 /* global Highcharts */
-
-
+//initialize all modals
 angular.module("AppManager").controller("spanUnivStatsListCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
     console.log("List Ctrl initialized!");
     var api = "/api/v2/span-univ-stats";
@@ -11,6 +10,7 @@ angular.module("AppManager").controller("spanUnivStatsListCtrl", ["$scope", "$ht
     var offset = 0;
     var paginationString = "";
     $scope.currentPage = 1;
+  
 
 
 
