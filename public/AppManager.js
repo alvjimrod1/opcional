@@ -26,15 +26,15 @@ angular
 
                 /*ALVARO*/
             }).when("/spanishUniversities", {
-                templateUrl: "spanishUniversitiesList.html",
+                templateUrl: "../spanishUniversities/spanishUniversitiesList.html",
                 controller: "spanishUniversitiesListCtrl"
             })
             .when("/univ/:autCommunity/:yearFund", {
-                templateUrl: "spanishUniversitiesEdit.html",
+                templateUrl: "../spanishUniversities/spanishUniversitiesEdit.html",
                 controller: "spanishUniversitiesEditCtrl"
             })
             .when("/spanishUniversitiesGraphs", {
-                templateUrl: "spanishUniversitiesGraphs.html",
+                templateUrl: "../spanishUniversities/spanishUniversitiesGraphs.html",
                 controller: "spanishUniversitiesGraphsCtrl"
 
 
