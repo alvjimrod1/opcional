@@ -21,6 +21,10 @@ angular
             .when("/spanUnivStatsGraphs", {
                 templateUrl: "spanUnivStatsGraphs.html",
                 controller: "spanUnivStatsGraphsCtrl"
+            })
+            .when("/crimeSpanUnivStats", {
+                templateUrl: "crimeSpanUnivStatsGraph.html",
+                controller: "crimeSpanUnivStatsGraphCtrl"
 
 
 
