@@ -40,16 +40,20 @@ angular
             .when("/spanishUniversitiesGraphs", {
                 templateUrl: "../spanishUniversities/spanishUniversitiesGraphs.html",
                 controller: "spanishUniversitiesGraphsCtrl"
-                
-             }) .when("/spanishUniversitiesCORS", {
-                templateUrl: "../spanishUniversities/spanishUniversitiesGraphsApiCors.html",
+
+            })
+            .when("/spanishUniversitiesCORS", {
+                templateUrl: "../integraciones/spanishUniversities/spanishUniversitiesGraphsApiCors.html",
                 controller: "spanishUniversitiesGraphsApiCorsCtrl"
-             })
+            })
+             .when("/spanishUniversitiesPROXY", {
+                templateUrl: "../integraciones/spanishUniversities/spanishUniversitiesGraphsApiProxy.html",
+                controller: "spanishUniversitiesGraphsApiProxyCtrl"
+            })
 
 
-
-                /*RAFA*/
-           .when("/openSourceContests", {
+            /*RAFA*/
+            .when("/openSourceContests", {
                 templateUrl: "../openSourceContests/list/list.html",
                 controller: "ListCtrl"
             }).when("/contest/:year/:university/:project", {
