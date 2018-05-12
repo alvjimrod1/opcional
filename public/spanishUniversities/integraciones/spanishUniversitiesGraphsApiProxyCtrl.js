@@ -5,9 +5,7 @@
 angular.module("AppManager").controller("spanishUniversitiesGraphsApiProxyCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
     console.log("Graph CORS Controller Initialized!");
     var api = "/api/v2/spanish-universities";
-    var api2 = "https://sos1718-03.herokuapp.com/api/v1/global-warmings";
-
-
+    var api2 = "proxyAJR/api/v1/global-warmings";
     /* HIGCHARTS */
 
     /*aux functions*/

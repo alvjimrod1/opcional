@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var cors = require("cors");
+var request = require("request");
 
 var MongoClient = require("mongodb").MongoClient;
 
@@ -24,15 +25,26 @@ var secureSpanUnivStatsApi = require("./secureSpanUnivStatsApi");
 var secureSpanishUniversitiesApi = require("./secureSpanishUniversitiesApi");
 var apikey = require("./apikey");
 
-
-
-
 var app = express();
 
 app.use(bodyParser.json());
+
 app.use(cors());
 
+/*PROXYS*/
 
+/*ALVARO*/
+
+var apiServerHost = "https://sos1718-03.herokuapp.com";
+
+app.use("/proxyAJR/", function(req, res) {
+
+    var url = apiServerHost + req.url;
+
+    console.log('piped: ' + req.url);
+    req.pipe(request(url)).pipe(res);
+});
+/*----------*/
 app.use("/", express.static(path.join(__dirname, "public")));
 
 
@@ -49,7 +61,7 @@ var initialUniversities = [
         "headquar": "zaragoza",
         "type": "publica",
         "nameUniversity": "universidad de zaragoza"
-        
+
 
 
     },
@@ -161,7 +173,7 @@ var initialStats = [
         "master": 1657,
         "firstSecondCycle": 9659
 
-    }, 
+    },
     {
         "autCommunity": "galicia",
         "year": 2016,
@@ -170,7 +182,7 @@ var initialStats = [
         "master": 1657,
         "firstSecondCycle": 9659
 
-    }, 
+    },
     {
         "autCommunity": "castilla la mancha",
         "year": 2016,
@@ -179,7 +191,7 @@ var initialStats = [
         "master": 1657,
         "firstSecondCycle": 9659
 
-    }, 
+    },
     {
         "autCommunity": "galicia",
         "year": 2012,
@@ -188,7 +200,7 @@ var initialStats = [
         "master": 1657,
         "firstSecondCycle": 9659
 
-    }, 
+    },
     {
         "autCommunity": "extremadura",
         "year": 2014,
@@ -197,7 +209,7 @@ var initialStats = [
         "master": 1657,
         "firstSecondCycle": 9659
 
-    }, 
+    },
     {
         "autCommunity": "murcia",
         "year": 2013,
