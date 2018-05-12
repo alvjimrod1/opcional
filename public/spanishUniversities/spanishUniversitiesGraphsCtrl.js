@@ -77,7 +77,7 @@ angular.module("AppManager").controller("spanishUniversitiesGraphsCtrl", ["$scop
         console.log(totalPrivateUniversities)
 
         //////GOOGLE CHARTS/////
-
+var int= [];
         for (var i = 0; i < response.data.length; i++) {
             var cont = 0;
 
@@ -86,13 +86,13 @@ angular.module("AppManager").controller("spanishUniversitiesGraphsCtrl", ["$scop
                     cont++;
                 }
             }
-
+            
+         int.push(cont)
             googleChartData.push([response.data[i].autCommunity, cont]);
-
-
-
         }
-
+           
+            console.log (int)
+console.log ("PRUEBA" +googleChartData);
 
 
         Highcharts.chart('container', {

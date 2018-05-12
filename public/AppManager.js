@@ -36,12 +36,16 @@ angular
             .when("/spanishUniversitiesGraphs", {
                 templateUrl: "../spanishUniversities/spanishUniversitiesGraphs.html",
                 controller: "spanishUniversitiesGraphsCtrl"
-
+                
+             }) .when("/spanishUniversitiesCORS", {
+                templateUrl: "../spanishUniversities/spanishUniversitiesGraphsApiCors.html",
+                controller: "spanishUniversitiesGraphsApiCorsCtrl"
+             })
 
 
 
                 /*RAFA*/
-            }).when("/openSourceContests", {
+           .when("/openSourceContests", {
                 templateUrl: "../openSourceContests/list/list.html",
                 controller: "ListCtrl"
             }).when("/contest/:year/:university/:project", {
