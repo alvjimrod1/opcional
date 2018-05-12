@@ -87,27 +87,31 @@ angular.module("AppManager").controller("GPSpanUnivStatsGraphCtrl", ["$scope", "
 
 
             Highcharts.chart('gpSpanUnivStats', {
-                data: {
-                    table: 'datatable'
-                },
+
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Data extracted from a HTML table in the page'
+                    text: 'GPStatsApi and SpanUnivStatsApi Integration'
+                },
+                xAxis: {
+                    categories: years.sortNumbers().unique()
+
                 },
                 yAxis: {
                     allowDecimals: false,
                     title: {
-                        text: 'Units'
+                        text: 'Enrolled Number and Score'
                     }
                 },
-                tooltip: {
-                    formatter: function() {
-                        return '<b>' + this.series.name + '</b><br/>' +
-                            this.point.y + ' ' + this.point.name.toLowerCase();
-                    }
-                }
+                series: [{
+                    name: 'Enrolled Number',
+                    data: totalEnrolledNumber
+
+                }, {
+                    name: 'Score',
+                    data: totalScore
+                }]
             });
 
 
