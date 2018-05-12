@@ -5,7 +5,7 @@
 angular.module("AppManager").controller("spanishUniversitiesGraphsApiProxyCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
     console.log("Graph CORS Controller Initialized!");
     var api = "/api/v2/spanish-universities";
-    var api2 = "https://sos1718-08.herokuapp.com/api/v1/divorces-an/";
+    var api2 = "https://sos1718-03.herokuapp.com/api/v1/global-warmings";
 
 
     /* HIGCHARTS */
@@ -19,9 +19,10 @@ angular.module("AppManager").controller("spanishUniversitiesGraphsApiProxyCtrl",
         return c.indexOf(a, b + 1) < 0;
     });
     /*--------MI API-------*/
-    var total = [];
     var comunidades = [];
-    var provincesJurado = [];
+    var provincesAntonio = [];
+
+    var total = [];
 
     $http.get(api).then(function(response) {
         for (var i = 0; i < response.data.length; i++) {
@@ -46,65 +47,96 @@ angular.module("AppManager").controller("spanishUniversitiesGraphsApiProxyCtrl",
 
         console.log(int);
         console.log(comunidades.unique());
-        console.log(total);
 
-        /*API JURADO */
+
+        /*API ANTONIO SAUCEJO */
         $http.get(api2).then(function(response) {
             for (var i = 0; i < response.data.length; i++) {
-                provincesJurado.push(response.data[i].province);
+                provincesAntonio.push(response.data[i].name);
             }
-            console.log("PROVINCES JURADO: " + provincesJurado.sort().unique())
+            console.log("PROVINCES ANTONIO: " + provincesAntonio.sort().unique())
 
             var int = [];
-            for (var i = 0; i < provincesJurado.unique().length; i++) {
+            for (var i = 0; i < provincesAntonio.unique().length; i++) {
                 var cont = 0;
 
                 for (var j = 0; j < response.data.length; j++) {
-                    if (response.data[j].province == provincesJurado.sort().unique()[i] && response.data[j].year == 2015) {
-                        cont = response.data[j].nullity;
+                    if (response.data[j].name == provincesAntonio.sort().unique()[i]) {
+                        cont = response.data[j].peakPower;
                     }
                 }
 
                 int.push(cont);
-                total.push([provincesJurado.sort().unique()[i], cont]);
+                total.push([provincesAntonio.sort().unique()[i], cont]);
             }
 
             console.log(int);
-            console.log(provincesJurado.unique());
-            console.log(total);
+            console.log(provincesAntonio.unique());
+            console.log("EOEOEOEO" + (total));
 
-            ///HIGHCHARTS 2///
+            // totalComProv.push(comunidades.unique().sort());
+            // totalComProv.push(provincesAntonio.unique().sort());
+            // console.log("IIIIIIIII==>    " + totalComProv)
+            ///HIGHCHARTS 2 PROXY ///
+
             Highcharts.chart('container1', {
                 chart: {
-                    type: 'pie',
-                    options3d: {
-                        enabled: true,
-                        alpha: 45,
-                        beta: 0
-                    }
+                    type: 'area',
+                    spacingBottom: 30
                 },
                 title: {
-                    text: null
+                    text: 'Integracion numero universidades en com autonomas/ consumo de ciudades'
                 },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                subtitle: {
+                    text: '* Jane\'s banana consumption is unknown',
+                    floating: true,
+                    align: 'right',
+                    verticalAlign: 'bottom',
+                    y: 15
                 },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        depth: 50,
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.name}'
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    verticalAlign: 'top',
+                    x: 150,
+                    y: 100,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                },
+                xAxis: {
+                    categories: comunidades.unique().concat(provincesAntonio.unique())
+                },
+                yAxis: {
+                    title: {
+                        text: 'Y-Axis'
+                    },
+                    labels: {
+                        formatter: function() {
+                            return this.value;
                         }
                     }
                 },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            this.x + ': ' + this.y;
+                    }
+                },
+                plotOptions: {
+                    area: {
+                        fillOpacity: 0.1
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
                 series: [{
-                    type: 'pie',
+                    name: 'Nª univs/peakPower:',
                     data: total
-                }]
+                }, ]
             });
+
 
         });
     });
