@@ -43,11 +43,11 @@ angular
 
             })
             .when("/spanishUniversitiesCORS", {
-                templateUrl: "../integraciones/spanishUniversities/spanishUniversitiesGraphsApiCors.html",
+                templateUrl: "../spanishUniversities/integraciones/spanishUniversitiesGraphsApiCors.html",
                 controller: "spanishUniversitiesGraphsApiCorsCtrl"
             })
              .when("/spanishUniversitiesPROXY", {
-                templateUrl: "../integraciones/spanishUniversities/spanishUniversitiesGraphsApiProxy.html",
+                templateUrl: "../spanishUniversities/integraciones/spanishUniversitiesGraphsApiProxy.html",
                 controller: "spanishUniversitiesGraphsApiProxyCtrl"
             })
 
