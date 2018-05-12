@@ -26,6 +26,11 @@ angular
                 templateUrl: "crimeSpanUnivStatsGraph.html",
                 controller: "crimeSpanUnivStatsGraphCtrl"
 
+            })
+            .when("/GPSpanUnivStats", {
+                templateUrl: "GPSpanUnivStatsGraph.html",
+                controller: "GPSpanUnivStatsGraphCtrl"
+
 
 
                 /*ALVARO*/
@@ -46,7 +51,7 @@ angular
                 templateUrl: "../spanishUniversities/integraciones/spanishUniversitiesGraphsApiCors.html",
                 controller: "spanishUniversitiesGraphsApiCorsCtrl"
             })
-             .when("/spanishUniversitiesPROXY", {
+            .when("/spanishUniversitiesPROXY", {
                 templateUrl: "../spanishUniversities/integraciones/spanishUniversitiesGraphsApiProxy.html",
                 controller: "spanishUniversitiesGraphsApiProxyCtrl"
             })

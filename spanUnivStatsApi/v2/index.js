@@ -7,6 +7,17 @@ module.exports = spanUnivStatsApi;
 spanUnivStatsApi.register = function(app, SpanUNivStatsdb, initialStats) {
 
     console.log("Registering routes for span-univ-stats API...");
+    
+    /*PROXY*/
+    var request = require("request");
+    var apiServerHost="https://sos1718-10.herokuapp.com";
+    ///api/v1/motogp-stats
+    
+    app.use("/proxyGP", function(req,res){
+        
+        var url = apiServerHost + req.url;
+        req.pipe(request(url)).pipe(res);
+    });
 
 
     ///////////// REDIRECT
