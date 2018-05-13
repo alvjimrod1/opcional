@@ -47,7 +47,16 @@ app.use("/proxyAJR/", function(req, res) {
 /*----------*/
 app.use("/", express.static(path.join(__dirname, "public")));
 
+/*Rafa*/
 
+app.use("/proxyRAR/", function(req, res) {
+
+    var url = "https://sos1718-11.herokuapp.com" + req.url;
+
+    console.log('piped: ' + req.url);
+    req.pipe(request(url)).pipe(res);
+});
+/*----------*/
 
 
 /* API SPANISH UNIVERSITIES */

@@ -70,7 +70,8 @@ angular
             }).when("/openSourceContests/graphApi1", {
                 templateUrl: "../openSourceContests/graph/graphApi1.html",
                 controller: "GraphApi1Ctrl"
-            }).when("/openSourceContests/graphApi2", {
-                templateUrl: "../openSourceContests/graph/graphApi2.html"
+            }).when("/openSourceContestsPROXY/", {
+                templateUrl: "../openSourceContests/graph/graphApi2.html",
+                controller: "GraphApi2Ctrl"
             });
     });
