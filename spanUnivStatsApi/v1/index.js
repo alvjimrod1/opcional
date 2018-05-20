@@ -1,3 +1,4 @@
+"use strict";
 var spanUnivStatsApi = {};
 var BASE_API_PATH = "/api/v1";
 
