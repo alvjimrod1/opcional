@@ -1,4 +1,9 @@
 "use strict";
+
+function test() {
+    "use strict";
+    let a = 1;
+}
 var spanUnivStatsApi = {};
 var BASE_API_PATH = "/api/v1";
 
