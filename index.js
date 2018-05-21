@@ -7,6 +7,8 @@ var request = require("request");
 var MongoClient = require("mongodb").MongoClient;
 
 var port = (process.env.PORT || 1607);
+//para var de entrono
+var jwt = (process.env.JWT || "hola1234");
 
 var mdbSpanUnivStatsURL = "mongodb://balramrom:balramrom@ds121309.mlab.com:21309/span-univ-stats-brrdb";
 

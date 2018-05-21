@@ -1,9 +1,16 @@
 var spanishUniversitiesApi = {};
 var BASE_API_PATH = "/api/v2";
+var jwtClave = "hola1234";
+var jwt = require('jsonwebtoken');
+var expressJwt = require('express-jwt');
+
 
 module.exports = spanishUniversitiesApi;
 
 spanishUniversitiesApi.register = function(app, univs, initialUniversities, checkApiKey) {
+
+
+
     console.log("Registering routes for spanishUniversities API");
 
 
@@ -16,6 +23,7 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
 
 
     /////////////   LOADINITIALDATA 
+    app.use(expressJwt({ secret: jwtClave }).unless({ path: ["/spanish-universities/token"] }));
 
     app.get(BASE_API_PATH + "/spanish-universities/loadInitialData", (req, res) => {
 
@@ -41,6 +49,25 @@ spanishUniversitiesApi.register = function(app, univs, initialUniversities, chec
         });
     });
 
+
+    /*POST PARA TOKEN */
+    app.post(BASE_API_PATH + "/spanish-universities/token", (req, res) => {
+        console.log(Date() + " probando token");
+
+        if (req.body.email) {
+            var token = jwt.sign({
+                email: req.body.email
+            }, jwtClave);
+
+            res.send("token :" + token);
+
+        }
+        else {
+            res.sendStatus(401);
+
+        }
+
+    });
 
     //ACCIONES REST
     /////////// GET A RECURSO BASE CON BUSQUEDAS Y PAGINACIÓN IPLEMENTADO
